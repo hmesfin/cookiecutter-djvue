@@ -1,0 +1,49 @@
+# Docker Compose Override Example
+# Copy this to docker-compose.override.yml for local development overrides
+# docker-compose.override.yml is automatically loaded by Docker Compose
+# DO NOT commit docker-compose.override.yml to version control
+
+version: '3.9'
+
+services:
+  backend:
+    # Override environment variables for local development
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=local-development-secret-key-override
+    # Add additional volumes if needed
+    # volumes:
+    #   - ./backend/local_data:/app/local_data
+
+  frontend:
+    # Override for local development
+    environment:
+      - NODE_ENV=development
+    # Uncomment to change the port
+    # ports:
+    #   - "3000:5173"
+
+  {% if cookiecutter.database == 'postgresql' -%}
+  postgres:
+    # Uncomment to persist database data locally
+    # volumes:
+    #   - ./postgres_data:/var/lib/postgresql/data
+    # Uncomment to expose database port for external tools
+    # ports:
+    #   - "5432:5432"
+  {% elif cookiecutter.database == 'mysql' -%}
+  mysql:
+    # Uncomment to persist database data locally
+    # volumes:
+    #   - ./mysql_data:/var/lib/mysql
+    # Uncomment to expose database port for external tools
+    # ports:
+    #   - "3306:3306"
+  {%- endif %}
+
+  {% if cookiecutter.use_redis == 'y' -%}
+  redis:
+    # Uncomment to expose Redis port for external tools
+    # ports:
+    #   - "6379:6379"
+  {%- endif %}

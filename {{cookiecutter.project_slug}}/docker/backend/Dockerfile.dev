@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Copy requirements and install dependencies
+# This allows Docker to cache the dependency layer
 COPY backend/requirements/development.txt /tmp/requirements.txt
 RUN pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt
@@ -35,7 +36,7 @@ RUN pip install --upgrade pip && \
 COPY docker/backend/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
-# The source code will be mounted as a volume, so we don't copy it here
+# The application code will be mounted as a volume
 
 # Create necessary directories
 RUN mkdir -p /app/staticfiles /app/media
