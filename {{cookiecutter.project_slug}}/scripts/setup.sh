@@ -51,6 +51,27 @@ pip install --upgrade pip
 echo "Installing Python dependencies..."
 pip install -r requirements/development.txt
 
+# Determine database URL based on availability
+{% if cookiecutter.database == 'postgresql' -%}
+if command -v pg_isready &> /dev/null && pg_isready -h localhost -p 5432 &> /dev/null; then
+    echo -e "${GREEN}✓ PostgreSQL is running${NC}"
+    DB_URL="postgres://{{ cookiecutter.project_slug }}:changeme@localhost:5432/{{ cookiecutter.project_slug }}"
+else
+    echo -e "${YELLOW}⚠ PostgreSQL is not running or not installed. Using SQLite for development.${NC}"
+    DB_URL="sqlite:///db.sqlite3"
+fi
+{% elif cookiecutter.database == 'mysql' -%}
+if command -v mysqladmin &> /dev/null && mysqladmin ping -h localhost --silent &> /dev/null; then
+    echo -e "${GREEN}✓ MySQL is running${NC}"
+    DB_URL="mysql://{{ cookiecutter.project_slug }}:changeme@localhost:3306/{{ cookiecutter.project_slug }}"
+else
+    echo -e "${YELLOW}⚠ MySQL is not running or not installed. Using SQLite for development.${NC}"
+    DB_URL="sqlite:///db.sqlite3"
+fi
+{% else -%}
+DB_URL="sqlite:///db.sqlite3"
+{%- endif %}
+
 # Create .env file if it doesn't exist
 if [ ! -f ".env" ]; then
     echo "Creating .env file from example..."
@@ -60,20 +81,8 @@ SECRET_KEY=django-insecure-change-this-in-production-$(openssl rand -hex 32)
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
 
-{% if cookiecutter.database == 'postgresql' -%}
-# Database - PostgreSQL
-DATABASE_URL=postgres://{{ cookiecutter.project_slug }}:changeme@localhost:5432/{{ cookiecutter.project_slug }}
-# If PostgreSQL is not available, you can use SQLite for development:
-# DATABASE_URL=sqlite:///db.sqlite3
-{% elif cookiecutter.database == 'mysql' -%}
-# Database - MySQL
-DATABASE_URL=mysql://{{ cookiecutter.project_slug }}:changeme@localhost:3306/{{ cookiecutter.project_slug }}
-# If MySQL is not available, you can use SQLite for development:
-# DATABASE_URL=sqlite:///db.sqlite3
-{% else -%}
-# Database - SQLite
-DATABASE_URL=sqlite:///db.sqlite3
-{%- endif %}
+# Database - Automatically detected
+DATABASE_URL=$DB_URL
 
 {% if cookiecutter.use_redis == 'y' -%}
 # Redis (optional for development)
@@ -102,29 +111,12 @@ else
     echo -e "${YELLOW}⚠ .env file already exists, skipping...${NC}"
 fi
 
-# Check database availability and migrations
-echo "Checking database connection..."
-{% if cookiecutter.database == 'postgresql' -%}
-# Check if PostgreSQL is running
-if pg_isready -h localhost -p 5432 &> /dev/null; then
-    echo -e "${GREEN}✓ PostgreSQL is running${NC}"
-else
-    echo -e "${YELLOW}⚠ PostgreSQL is not running. Using SQLite for development.${NC}"
-    # Update .env to use SQLite
-    sed -i.bak 's|^DATABASE_URL=postgres://.*|DATABASE_URL=sqlite:///db.sqlite3|' .env
+# Load the .env file to make sure environment is set
+if [ -f ".env" ]; then
+    export $(cat .env | grep -v '^#' | xargs)
 fi
-{% elif cookiecutter.database == 'mysql' -%}
-# Check if MySQL is running
-if mysqladmin ping -h localhost --silent &> /dev/null; then
-    echo -e "${GREEN}✓ MySQL is running${NC}"
-else
-    echo -e "${YELLOW}⚠ MySQL is not running. Using SQLite for development.${NC}"
-    # Update .env to use SQLite
-    sed -i.bak 's|^DATABASE_URL=mysql://.*|DATABASE_URL=sqlite:///db.sqlite3|' .env
-fi
-{%- endif %}
 
-# Run migrations
+# Run migrations with the correct database
 echo "Running database migrations..."
 python manage.py migrate
 

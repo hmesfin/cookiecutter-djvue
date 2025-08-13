@@ -271,6 +271,12 @@ repos:
             f.write(pre_commit_config.strip())
         
         print("  ✓ Pre-commit configuration created")
+    
+    # Mark setup script as executable
+    setup_file = Path('scripts/setup.sh')
+    if setup_file.exists():
+        setup_file.chmod(0o755)
+        print("  ✓ Setup script made executable")
 
 
 def create_setup_script():
@@ -470,10 +476,12 @@ def main():
     
     clean_up_files()
     create_directories()
-    create_env_files()
+    # Don't create env files - let setup.sh handle database detection
+    # create_env_files()
     initialize_git()
     install_pre_commit()
-    create_setup_script()
+    # Don't create setup script - we already have one in template
+    # create_setup_script()
     print_success_message()
 
 
