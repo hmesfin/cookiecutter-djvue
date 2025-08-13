@@ -17,6 +17,10 @@ done
 echo "MySQL started"
 {%- endif %}
 
+# Create migrations if needed (for custom user model)
+echo "Checking for model changes..."
+python manage.py makemigrations --noinput || true
+
 # Run migrations
 echo "Running database migrations..."
 python manage.py migrate --noinput
