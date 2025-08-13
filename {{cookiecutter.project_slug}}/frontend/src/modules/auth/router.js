@@ -31,6 +31,18 @@ export default [
         component: () => import('./views/ResetPasswordView.vue'),
         meta: { requiresGuest: true },
       },
+      {
+        path: 'verify-email',
+        name: 'EmailVerification',
+        component: () => import('./views/EmailVerificationView.vue'),
+        meta: { requiresGuest: false },
+      },
+      {
+        path: 'verify-email/:email',
+        name: 'EmailVerificationPending',
+        component: () => import('./views/EmailVerificationView.vue'),
+        meta: { requiresGuest: false },
+      },
     ],
   },
 ]

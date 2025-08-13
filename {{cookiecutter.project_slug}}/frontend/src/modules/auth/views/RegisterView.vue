@@ -240,7 +240,7 @@ const handleRegister = async () => {
   loading.value = true
   
   try {
-    await authStore.register({
+    const response = await authStore.register({
       first_name: form.firstName,
       last_name: form.lastName,
       email: form.email,
@@ -248,18 +248,27 @@ const handleRegister = async () => {
       password_confirm: form.confirmPassword,
     })
     
-    // Auto-login after registration
-    await authStore.login({
-      {% if cookiecutter.api_authentication == 'jwt' or cookiecutter.api_authentication == 'token' -%}
-      email: form.email,
-      {% else -%}
-      username: form.email,
-      {%- endif %}
-      password: form.password,
-    })
-    
-    // Redirect to dashboard
-    router.push('/dashboard')
+    // Check if email verification is required
+    if (response.email_verification_required) {
+      // Redirect to email verification page
+      router.push({
+        name: 'EmailVerificationPending',
+        params: { email: form.email }
+      })
+    } else {
+      // Auto-login after registration if email verification is not required
+      await authStore.login({
+        {% if cookiecutter.api_authentication == 'jwt' or cookiecutter.api_authentication == 'token' -%}
+        email: form.email,
+        {% else -%}
+        username: form.email,
+        {%- endif %}
+        password: form.password,
+      })
+      
+      // Redirect to dashboard
+      router.push('/dashboard')
+    }
   } catch (error{% if cookiecutter.use_typescript == 'y' %}: any{% endif %}) {
     if (error.response?.data) {
       const data = error.response.data

@@ -171,6 +171,17 @@ const handleLogin = async () => {
   } catch (error{% if cookiecutter.use_typescript == 'y' %}: any{% endif %}) {
     if (error.response?.data) {
       const data = error.response.data
+      
+      // Check if email verification is required
+      if (data.email_verification_required) {
+        // Redirect to email verification page
+        router.push({
+          name: 'EmailVerificationPending',
+          params: { email: data.email || form.email }
+        })
+        return
+      }
+      
       errors.email = data.email?.[0] || ''
       errors.password = data.password?.[0] || ''
       errors.general = data.detail || data.non_field_errors?.[0] || 'Invalid credentials'
