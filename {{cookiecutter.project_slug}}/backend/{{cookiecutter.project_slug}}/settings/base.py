@@ -100,36 +100,49 @@ WSGI_APPLICATION = '{{ cookiecutter.project_slug }}.wsgi.application'
 {%- endif %}
 
 # Database
-{% if cookiecutter.database == 'postgresql' -%}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB', '{{ cookiecutter.project_slug }}'),
-        'USER': os.environ.get('POSTGRES_USER', '{{ cookiecutter.project_slug }}'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'changeme'),
-        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+# Supports DATABASE_URL for easy configuration
+import dj_database_url
+
+DATABASE_URL = os.environ.get('DATABASE_URL', None)
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
     }
-}
-{% elif cookiecutter.database == 'mysql' -%}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE', '{{ cookiecutter.project_slug }}'),
-        'USER': os.environ.get('MYSQL_USER', '{{ cookiecutter.project_slug }}'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'changeme'),
-        'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
-        'PORT': os.environ.get('MYSQL_PORT', '3306'),
+else:
+    {% if cookiecutter.database == 'postgresql' -%}
+    # PostgreSQL configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB', '{{ cookiecutter.project_slug }}'),
+            'USER': os.environ.get('POSTGRES_USER', '{{ cookiecutter.project_slug }}'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'changeme'),
+            'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        }
     }
-}
-{% else -%}
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    {% elif cookiecutter.database == 'mysql' -%}
+    # MySQL configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('MYSQL_DATABASE', '{{ cookiecutter.project_slug }}'),
+            'USER': os.environ.get('MYSQL_USER', '{{ cookiecutter.project_slug }}'),
+            'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'changeme'),
+            'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
+            'PORT': os.environ.get('MYSQL_PORT', '3306'),
+        }
     }
-}
-{%- endif %}
+    {% else -%}
+    # SQLite configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    {%- endif %}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

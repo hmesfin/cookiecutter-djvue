@@ -128,25 +128,27 @@ def create_env_files():
     backend_env_example = BACKEND_DIR / '.env.example'
     backend_env = BACKEND_DIR / '.env'
     
+    # Generate a real secret key
+    secret_key = generate_secret_key()
+    
     env_content = f"""
 # Django Settings
-SECRET_KEY=django-insecure-change-this-in-production-{''.join([str(i) for i in range(32)])}
+SECRET_KEY={secret_key}
 DEBUG=True
 DJANGO_ENV=development
 
 # Database
 {% if cookiecutter.database == 'postgresql' -%}
-POSTGRES_DB={{ cookiecutter.project_slug }}
-POSTGRES_USER={{ cookiecutter.project_slug }}
-POSTGRES_PASSWORD=changeme
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
+# Using DATABASE_URL for flexibility
+# If PostgreSQL is not available, change to: sqlite:///db.sqlite3
+DATABASE_URL=postgres://{{ cookiecutter.project_slug }}:changeme@localhost:5432/{{ cookiecutter.project_slug }}
 {% elif cookiecutter.database == 'mysql' -%}
-MYSQL_DATABASE={{ cookiecutter.project_slug }}
-MYSQL_USER={{ cookiecutter.project_slug }}
-MYSQL_PASSWORD=changeme
-MYSQL_HOST=localhost
-MYSQL_PORT=3306
+# Using DATABASE_URL for flexibility
+# If MySQL is not available, change to: sqlite:///db.sqlite3
+DATABASE_URL=mysql://{{ cookiecutter.project_slug }}:changeme@localhost:3306/{{ cookiecutter.project_slug }}
+{% else -%}
+# Using SQLite for development
+DATABASE_URL=sqlite:///db.sqlite3
 {%- endif %}
 
 # Redis
