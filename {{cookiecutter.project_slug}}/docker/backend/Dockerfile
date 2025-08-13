@@ -25,9 +25,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY backend/requirements/development.txt /tmp/requirements.txt
+COPY backend/requirements/ /tmp/requirements/
 RUN pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt
+    pip install -r /tmp/requirements/production.txt
 
 # Copy project
 COPY backend/ /app/

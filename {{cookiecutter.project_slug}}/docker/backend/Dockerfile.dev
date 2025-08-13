@@ -28,9 +28,9 @@ RUN apt-get update && apt-get install -y \
 
 # Copy requirements and install dependencies
 # This allows Docker to cache the dependency layer
-COPY backend/requirements/development.txt /tmp/requirements.txt
+COPY backend/requirements/ /tmp/requirements/
 RUN pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt
+    pip install -r /tmp/requirements/development.txt
 
 # Copy entrypoint script
 COPY docker/backend/docker-entrypoint.sh /docker-entrypoint.sh

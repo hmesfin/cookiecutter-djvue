@@ -3,8 +3,6 @@
 # docker-compose.override.yml is automatically loaded by Docker Compose
 # DO NOT commit docker-compose.override.yml to version control
 
-version: '3.9'
-
 services:
   backend:
     # Override environment variables for local development
