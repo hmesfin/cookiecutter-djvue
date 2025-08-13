@@ -122,7 +122,7 @@ services:
   celery_worker:
     build:
       context: .
-      dockerfile: docker/backend/Dockerfile.dev
+      dockerfile: docker/backend/Dockerfile.celery
     container_name: {{ cookiecutter.project_slug }}_celery_worker
     volumes:
       - ./backend:/app
@@ -148,7 +148,7 @@ services:
   celery_beat:
     build:
       context: .
-      dockerfile: docker/backend/Dockerfile.dev
+      dockerfile: docker/backend/Dockerfile.celery
     container_name: {{ cookiecutter.project_slug }}_celery_beat
     volumes:
       - ./backend:/app
