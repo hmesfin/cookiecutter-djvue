@@ -1,0 +1,28 @@
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
+{% if cookiecutter.css_framework == 'bootstrap-vue-3' -%}
+import { BootstrapVue3 } from 'bootstrap-vue-3'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
+{% elif cookiecutter.css_framework == 'tailwindcss' -%}
+import './assets/tailwind.css'
+{%- endif %}
+{% if cookiecutter.use_i18n == 'y' -%}
+import i18n from './i18n'
+{%- endif %}
+import './assets/main.css'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+{% if cookiecutter.css_framework == 'bootstrap-vue-3' -%}
+app.use(BootstrapVue3)
+{%- endif %}
+{% if cookiecutter.use_i18n == 'y' -%}
+app.use(i18n)
+{%- endif %}
+
+app.mount('#app')

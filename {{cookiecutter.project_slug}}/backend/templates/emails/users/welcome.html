@@ -1,0 +1,43 @@
+{% raw %}{% extends "emails/base.html" %}
+
+{% block title %}Welcome to {{ project_name }}!{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ user.get_short_name }}! 🎉</h1>
+
+<p>We're thrilled to have you join {{ project_name }}!</p>
+
+<p>Your account has been successfully created with the email address: <strong>{{ user.email }}</strong></p>
+
+{% if not user.is_verified %}
+<p>To get started and unlock all features, please verify your email address:</p>
+
+<div style="text-align: center;">
+    <a href="{{ protocol }}://{{ domain }}/verify-email" class="button">Verify Email Address</a>
+</div>
+{% else %}
+<p>Your email is already verified. You're all set to explore everything {{ project_name }} has to offer!</p>
+
+<div style="text-align: center;">
+    <a href="{{ protocol }}://{{ domain }}/dashboard" class="button">Go to Dashboard</a>
+</div>
+{% endif %}
+
+<h3>What's Next?</h3>
+<ul>
+    <li>Complete your profile to personalize your experience</li>
+    <li>Explore our features and settings</li>
+    <li>Check out our getting started guide</li>
+</ul>
+
+<p>If you have any questions or need assistance, our support team is here to help!</p>
+
+<p>Best regards,<br>
+The {{ project_name }} Team</p>
+{% endblock %}
+
+{% block footer_links %}
+<a href="{{ protocol }}://{{ domain }}/help">Help Center</a> |
+<a href="{{ protocol }}://{{ domain }}/contact">Contact Support</a> |
+<a href="{{ protocol }}://{{ domain }}/docs">Documentation</a>
+{% endblock %}{% endraw %}

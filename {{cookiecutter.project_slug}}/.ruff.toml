@@ -1,0 +1,16 @@
+{% if cookiecutter.use_ruff == 'y' -%}
+# This is a root-level Ruff configuration that applies to the entire project
+# For backend-specific configuration, see backend/pyproject.toml
+
+[lint]
+# Extend the backend configuration
+extend = "./backend/pyproject.toml"
+
+# Additional project-wide exclusions
+extend-exclude = [
+    "frontend",
+    "docker",
+    "scripts",
+    "docs",
+]
+{%- endif %}

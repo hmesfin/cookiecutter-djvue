@@ -1,0 +1,66 @@
+{
+  "name": "{{ cookiecutter.project_slug }}-frontend",
+  "version": "{{ cookiecutter.version }}",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "{% if cookiecutter.use_typescript == 'y' %}vue-tsc --noEmit && {% endif %}vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    {% if cookiecutter.use_eslint == 'y' -%}
+    "lint": "eslint . --ext {% if cookiecutter.use_typescript == 'y' %}.vue,.js,.jsx,.cjs,.mjs,.ts,.tsx{% else %}.vue,.js,.jsx,.cjs,.mjs{% endif %} --report-unused-disable-directives --max-warnings 0",
+    {%- endif %}
+    {% if cookiecutter.use_prettier == 'y' -%}
+    "format": "prettier --write src/",
+    {%- endif %}
+    "type-check": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^{{ cookiecutter.vue_version }}",
+    "vue-router": "^4.4.0",
+    "pinia": "^2.2.0",
+    "axios": "^1.7.3",
+    {% if cookiecutter.css_framework == 'bootstrap-vue-3' -%}
+    "bootstrap": "^5.3.3",
+    "bootstrap-vue-3": "^0.5.1",
+    {% elif cookiecutter.css_framework == 'tailwindcss' -%}
+    "@heroicons/vue": "^2.1.5",
+    "@headlessui/vue": "^1.7.22",
+    {%- endif %}
+    {% if cookiecutter.use_i18n == 'y' -%}
+    "vue-i18n": "^9.13.1",
+    {%- endif %}
+    "date-fns": "^3.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "vite": "^5.4.0",
+    {% if cookiecutter.use_typescript == 'y' -%}
+    "typescript": "^5.5.4",
+    "vue-tsc": "^2.0.29",
+    "@types/node": "^22.1.0",
+    {%- endif %}
+    {% if cookiecutter.use_eslint == 'y' -%}
+    "eslint": "^9.8.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    {%- endif %}
+    {% if cookiecutter.use_prettier == 'y' -%}
+    "prettier": "^3.3.3",
+    {%- endif %}
+    {% if cookiecutter.css_framework == 'tailwindcss' -%}
+    "tailwindcss": "^3.4.7",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.40",
+    {%- endif %}
+    "@vue/test-utils": "^2.4.6",
+    "vitest": "^2.0.5",
+    "@playwright/test": "^1.45.3",
+    "jsdom": "^24.1.1",
+    "unplugin-auto-import": "^0.18.2",
+    "unplugin-vue-components": "^0.27.3"
+  }
+}

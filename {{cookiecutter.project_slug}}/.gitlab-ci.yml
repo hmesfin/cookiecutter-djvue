@@ -1,0 +1,220 @@
+{% if cookiecutter.ci_tool == 'gitlab' -%}
+stages:
+  - build
+  - test
+  - security
+  - deploy
+
+variables:
+  PYTHON_VERSION: "{{ cookiecutter.python_version }}"
+  NODE_VERSION: "{{ cookiecutter.node_version }}"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  NPM_CACHE_DIR: "$CI_PROJECT_DIR/.cache/npm"
+
+cache:
+  paths:
+    - .cache/pip
+    - .cache/npm
+    - frontend/node_modules/
+
+# Backend Jobs
+backend:build:
+  stage: build
+  image: python:{{ cookiecutter.python_version }}-slim
+  before_script:
+    - apt-get update && apt-get install -y build-essential {% if cookiecutter.database == 'postgresql' %}libpq-dev{% elif cookiecutter.database == 'mysql' %}default-libmysqlclient-dev{% endif %}
+    - pip install --upgrade pip
+  script:
+    - cd backend
+    - pip install -r requirements/development.txt
+    - python manage.py collectstatic --noinput
+  artifacts:
+    paths:
+      - backend/staticfiles/
+    expire_in: 1 day
+  only:
+    changes:
+      - backend/**/*
+      - .gitlab-ci.yml
+
+backend:test:
+  stage: test
+  image: python:{{ cookiecutter.python_version }}-slim
+  {% if cookiecutter.database == 'postgresql' -%}
+  services:
+    - postgres:{{ cookiecutter.postgres_version }}
+  variables:
+    POSTGRES_DB: testdb
+    POSTGRES_USER: testuser
+    POSTGRES_PASSWORD: testpass
+    POSTGRES_HOST: postgres
+  {% elif cookiecutter.database == 'mysql' -%}
+  services:
+    - mysql:8.0
+  variables:
+    MYSQL_DATABASE: testdb
+    MYSQL_USER: testuser
+    MYSQL_PASSWORD: testpass
+    MYSQL_ROOT_PASSWORD: rootpass
+    MYSQL_HOST: mysql
+  {%- endif %}
+  {% if cookiecutter.use_redis == 'y' -%}
+    - redis:{{ cookiecutter.redis_version }}
+  {%- endif %}
+  before_script:
+    - apt-get update && apt-get install -y build-essential {% if cookiecutter.database == 'postgresql' %}libpq-dev{% elif cookiecutter.database == 'mysql' %}default-libmysqlclient-dev{% endif %}
+    - pip install --upgrade pip
+    - cd backend
+    - pip install -r requirements/development.txt
+  script:
+    {% if cookiecutter.use_ruff == 'y' -%}
+    - ruff check .
+    - ruff format --check .
+    {%- endif %}
+    {% if cookiecutter.use_pytest == 'y' -%}
+    - pytest --cov={{ cookiecutter.project_slug }} --cov-report=xml --cov-report=term
+    {% else -%}
+    - python manage.py test
+    {%- endif %}
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: backend/coverage.xml
+  only:
+    changes:
+      - backend/**/*
+      - .gitlab-ci.yml
+
+backend:security:
+  stage: security
+  image: python:{{ cookiecutter.python_version }}-slim
+  before_script:
+    - pip install --upgrade pip
+    - pip install safety bandit
+  script:
+    - cd backend
+    - pip install -r requirements/base.txt
+    - safety check --json
+    - bandit -r {{ cookiecutter.project_slug }} -f json
+  allow_failure: true
+  only:
+    changes:
+      - backend/**/*
+      - .gitlab-ci.yml
+
+# Frontend Jobs
+frontend:build:
+  stage: build
+  image: node:{{ cookiecutter.node_version }}-alpine
+  script:
+    - cd frontend
+    - npm ci --cache $NPM_CACHE_DIR
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist/
+    expire_in: 1 day
+  only:
+    changes:
+      - frontend/**/*
+      - .gitlab-ci.yml
+
+frontend:test:
+  stage: test
+  image: node:{{ cookiecutter.node_version }}-alpine
+  script:
+    - cd frontend
+    - npm ci --cache $NPM_CACHE_DIR
+    {% if cookiecutter.use_eslint == 'y' -%}
+    - npm run lint
+    {%- endif %}
+    {% if cookiecutter.use_typescript == 'y' -%}
+    - npm run type-check
+    {%- endif %}
+    - npm run test:unit -- --run --coverage
+  coverage: '/Lines\s*:\s*([0-9.]+)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: frontend/coverage/cobertura-coverage.xml
+  only:
+    changes:
+      - frontend/**/*
+      - .gitlab-ci.yml
+
+frontend:e2e:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.40.0-focal
+  script:
+    - cd frontend
+    - npm ci --cache $NPM_CACHE_DIR
+    - npm run test:e2e
+  artifacts:
+    when: always
+    paths:
+      - frontend/playwright-report/
+    expire_in: 1 week
+  only:
+    changes:
+      - frontend/**/*
+      - .gitlab-ci.yml
+
+# Docker Build
+docker:build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHA -f docker/backend/Dockerfile .
+    - docker build -t $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHA -f docker/frontend/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_SHA
+  only:
+    - main
+    - develop
+
+# Deployment Jobs
+deploy:staging:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+  script:
+    - echo "Deploying to staging..."
+    # Add your deployment commands here
+    # Example: ssh user@staging-server "cd /app && docker-compose pull && docker-compose up -d"
+  environment:
+    name: staging
+    url: https://staging.{{ cookiecutter.domain_name }}
+  only:
+    - develop
+
+deploy:production:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+  script:
+    - echo "Deploying to production..."
+    # Add your deployment commands here
+  environment:
+    name: production
+    url: https://{{ cookiecutter.domain_name }}
+  when: manual
+  only:
+    - main
+{%- endif %}

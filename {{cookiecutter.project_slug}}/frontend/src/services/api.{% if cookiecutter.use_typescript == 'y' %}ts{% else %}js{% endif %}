@@ -1,0 +1,67 @@
+import axios{% if cookiecutter.use_typescript == 'y' %}, { type AxiosInstance }{% endif %} from 'axios'
+{% if cookiecutter.api_authentication == 'jwt' -%}
+import router from '@/router'
+{%- endif %}
+
+const API_URL = import.meta.env.VITE_API_URL || '/api'
+
+export const apiClient{% if cookiecutter.use_typescript == 'y' %}: AxiosInstance{% endif %} = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+// Request interceptor
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// Response interceptor
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    const originalRequest = error.config
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+      
+      try {
+        const { useAuthStore } = await import('@/stores/auth')
+        const authStore = useAuthStore()
+        const newToken = await authStore.refreshAccessToken()
+        
+        originalRequest.headers.Authorization = `Bearer ${newToken}`
+        return apiClient(originalRequest)
+      } catch (refreshError) {
+        const { useAuthStore } = await import('@/stores/auth')
+        const authStore = useAuthStore()
+        authStore.clearAuthData()
+        router.push('/login')
+        return Promise.reject(refreshError)
+      }
+    }
+    {% else -%}
+    if (error.response?.status === 401) {
+      const { useAuthStore } = await import('@/stores/auth')
+      const authStore = useAuthStore()
+      authStore.clearAuthData()
+      router.push('/login')
+    }
+    {%- endif %}
+    
+    return Promise.reject(error)
+  }
+)
+
+export default apiClient

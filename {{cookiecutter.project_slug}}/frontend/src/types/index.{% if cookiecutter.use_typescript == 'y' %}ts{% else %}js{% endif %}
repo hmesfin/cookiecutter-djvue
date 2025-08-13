@@ -1,0 +1,51 @@
+{% if cookiecutter.use_typescript == 'y' -%}
+export interface User {
+  id: number
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+  phone_number?: string
+  bio?: string
+  avatar?: string
+  date_of_birth?: string
+  is_verified: boolean
+  is_staff: boolean
+  date_joined: string
+  last_login?: string
+}
+
+export interface LoginCredentials {
+  username: string
+  password: string
+}
+
+export interface RegisterData {
+  username: string
+  email: string
+  password: string
+  password2: string
+  first_name?: string
+  last_name?: string
+}
+
+export interface AuthResponse {
+  data: {
+    user: User
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    access: string
+    refresh: string
+    {% else -%}
+    token: string
+    {%- endif %}
+  }
+}
+
+export interface ApiError {
+  detail?: string
+  [key: string]: any
+}
+{% else -%}
+// Type definitions can be added here if needed
+export {}
+{%- endif %}

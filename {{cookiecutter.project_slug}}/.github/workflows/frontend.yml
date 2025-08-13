@@ -1,0 +1,161 @@
+{% if cookiecutter.ci_tool == 'github' -%}
+name: Frontend CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+
+env:
+  NODE_VERSION: '{{ cookiecutter.node_version }}'
+
+jobs:
+  test:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: {% raw %}${{ env.NODE_VERSION }}{% endraw %}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    {% if cookiecutter.use_eslint == 'y' -%}
+    - name: Run ESLint
+      working-directory: ./frontend
+      run: npm run lint
+    {%- endif %}
+    
+    {% if cookiecutter.use_typescript == 'y' -%}
+    - name: Type check
+      working-directory: ./frontend
+      run: npm run type-check
+    {%- endif %}
+    
+    - name: Run unit tests
+      working-directory: ./frontend
+      run: npm run test:unit -- --run --coverage
+    
+    - name: Upload coverage to Codecov
+      if: {% raw %}${{ success() }}{% endraw %}
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./frontend/coverage/coverage-final.json
+        flags: frontend
+        name: frontend-coverage
+        fail_ci_if_error: false
+    
+    - name: Build application
+      working-directory: ./frontend
+      run: npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-build
+        path: frontend/dist
+        retention-days: 7
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: {% raw %}${{ env.NODE_VERSION }}{% endraw %}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Install Playwright browsers
+      working-directory: ./frontend
+      run: npx playwright install --with-deps
+    
+    - name: Run E2E tests
+      working-directory: ./frontend
+      run: npm run test:e2e
+    
+    - name: Upload Playwright report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: frontend/playwright-report/
+        retention-days: 30
+
+  docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build frontend image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/frontend/Dockerfile
+        target: production
+        push: false
+        tags: {% raw %}${{ github.repository }}{% endraw %}-frontend:{% raw %}${{ github.sha }}{% endraw %}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          NODE_VERSION={{ cookiecutter.node_version }}
+
+  lighthouse:
+    name: Lighthouse Performance
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: {% raw %}${{ env.NODE_VERSION }}{% endraw %}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install and build
+      working-directory: ./frontend
+      run: |
+        npm ci
+        npm run build
+    
+    - name: Run Lighthouse CI
+      uses: treosh/lighthouse-ci-action@v11
+      with:
+        configPath: ./frontend/.lighthouserc.json
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+{%- endif %}

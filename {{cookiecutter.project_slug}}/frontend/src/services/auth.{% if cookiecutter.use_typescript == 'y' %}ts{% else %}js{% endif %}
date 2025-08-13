@@ -1,0 +1,32 @@
+import { apiClient } from './api'
+{% if cookiecutter.use_typescript == 'y' %}
+import type { LoginCredentials, RegisterData, User, AuthResponse } from '@/types'
+{% endif %}
+
+export const authService = {
+  async login(credentials{% if cookiecutter.use_typescript == 'y' %}: LoginCredentials{% endif %}){% if cookiecutter.use_typescript == 'y' %}: Promise<AuthResponse>{% endif %} {
+    return apiClient.post('/auth/login/', credentials)
+  },
+
+  async register(data{% if cookiecutter.use_typescript == 'y' %}: RegisterData{% endif %}){% if cookiecutter.use_typescript == 'y' %}: Promise<AuthResponse>{% endif %} {
+    return apiClient.post('/auth/register/', data)
+  },
+
+  async logout({% if cookiecutter.api_authentication == 'jwt' %}refreshToken{% if cookiecutter.use_typescript == 'y' %}?: string | null{% endif %}{% endif %}) {
+    return apiClient.post('/auth/logout/', {% if cookiecutter.api_authentication == 'jwt' %}{ refresh: refreshToken }{% else %}{}{% endif %})
+  },
+
+  async getCurrentUser(){% if cookiecutter.use_typescript == 'y' %}: Promise<{ data: User }>{% endif %} {
+    return apiClient.get('/me/')
+  },
+
+  {% if cookiecutter.api_authentication == 'jwt' -%}
+  async refreshToken(refreshToken{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}){% if cookiecutter.use_typescript == 'y' %}: Promise<{ data: { access: string } }>{% endif %} {
+    return apiClient.post('/auth/refresh/', { refresh: refreshToken })
+  },
+  {%- endif %}
+
+  async updateProfile(data{% if cookiecutter.use_typescript == 'y' %}: Partial<User>{% endif %}){% if cookiecutter.use_typescript == 'y' %}: Promise<{ data: User }>{% endif %} {
+    return apiClient.patch('/me/', data)
+  }
+}

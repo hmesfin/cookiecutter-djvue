@@ -1,0 +1,32 @@
+-r base.txt
+
+# Development tools
+{% if cookiecutter.use_debug_toolbar == 'y' -%}
+django-debug-toolbar==4.4.*
+{%- endif %}
+ipython==8.26.*
+ipdb==0.13.*
+
+# Testing
+{% if cookiecutter.use_pytest == 'y' -%}
+pytest==8.3.*
+pytest-django==4.8.*
+pytest-cov==5.0.*
+pytest-xdist==3.6.*
+factory-boy==3.3.*
+faker==28.0.*
+{% else -%}
+coverage==7.6.*
+{%- endif %}
+
+# Code quality
+{% if cookiecutter.use_ruff == 'y' -%}
+ruff==0.6.*
+{%- endif %}
+{% if cookiecutter.use_pre_commit == 'y' -%}
+pre-commit==3.8.*
+{%- endif %}
+
+# Documentation
+mkdocs==1.6.*
+mkdocs-material==9.5.*

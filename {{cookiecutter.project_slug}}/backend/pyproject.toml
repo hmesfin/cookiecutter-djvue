@@ -1,0 +1,87 @@
+{% if cookiecutter.use_ruff == 'y' -%}
+[tool.ruff]
+# Exclude commonly ignored directories
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    "migrations",
+    "static",
+    "media",
+    "node_modules",
+]
+
+# Same as Black's default line length
+line-length = 88
+indent-width = 4
+
+# Assume Python {{ cookiecutter.python_version }}
+target-version = "py{{ cookiecutter.python_version.replace('.', '') }}"
+
+[tool.ruff.lint]
+# Enable pycodestyle (E), Pyflakes (F), isort (I), and more
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "DTZ",    # flake8-datetimez
+    "DJ",     # flake8-django
+    "RUF",    # Ruff-specific rules
+]
+
+# Ignore specific rules
+ignore = [
+    "E501",   # Line too long (handled by formatter)
+    "E203",   # Whitespace before ':'
+    "B008",   # Do not perform function calls in argument defaults
+    "B904",   # Allow raising exceptions without from
+    "SIM105", # Use contextlib.suppress instead of try-except-pass
+    "UP007",  # Use X | Y for type unions (requires Python 3.10+)
+]
+
+# Allow autofix for all enabled rules
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Use double quotes for strings
+quote-style = "double"
+
+# Indent with spaces
+indent-style = "space"
+
+# Respect magic trailing commas
+skip-magic-trailing-comma = false
+
+# Automatically detect line endings
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+known-third-party = ["django", "rest_framework", "celery", "redis"]
+known-first-party = ["{{ cookiecutter.project_slug }}"]
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 88
+
+[tool.ruff.lint.flake8-django]
+# Configure Django settings module for flake8-django
+django-settings-module = "{{ cookiecutter.project_slug }}.settings"
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore certain rules in specific files
+"__init__.py" = ["F401", "F403"]
+"settings/*.py" = ["F401", "F403", "E402"]
+"tests/*.py" = ["ARG001", "ARG002"]
+{%- endif %}

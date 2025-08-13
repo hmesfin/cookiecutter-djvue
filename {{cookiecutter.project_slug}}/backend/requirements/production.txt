@@ -1,0 +1,14 @@
+-r base.txt
+
+# Production server
+gunicorn==23.0.*
+{% if cookiecutter.use_channels == 'y' -%}
+uvicorn[standard]==0.30.*
+{%- endif %}
+
+# Monitoring
+django-health-check==3.18.*
+
+# Security
+django-csp==3.8
+django-permissions-policy==4.21.*

@@ -1,0 +1,63 @@
+# Django
+Django=={{ cookiecutter.django_version }}.*
+
+# Django REST Framework
+djangorestframework==3.15.*
+django-cors-headers==4.4.*
+{% if cookiecutter.api_authentication == 'jwt' -%}
+djangorestframework-simplejwt==5.3.*
+{% elif cookiecutter.api_authentication == 'token' -%}
+# Token auth is built into DRF
+{%- endif %}
+
+# Database
+{% if cookiecutter.database == 'postgresql' -%}
+psycopg[binary]==3.2.*
+{% elif cookiecutter.database == 'mysql' -%}
+mysqlclient==2.2.*
+{%- endif %}
+
+# Environment
+python-decouple==3.8
+python-dotenv==1.0.*
+
+{% if cookiecutter.use_redis == 'y' -%}
+# Redis
+redis==5.0.*
+hiredis==2.3.*
+{%- endif %}
+
+{% if cookiecutter.use_celery == 'y' -%}
+# Celery
+celery==5.3.*
+django-celery-beat==2.6.*
+django-celery-results==2.5.*
+{%- endif %}
+
+{% if cookiecutter.use_channels == 'y' -%}
+# Channels
+channels==4.1.*
+channels-redis==4.2.*
+daphne==4.1.*
+{%- endif %}
+
+# Static files
+{% if cookiecutter.use_whitenoise == 'y' -%}
+whitenoise==6.7.*
+{%- endif %}
+
+# Image processing
+Pillow==10.4.*
+
+# Utilities
+django-extensions==3.2.*
+
+{% if cookiecutter.use_drf_spectacular == 'y' -%}
+# API Documentation
+drf-spectacular==0.27.*
+{%- endif %}
+
+# Monitoring
+{% if cookiecutter.use_sentry == 'y' -%}
+sentry-sdk==2.13.*
+{%- endif %}

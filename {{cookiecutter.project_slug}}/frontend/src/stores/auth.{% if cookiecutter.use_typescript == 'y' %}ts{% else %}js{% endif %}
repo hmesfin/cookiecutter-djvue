@@ -1,0 +1,169 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { authService } from '@/services/auth'
+import { apiClient } from '@/services/api'
+{% if cookiecutter.use_typescript == 'y' %}
+import type { User, LoginCredentials, RegisterData } from '@/types'
+{% endif %}
+
+export const useAuthStore = defineStore('auth', () => {
+  const user = ref{% if cookiecutter.use_typescript == 'y' %}<User | null>{% endif %}(null)
+  const token = ref{% if cookiecutter.use_typescript == 'y' %}<string | null>{% endif %}(null)
+  {% if cookiecutter.api_authentication == 'jwt' -%}
+  const refreshToken = ref{% if cookiecutter.use_typescript == 'y' %}<string | null>{% endif %}(null)
+  {%- endif %}
+  const loading = ref(false)
+  const error = ref{% if cookiecutter.use_typescript == 'y' %}<string | null>{% endif %}(null)
+
+  const isAuthenticated = computed(() => !!token.value)
+
+  function setAuthData(userData{% if cookiecutter.use_typescript == 'y' %}: User{% endif %}, accessToken{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}{% if cookiecutter.api_authentication == 'jwt' %}, refresh{% if cookiecutter.use_typescript == 'y' %}?: string{% endif %}{% endif %}) {
+    user.value = userData
+    token.value = accessToken
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    if (refresh) {
+      refreshToken.value = refresh
+      localStorage.setItem('refreshToken', refresh)
+    }
+    {%- endif %}
+    localStorage.setItem('token', accessToken)
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+  }
+
+  function clearAuthData() {
+    user.value = null
+    token.value = null
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    refreshToken.value = null
+    localStorage.removeItem('refreshToken')
+    {%- endif %}
+    localStorage.removeItem('token')
+    delete apiClient.defaults.headers.common['Authorization']
+  }
+
+  async function login(credentials{% if cookiecutter.use_typescript == 'y' %}: LoginCredentials{% endif %}) {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await authService.login(credentials)
+      setAuthData(
+        response.data.user,
+        response.data.{% if cookiecutter.api_authentication == 'jwt' %}access{% else %}token{% endif %}{% if cookiecutter.api_authentication == 'jwt' %},
+        response.data.refresh{% endif %}
+      )
+      return response.data
+    } catch (err{% if cookiecutter.use_typescript == 'y' %}: any{% endif %}) {
+      error.value = err.response?.data?.detail || 'Login failed'
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function register(data{% if cookiecutter.use_typescript == 'y' %}: RegisterData{% endif %}) {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await authService.register(data)
+      setAuthData(
+        response.data.user,
+        response.data.{% if cookiecutter.api_authentication == 'jwt' %}access{% else %}token{% endif %}{% if cookiecutter.api_authentication == 'jwt' %},
+        response.data.refresh{% endif %}
+      )
+      return response.data
+    } catch (err{% if cookiecutter.use_typescript == 'y' %}: any{% endif %}) {
+      error.value = err.response?.data?.detail || 'Registration failed'
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function logout() {
+    try {
+      {% if cookiecutter.api_authentication == 'jwt' -%}
+      await authService.logout(refreshToken.value)
+      {% else -%}
+      await authService.logout()
+      {%- endif %}
+    } catch (err) {
+      console.error('Logout error:', err)
+    } finally {
+      clearAuthData()
+    }
+  }
+
+  async function fetchCurrentUser() {
+    loading.value = true
+    try {
+      const response = await authService.getCurrentUser()
+      user.value = response.data
+      return response.data
+    } catch (err) {
+      clearAuthData()
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  {% if cookiecutter.api_authentication == 'jwt' -%}
+  async function refreshAccessToken() {
+    const refresh = localStorage.getItem('refreshToken')
+    if (!refresh) {
+      throw new Error('No refresh token available')
+    }
+    
+    try {
+      const response = await authService.refreshToken(refresh)
+      const newAccessToken = response.data.access
+      token.value = newAccessToken
+      localStorage.setItem('token', newAccessToken)
+      apiClient.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`
+      return newAccessToken
+    } catch (err) {
+      clearAuthData()
+      throw err
+    }
+  }
+  {%- endif %}
+
+  // Initialize auth state from localStorage
+  function initializeAuth() {
+    const storedToken = localStorage.getItem('token')
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    const storedRefresh = localStorage.getItem('refreshToken')
+    {%- endif %}
+    
+    if (storedToken) {
+      token.value = storedToken
+      {% if cookiecutter.api_authentication == 'jwt' -%}
+      refreshToken.value = storedRefresh
+      {%- endif %}
+      apiClient.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`
+      fetchCurrentUser().catch(() => {
+        clearAuthData()
+      })
+    }
+  }
+
+  return {
+    user,
+    token,
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    refreshToken,
+    {%- endif %}
+    loading,
+    error,
+    isAuthenticated,
+    login,
+    register,
+    logout,
+    fetchCurrentUser,
+    {% if cookiecutter.api_authentication == 'jwt' -%}
+    refreshAccessToken,
+    {%- endif %}
+    initializeAuth,
+    clearAuthData
+  }
+})

@@ -1,0 +1,185 @@
+{% if cookiecutter.use_docker == 'y' -%}
+version: '3.9'
+
+services:
+  {% if cookiecutter.database == 'postgresql' -%}
+  postgres:
+    image: postgres:{{ cookiecutter.postgres_version }}
+    container_name: {{ cookiecutter.project_slug }}_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB={{ cookiecutter.project_slug }}
+      - POSTGRES_USER={{ cookiecutter.project_slug }}
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U {{ cookiecutter.project_slug }}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {% elif cookiecutter.database == 'mysql' -%}
+  mysql:
+    image: mysql:8.0
+    container_name: {{ cookiecutter.project_slug }}_mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE={{ cookiecutter.project_slug }}
+      - MYSQL_USER={{ cookiecutter.project_slug }}
+      - MYSQL_PASSWORD=changeme
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {%- endif %}
+
+  {% if cookiecutter.use_redis == 'y' -%}
+  redis:
+    image: redis:{{ cookiecutter.redis_version }}
+    container_name: {{ cookiecutter.project_slug }}_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {%- endif %}
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: {{ cookiecutter.project_slug }}_backend
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "{{ cookiecutter.backend_port }}:8000"
+    environment:
+      - DJANGO_ENV=development
+      - DEBUG=True
+      {% if cookiecutter.database == 'postgresql' -%}
+      - POSTGRES_DB={{ cookiecutter.project_slug }}
+      - POSTGRES_USER={{ cookiecutter.project_slug }}
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_HOST=postgres
+      {% elif cookiecutter.database == 'mysql' -%}
+      - MYSQL_DATABASE={{ cookiecutter.project_slug }}
+      - MYSQL_USER={{ cookiecutter.project_slug }}
+      - MYSQL_PASSWORD=changeme
+      - MYSQL_HOST=mysql
+      {%- endif %}
+      {% if cookiecutter.use_redis == 'y' -%}
+      - REDIS_URL=redis://redis:6379/0
+      {%- endif %}
+    depends_on:
+      {% if cookiecutter.database in ['postgresql', 'mysql'] -%}
+      - {{ 'postgres' if cookiecutter.database == 'postgresql' else 'mysql' }}
+      {%- endif %}
+      {% if cookiecutter.use_redis == 'y' -%}
+      - redis
+      {%- endif %}
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+      target: development
+    container_name: {{ cookiecutter.project_slug }}_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "{{ cookiecutter.frontend_port }}:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:{{ cookiecutter.backend_port }}/api
+    depends_on:
+      - backend
+    command: npm run dev
+
+  {% if cookiecutter.use_mailhog == 'y' -%}
+  mailhog:
+    image: mailhog/mailhog
+    container_name: {{ cookiecutter.project_slug }}_mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+  {%- endif %}
+
+  {% if cookiecutter.use_celery == 'y' -%}
+  celery_worker:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: {{ cookiecutter.project_slug }}_celery_worker
+    volumes:
+      - ./backend:/app
+    environment:
+      - DJANGO_ENV=development
+      {% if cookiecutter.database == 'postgresql' -%}
+      - POSTGRES_DB={{ cookiecutter.project_slug }}
+      - POSTGRES_USER={{ cookiecutter.project_slug }}
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_HOST=postgres
+      {% elif cookiecutter.database == 'mysql' -%}
+      - MYSQL_DATABASE={{ cookiecutter.project_slug }}
+      - MYSQL_USER={{ cookiecutter.project_slug }}
+      - MYSQL_PASSWORD=changeme
+      - MYSQL_HOST=mysql
+      {%- endif %}
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - backend
+      - redis
+    command: celery -A {{ cookiecutter.project_slug }} worker -l info
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: {{ cookiecutter.project_slug }}_celery_beat
+    volumes:
+      - ./backend:/app
+    environment:
+      - DJANGO_ENV=development
+      {% if cookiecutter.database == 'postgresql' -%}
+      - POSTGRES_DB={{ cookiecutter.project_slug }}
+      - POSTGRES_USER={{ cookiecutter.project_slug }}
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_HOST=postgres
+      {% elif cookiecutter.database == 'mysql' -%}
+      - MYSQL_DATABASE={{ cookiecutter.project_slug }}
+      - MYSQL_USER={{ cookiecutter.project_slug }}
+      - MYSQL_PASSWORD=changeme
+      - MYSQL_HOST=mysql
+      {%- endif %}
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - backend
+      - redis
+    command: celery -A {{ cookiecutter.project_slug }} beat -l info
+  {%- endif %}
+
+volumes:
+  {% if cookiecutter.database == 'postgresql' -%}
+  postgres_data:
+  {% elif cookiecutter.database == 'mysql' -%}
+  mysql_data:
+  {%- endif %}
+  static_volume:
+  media_volume:
+
+networks:
+  default:
+    name: {{ cookiecutter.project_slug }}_network
+{%- endif %}

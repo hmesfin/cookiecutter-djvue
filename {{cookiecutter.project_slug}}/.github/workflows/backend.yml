@@ -1,0 +1,183 @@
+{% if cookiecutter.ci_tool == 'github' -%}
+name: Backend CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+
+env:
+  PYTHON_VERSION: '{{ cookiecutter.python_version }}'
+
+jobs:
+  test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    
+    {% if cookiecutter.database == 'postgresql' -%}
+    services:
+      postgres:
+        image: postgres:{{ cookiecutter.postgres_version }}
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    {% elif cookiecutter.database == 'mysql' -%}
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: rootpass
+          MYSQL_DATABASE: testdb
+          MYSQL_USER: testuser
+          MYSQL_PASSWORD: testpass
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+    {%- endif %}
+    
+    {% if cookiecutter.use_redis == 'y' -%}
+      redis:
+        image: redis:{{ cookiecutter.redis_version }}
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    {%- endif %}
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: {% raw %}${{ env.PYTHON_VERSION }}{% endraw %}
+        cache: 'pip'
+        cache-dependency-path: 'backend/requirements/*.txt'
+    
+    - name: Install dependencies
+      working-directory: ./backend
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements/development.txt
+    
+    - name: Run linting
+      working-directory: ./backend
+      run: |
+        {% if cookiecutter.use_ruff == 'y' -%}
+        ruff check .
+        ruff format --check .
+        {%- endif %}
+    
+    - name: Run tests
+      working-directory: ./backend
+      env:
+        DJANGO_ENV: testing
+        SECRET_KEY: test-secret-key-for-ci
+        {% if cookiecutter.database == 'postgresql' -%}
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
+        POSTGRES_DB: testdb
+        POSTGRES_USER: testuser
+        POSTGRES_PASSWORD: testpass
+        {% elif cookiecutter.database == 'mysql' -%}
+        MYSQL_HOST: localhost
+        MYSQL_PORT: 3306
+        MYSQL_DATABASE: testdb
+        MYSQL_USER: testuser
+        MYSQL_PASSWORD: testpass
+        {%- endif %}
+        {% if cookiecutter.use_redis == 'y' -%}
+        REDIS_URL: redis://localhost:6379/0
+        {%- endif %}
+      run: |
+        {% if cookiecutter.use_pytest == 'y' -%}
+        pytest --cov={{ cookiecutter.project_slug }} --cov-report=xml --cov-report=term-missing
+        {% else -%}
+        python manage.py test
+        {%- endif %}
+    
+    - name: Upload coverage to Codecov
+      if: {% raw %}${{ success() }}{% endraw %}
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./backend/coverage.xml
+        flags: backend
+        name: backend-coverage
+        fail_ci_if_error: false
+
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: {% raw %}${{ env.PYTHON_VERSION }}{% endraw %}
+    
+    - name: Install dependencies
+      working-directory: ./backend
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety bandit
+    
+    - name: Run Safety check
+      working-directory: ./backend
+      run: |
+        pip install -r requirements/base.txt
+        safety check --json
+      continue-on-error: true
+    
+    - name: Run Bandit security check
+      working-directory: ./backend
+      run: |
+        bandit -r {{ cookiecutter.project_slug }} -f json -o bandit-report.json --exclude /migrations/
+      continue-on-error: true
+
+  docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Build backend image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/backend/Dockerfile
+        push: false
+        tags: {% raw %}${{ github.repository }}{% endraw %}-backend:{% raw %}${{ github.sha }}{% endraw %}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          PYTHON_VERSION={{ cookiecutter.python_version }}
+{%- endif %}
