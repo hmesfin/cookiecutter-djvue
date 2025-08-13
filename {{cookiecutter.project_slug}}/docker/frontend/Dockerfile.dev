@@ -12,16 +12,35 @@ RUN cat > /docker-entrypoint.sh << 'EOF'
 #!/bin/sh
 set -e
 
-# Check if package.json exists (will be mounted via volume)
-if [ -f "package.json" ]; then
-    # Install dependencies if node_modules doesn't exist
-    if [ ! -d "node_modules" ]; then
-        echo "Installing Node.js dependencies..."
-        npm install
-    fi
+# Wait for package.json to be available
+max_attempts=30
+attempt=0
+while [ ! -f "package.json" ] && [ $attempt -lt $max_attempts ]; do
+    echo "Waiting for package.json to be mounted (attempt $((attempt+1))/$max_attempts)..."
+    sleep 1
+    attempt=$((attempt+1))
+done
+
+if [ ! -f "package.json" ]; then
+    echo "ERROR: package.json not found after waiting. Please ensure the volume is mounted correctly."
+    exit 1
+fi
+
+# Always check and install dependencies
+if [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; then
+    echo "Installing Node.js dependencies..."
+    npm install
+    echo "Dependencies installed successfully!"
 else
-    echo "Waiting for package.json to be mounted..."
-    sleep 2
+    echo "Dependencies already installed, checking for updates..."
+    # Quick check if package.json has changed
+    npm install
+fi
+
+# Verify vite is installed
+if [ ! -f "node_modules/.bin/vite" ]; then
+    echo "Vite not found, installing dependencies..."
+    npm install
 fi
 
 # Execute the main command
