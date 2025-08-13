@@ -39,8 +39,21 @@ class RegisterView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         
-        # Send verification email
-        send_verification_email_to_user(user, request)
+        # Try to send verification email, but don't fail registration if it fails
+        try:
+            send_verification_email_to_user(user, request)
+            email_sent = True
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Failed to send verification email: {str(e)}")
+            email_sent = False
+        
+        # Prepare response message based on email status
+        if email_sent:
+            message = 'Registration successful! Please check your email to verify your account.'
+        else:
+            message = 'Registration successful! Email verification will be sent shortly.'
         
         {% if cookiecutter.api_authentication == 'jwt' -%}
         refresh = RefreshToken.for_user(user)
@@ -48,22 +61,25 @@ class RegisterView(CreateAPIView):
             'user': UserSerializer(user).data,
             'access': str(refresh.access_token),
             'refresh': str(refresh),
-            'message': 'Registration successful! Please check your email to verify your account.',
-            'email_verification_required': True
+            'message': message,
+            'email_verification_required': True,
+            'email_sent': email_sent
         }
         {% elif cookiecutter.api_authentication == 'token' -%}
         token, created = Token.objects.get_or_create(user=user)
         data = {
             'user': UserSerializer(user).data,
             'token': token.key,
-            'message': 'Registration successful! Please check your email to verify your account.',
-            'email_verification_required': True
+            'message': message,
+            'email_verification_required': True,
+            'email_sent': email_sent
         }
         {% else -%}
         data = {
             'user': UserSerializer(user).data,
-            'message': 'Registration successful! Please check your email to verify your account.',
-            'email_verification_required': True
+            'message': message,
+            'email_verification_required': True,
+            'email_sent': email_sent
         }
         {%- endif %}
         

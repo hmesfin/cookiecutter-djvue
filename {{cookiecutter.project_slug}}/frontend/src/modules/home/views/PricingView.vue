@@ -237,7 +237,7 @@ const pricingPlans = ref({% if cookiecutter.use_typescript == 'y' %}<PricingPlan
 const faqs = ref({% if cookiecutter.use_typescript == 'y' %}<FAQ[]>{% endif %}[
   {
     question: 'Can I change my plan later?',
-    answer: 'Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any difference in price.'
+    answer: 'Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we\'ll prorate any difference in price.'
   },
   {
     question: 'What payment methods do you accept?',
@@ -249,7 +249,7 @@ const faqs = ref({% if cookiecutter.use_typescript == 'y' %}<FAQ[]>{% endif %}[
   },
   {
     question: 'Can I cancel my subscription?',
-    answer: 'Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your current billing period.'
+    answer: 'Yes, you can cancel your subscription at any time. You\'ll continue to have access until the end of your current billing period.'
   },
   {
     question: 'Do you offer discounts for non-profits?',
@@ -257,7 +257,7 @@ const faqs = ref({% if cookiecutter.use_typescript == 'y' %}<FAQ[]>{% endif %}[
   },
   {
     question: 'What happens to my data if I cancel?',
-    answer: 'Your data remains available for download for 30 days after cancellation. After that, it's permanently deleted from our servers.'
+    answer: 'Your data remains available for download for 30 days after cancellation. After that, it\'s permanently deleted from our servers.'
   }
 ])
 

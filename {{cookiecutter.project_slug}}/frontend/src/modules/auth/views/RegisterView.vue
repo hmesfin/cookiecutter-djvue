@@ -241,11 +241,12 @@ const handleRegister = async () => {
   
   try {
     const response = await authStore.register({
+      username: form.email,  // Use email as username
       first_name: form.firstName,
       last_name: form.lastName,
       email: form.email,
       password: form.password,
-      password_confirm: form.confirmPassword,
+      password2: form.confirmPassword,  // Changed from password_confirm to password2
     })
     
     // Check if email verification is required
