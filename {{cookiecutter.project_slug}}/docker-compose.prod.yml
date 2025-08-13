@@ -1,0 +1,144 @@
+{% if cookiecutter.use_docker == 'y' -%}
+version: '3.9'
+
+services:
+  {% if cookiecutter.database == 'postgresql' -%}
+  postgres:
+    image: postgres:{{ cookiecutter.postgres_version }}
+    container_name: {{ cookiecutter.project_slug }}_postgres_prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-{{ cookiecutter.project_slug }}}
+      - POSTGRES_USER=${POSTGRES_USER:-{{ cookiecutter.project_slug }}}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-{{ cookiecutter.project_slug }}}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {% elif cookiecutter.database == 'mysql' -%}
+  mysql:
+    image: mysql:8.0
+    container_name: {{ cookiecutter.project_slug }}_mysql_prod
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-{{ cookiecutter.project_slug }}}
+      - MYSQL_USER=${MYSQL_USER:-{{ cookiecutter.project_slug }}}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {%- endif %}
+
+  {% if cookiecutter.use_redis == 'y' -%}
+  redis:
+    image: redis:{{ cookiecutter.redis_version }}
+    container_name: {{ cookiecutter.project_slug }}_redis_prod
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  {%- endif %}
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: {{ cookiecutter.project_slug }}_backend_prod
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    environment:
+      - DJANGO_ENV=production
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      {% if cookiecutter.use_redis == 'y' -%}
+      - REDIS_URL=redis://redis:6379/0
+      {%- endif %}
+    depends_on:
+      {% if cookiecutter.database == 'postgresql' -%}
+      postgres:
+        condition: service_healthy
+      {% elif cookiecutter.database == 'mysql' -%}
+      mysql:
+        condition: service_healthy
+      {%- endif %}
+      {% if cookiecutter.use_redis == 'y' -%}
+      redis:
+        condition: service_healthy
+      {%- endif %}
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+      target: production
+    container_name: {{ cookiecutter.project_slug }}_frontend_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_volume:/usr/share/nginx/html/static
+      - media_volume:/usr/share/nginx/html/media
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  {% if cookiecutter.use_celery == 'y' -%}
+  celery_worker:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: {{ cookiecutter.project_slug }}_celery_worker_prod
+    environment:
+      - DJANGO_ENV=production
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - backend
+      - redis
+    command: celery -A {{ cookiecutter.project_slug }} worker -l info
+    restart: unless-stopped
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: {{ cookiecutter.project_slug }}_celery_beat_prod
+    environment:
+      - DJANGO_ENV=production
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - backend
+      - redis
+    command: celery -A {{ cookiecutter.project_slug }} beat -l info
+    restart: unless-stopped
+  {%- endif %}
+
+volumes:
+  {% if cookiecutter.database == 'postgresql' -%}
+  postgres_data:
+  {% elif cookiecutter.database == 'mysql' -%}
+  mysql_data:
+  {%- endif %}
+  static_volume:
+  media_volume:
+
+networks:
+  default:
+    name: {{ cookiecutter.project_slug }}_network_prod
+{%- endif %}

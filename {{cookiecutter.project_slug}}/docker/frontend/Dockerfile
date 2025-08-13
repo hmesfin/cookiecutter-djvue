@@ -5,10 +5,16 @@ FROM node:{{ cookiecutter.node_version }}-alpine AS development
 WORKDIR /app
 
 # Copy package files
-COPY frontend/package*.json ./
+COPY frontend/package.json ./
+COPY frontend/package-lock.json* ./
 
 # Install dependencies
-RUN npm ci
+# Use npm install if package-lock.json doesn't exist (first time setup)
+RUN if [ -f package-lock.json ]; then \
+        npm ci --prefer-offline --no-audit; \
+    else \
+        npm install --no-audit --no-fund && npm cache clean --force; \
+    fi
 
 # Copy source code
 COPY frontend/ .
@@ -24,10 +30,16 @@ FROM node:{{ cookiecutter.node_version }}-alpine AS build
 WORKDIR /app
 
 # Copy package files
-COPY frontend/package*.json ./
+COPY frontend/package.json ./
+COPY frontend/package-lock.json* ./
 
 # Install dependencies
-RUN npm ci
+# Use npm install if package-lock.json doesn't exist (first time setup)
+RUN if [ -f package-lock.json ]; then \
+        npm ci --prefer-offline --no-audit; \
+    else \
+        npm install --no-audit --no-fund && npm cache clean --force; \
+    fi
 
 # Copy source code
 COPY frontend/ .
