@@ -46,7 +46,7 @@
             </div>
             
             <div v-if="isAnnual && plan.monthlyPrice > 0" class="savings">
-              Save ${% raw %}{{ (plan.monthlyPrice * 12 - plan.annualPrice).toFixed(0) }}{% endraw %} per year
+              Save {% raw %}{{ '$' + (plan.monthlyPrice * 12 - plan.annualPrice).toFixed(0) }}{% endraw %} per year
             </div>
             
             <ul class="features-list">
