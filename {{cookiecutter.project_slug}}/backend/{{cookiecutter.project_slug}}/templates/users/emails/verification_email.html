@@ -116,7 +116,7 @@
         
         <div class="footer">
             <p>This email was sent to {% raw %}{{ user.email }}{% endraw %}</p>
-            <p>&copy; {% now "Y" %} {% raw %}{{ project_name }}{% endraw %}. All rights reserved.</p>
+            <p>&copy; {% raw %}{% now "Y" %}{% endraw %} {% raw %}{{ project_name }}{% endraw %}. All rights reserved.</p>
             <p>
                 <a href="{% raw %}{{ domain }}{% endraw %}/privacy" style="color: #4299e1; text-decoration: none;">Privacy Policy</a> |
                 <a href="{% raw %}{{ domain }}{% endraw %}/terms" style="color: #4299e1; text-decoration: none;">Terms of Service</a>
