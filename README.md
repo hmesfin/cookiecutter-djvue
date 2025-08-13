@@ -43,8 +43,18 @@ A modern, production-ready [Cookiecutter](https://github.com/cookiecutter/cookie
 
 ### Prerequisites
 
+Choose one approach:
+
+**Docker Approach (Recommended):**
+- Docker 20.10+
+- Docker Compose 2.0+
+- Cookiecutter 2.0+
+
+**Local Development Approach:**
 - Python 3.8+
 - Node.js 18+
+- PostgreSQL/MySQL (if selected)
+- Redis (if selected)
 - Cookiecutter 2.0+
 
 ### Installation
@@ -68,7 +78,8 @@ project_name [My Project]: Your Amazing App
 project_slug [your_amazing_app]: 
 author_name [Your Name]: John Doe
 author_email [your.email@example.com]: john@example.com
-project_description [A Django + Vue.js project]: Full-stack web application
+use_docker [y]: y  # Recommended!
+database [postgresql]: postgresql
 ...
 ```
 
@@ -81,14 +92,47 @@ cd your_amazing_app
 5. Start developing:
 
 ```bash
-# Using Make (recommended)
-make setup
+# Using Docker (Recommended) - Everything runs automatically!
+docker-compose up
+
+# Or using Make
 make dev
 
-# Or manually
-./scripts/setup.sh
-# Then run backend and frontend separately
+# Access your application at:
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:8000/api
+# Admin: http://localhost:8000/admin (admin@example.com / admin123)
 ```
+
+### Docker-First Development
+
+This template is designed to work seamlessly with Docker:
+
+1. **Database Setup**: PostgreSQL/MySQL automatically starts in Docker
+2. **Auto-Migrations**: Database migrations run automatically on startup
+3. **Hot Reload**: Both frontend and backend support hot reloading
+4. **Zero Config**: No manual database or environment setup needed
+
+### Local Development (Advanced)
+
+If you prefer local development without Docker:
+
+1. Set up your database (PostgreSQL/MySQL)
+2. Create a Python virtual environment:
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements/development.txt
+   ```
+3. Configure your database in `backend/.env`
+4. Run migrations: `python manage.py migrate`
+5. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+6. Start both servers in separate terminals
 
 ## 📦 What You Get
 

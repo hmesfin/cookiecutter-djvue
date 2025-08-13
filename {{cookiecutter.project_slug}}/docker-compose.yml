@@ -81,13 +81,17 @@ services:
       - REDIS_URL=redis://redis:6379/0
       {%- endif %}
     depends_on:
-      {% if cookiecutter.database in ['postgresql', 'mysql'] -%}
-      - {{ 'postgres' if cookiecutter.database == 'postgresql' else 'mysql' }}
+      {% if cookiecutter.database == 'postgresql' -%}
+      postgres:
+        condition: service_healthy
+      {% elif cookiecutter.database == 'mysql' -%}
+      mysql:
+        condition: service_healthy
       {%- endif %}
       {% if cookiecutter.use_redis == 'y' -%}
-      - redis
+      redis:
+        condition: service_healthy
       {%- endif %}
-    command: python manage.py runserver 0.0.0.0:8000
 
   frontend:
     build:

@@ -271,12 +271,6 @@ repos:
             f.write(pre_commit_config.strip())
         
         print("  ✓ Pre-commit configuration created")
-    
-    # Mark setup script as executable
-    setup_file = Path('scripts/setup.sh')
-    if setup_file.exists():
-        setup_file.chmod(0o755)
-        print("  ✓ Setup script made executable")
 
 
 def create_setup_script():
@@ -445,25 +439,63 @@ def print_success_message():
     print("\n" + "="*60)
     print("🎉 Project '{{ cookiecutter.project_name }}' created successfully!")
     print("="*60)
-    print("\nNext steps:")
-    print("  1. cd {{ cookiecutter.project_slug }}")
-    print("  2. ./scripts/setup.sh  # Run the setup script")
-    print("  3. make dev            # Start development servers")
+    
+    if '{{ cookiecutter.use_docker }}' == 'y':
+        print("\n🐳 Docker-First Project Created!")
+        print("\nNext steps:")
+        print("  1. cd {{ cookiecutter.project_slug }}")
+        print("  2. docker-compose up     # Start all services (database, backend, frontend)")
+        print("     or")
+        print("     make dev              # Same as above")
+        print("\nThe first run will:")
+        print("  ✓ Build Docker images")
+        print("  ✓ Start {{ cookiecutter.database }} database")
+        print("  ✓ Run database migrations automatically")
+        print("  ✓ Create a superuser (admin@example.com / admin123)")
+        print("  ✓ Start both backend and frontend with hot reload")
+        print("\nAccess your application:")
+        print("  - Frontend: http://localhost:{{ cookiecutter.frontend_port }}")
+        print("  - Backend API: http://localhost:{{ cookiecutter.backend_port }}/api/")
+        print("  - Admin Panel: http://localhost:{{ cookiecutter.backend_port }}/admin/")
+        {% if cookiecutter.use_mailhog == 'y' -%}
+        print("  - Mail UI: http://localhost:8025")
+        {%- endif %}
+        {% if cookiecutter.use_drf_spectacular == 'y' -%}
+        print("  - API Docs: http://localhost:{{ cookiecutter.backend_port }}/api/docs/")
+        {%- endif %}
+        print("\nUseful Docker commands:")
+        print("  make logs              # View logs")
+        print("  make shell             # Django shell")
+        print("  make test              # Run tests")
+        print("  make down              # Stop all services")
+        print("  docker-compose exec backend bash  # Backend shell")
+    else:
+        print("\nNext steps for local development:")
+        print("  1. cd {{ cookiecutter.project_slug }}")
+        print("  2. Set up your {{ cookiecutter.database }} database")
+        print("  3. Backend setup:")
+        print("     cd backend")
+        print("     python -m venv venv")
+        print("     source venv/bin/activate  # On Windows: venv\\Scripts\\activate")
+        print("     pip install -r requirements/development.txt")
+        print("     # Configure your database in .env file")
+        print("     python manage.py migrate")
+        print("     python manage.py createsuperuser")
+        print("     python manage.py runserver")
+        print("  4. Frontend setup (new terminal):")
+        print("     cd frontend")
+        print("     npm install")
+        print("     npm run dev")
+    
     print("\nUseful commands:")
     print("  make help              # Show all available commands")
     print("  make test              # Run tests")
     print("  make lint              # Run linters")
     print("  make format            # Format code")
     
-    if '{{ cookiecutter.use_docker }}' == 'y':
-        print("\nDocker commands:")
-        print("  docker-compose up      # Start all services")
-        print("  docker-compose logs -f # View logs")
-        print("  make shell             # Django shell")
-    
     print("\nDocumentation:")
-    print("  - Backend API docs: http://localhost:{{ cookiecutter.backend_port }}/api/docs/")
     print("  - Project README: ./README.md")
+    print("  - Django Admin: http://localhost:{{ cookiecutter.backend_port }}/admin/")
     
     print("\nHappy coding! 🚀")
 

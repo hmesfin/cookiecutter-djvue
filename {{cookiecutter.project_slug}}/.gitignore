@@ -33,6 +33,15 @@ db.sqlite3
 media/
 staticfiles/
 
+# Environment files
+.env
+.env.local
+.env.production
+*.env
+!.env.docker
+!.env.local
+!.env.example
+
 # Virtual Environment
 venv/
 ENV/

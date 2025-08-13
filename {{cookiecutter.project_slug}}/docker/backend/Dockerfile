@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     {%- endif %}
     gettext \
+    netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -31,8 +32,12 @@ RUN pip install --upgrade pip && \
 # Copy project
 COPY backend/ /app/
 
-# Create necessary directories
-RUN mkdir -p /app/staticfiles /app/media
+# Copy entrypoint script
+COPY docker/backend/docker-entrypoint.sh /docker-entrypoint.sh
+
+# Create necessary directories and set permissions
+RUN mkdir -p /app/staticfiles /app/media && \
+    chmod +x /docker-entrypoint.sh
 
 # Run as non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
@@ -41,5 +46,6 @@ USER appuser
 # Expose port
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Use entrypoint script
+ENTRYPOINT ["/docker-entrypoint.sh"]
 {%- endif %}
