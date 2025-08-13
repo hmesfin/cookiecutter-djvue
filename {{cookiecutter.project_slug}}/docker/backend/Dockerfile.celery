@@ -16,8 +16,10 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     {% if cookiecutter.database == 'postgresql' -%}
     libpq-dev \
+    postgresql-client \
     {% elif cookiecutter.database == 'mysql' -%}
     default-libmysqlclient-dev \
+    default-mysql-client \
     {%- endif %}
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
@@ -27,8 +29,12 @@ COPY backend/requirements/ /tmp/requirements/
 RUN pip install --upgrade pip && \
     pip install -r /tmp/requirements/development.txt
 
+# Copy the Celery entrypoint script
+COPY docker/backend/celery-entrypoint.sh /celery-entrypoint.sh
+RUN chmod +x /celery-entrypoint.sh
+
 # The application code will be mounted as a volume
 
-# Don't run migrations or collect static for Celery workers
-# Just wait for services and run the command
+# Use the entrypoint script
+ENTRYPOINT ["/celery-entrypoint.sh"]
 {%- endif %}

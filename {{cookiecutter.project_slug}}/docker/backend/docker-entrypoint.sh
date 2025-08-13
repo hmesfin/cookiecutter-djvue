@@ -4,18 +4,23 @@ set -e
 echo "Waiting for database..."
 
 {% if cookiecutter.database == 'postgresql' -%}
-# Wait for PostgreSQL
-while ! nc -z postgres 5432; do
-  sleep 0.1
+# Wait for PostgreSQL to be ready
+until PGPASSWORD=changeme psql -h postgres -U {{ cookiecutter.project_slug }} -d {{ cookiecutter.project_slug }} -c '\q' 2>/dev/null; do
+  echo "PostgreSQL is unavailable - sleeping"
+  sleep 1
 done
-echo "PostgreSQL started"
+echo "PostgreSQL is ready"
 {% elif cookiecutter.database == 'mysql' -%}
-# Wait for MySQL
-while ! nc -z mysql 3306; do
-  sleep 0.1
+# Wait for MySQL to be ready
+until mysql -h mysql -u {{ cookiecutter.project_slug }} -pchangeme -e "SELECT 1" &>/dev/null; do
+  echo "MySQL is unavailable - sleeping"
+  sleep 1
 done
-echo "MySQL started"
+echo "MySQL is ready"
 {%- endif %}
+
+# Give the database a moment to fully initialize
+sleep 2
 
 # Run migrations
 echo "Running database migrations..."
