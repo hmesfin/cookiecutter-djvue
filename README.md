@@ -5,6 +5,7 @@ A modern, production-ready [Cookiecutter](https://github.com/cookiecutter/cookie
 ## ✨ Features
 
 ### Backend (Django 5.1)
+
 - **Modern Django Setup**: Latest Django 5.1 with async support
 - **RESTful API**: Django REST Framework with customizable authentication (JWT/Token/Session)
 - **Custom User Model**: Email-based authentication with flexible UserManager
@@ -18,6 +19,7 @@ A modern, production-ready [Cookiecutter](https://github.com/cookiecutter/cookie
 - **API Documentation**: Optional drf-spectacular for OpenAPI
 
 ### Frontend (Vue.js 3)
+
 - **Vue 3 Composition API**: Modern Vue.js with script setup syntax
 - **Modular Architecture**: Organized with layouts and feature modules
 - **State Management**: Pinia stores
@@ -29,6 +31,7 @@ A modern, production-ready [Cookiecutter](https://github.com/cookiecutter/cookie
 - **Testing**: Vitest for unit tests
 
 ### DevOps & Tooling
+
 - **Docker**: Multi-stage Dockerfiles and docker-compose
 - **CI/CD**: GitHub Actions or GitLab CI pipelines
 - **Pre-commit Hooks**: Automated code quality checks
@@ -39,6 +42,7 @@ A modern, production-ready [Cookiecutter](https://github.com/cookiecutter/cookie
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Python 3.8+
 - Node.js 18+
 - Cookiecutter 2.0+
@@ -46,17 +50,20 @@ A modern, production-ready [Cookiecutter](https://github.com/cookiecutter/cookie
 ### Installation
 
 1. Install Cookiecutter:
+
 ```bash
 pip install cookiecutter
 ```
 
 2. Generate your project:
+
 ```bash
-cookiecutter https://github.com/yourusername/cookiecutter-djvue
+cookiecutter https://github.com/hmesfin/cookiecutter-djvue
 ```
 
 3. Answer the prompts:
-```
+
+```markdown
 project_name [My Project]: Your Amazing App
 project_slug [your_amazing_app]: 
 author_name [Your Name]: John Doe
@@ -66,11 +73,13 @@ project_description [A Django + Vue.js project]: Full-stack web application
 ```
 
 4. Navigate to your project:
+
 ```bash
 cd your_amazing_app
 ```
 
 5. Start developing:
+
 ```bash
 # Using Make (recommended)
 make setup
@@ -83,7 +92,7 @@ make dev
 
 ## 📦 What You Get
 
-```
+```markdown
 your_project/
 ├── backend/                 # Django backend
 │   ├── your_project/       # Main Django project
@@ -113,12 +122,14 @@ your_project/
 ## 🛠️ Configuration Options
 
 ### Required
+
 - **project_name**: Human-readable project name
 - **project_slug**: Python/directory-friendly name
 - **author_name**: Your name
 - **author_email**: Your email
 
 ### Optional Features
+
 - **database**: PostgreSQL, MySQL, or SQLite
 - **api_authentication**: JWT, Token, or Session
 - **use_celery**: Background task processing
@@ -131,6 +142,7 @@ your_project/
 ## 📚 Documentation
 
 After generating your project, you'll find:
+
 - `README.md` - Project-specific documentation
 - `docs/` - Additional documentation
 - API documentation at `http://localhost:8000/api/docs/` (if enabled)
@@ -156,27 +168,34 @@ make test
 ## 🎯 Key Features Explained
 
 ### Custom User Model with Manager
+
 The template includes a sophisticated User model with email-based authentication and a custom UserManager that:
+
 - Automatically generates usernames from emails
 - Sends welcome emails (with or without Celery)
 - Includes user profile fields
 - Supports social authentication preparation
 
 ### Flexible Email System
+
 Smart email task system that:
+
 - Works with Celery when available
 - Falls back to synchronous sending
 - Includes beautiful HTML email templates
 - Configurable via environment variables
 
 ### Modular Frontend Architecture
+
 The Vue.js frontend uses a modular structure:
+
 - **Layouts**: Consistent page structures (Auth, Dashboard, Main)
 - **Modules**: Feature-based organization
 - **Lazy Loading**: Optimal performance
 - **Type Safety**: Optional TypeScript support
 
 ### Production-Ready Settings
+
 - Separate settings for different environments
 - Security best practices implemented
 - Performance optimizations included
