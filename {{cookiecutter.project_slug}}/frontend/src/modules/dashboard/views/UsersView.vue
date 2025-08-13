@@ -52,17 +52,17 @@
               </th>
               <th @click="sortBy('name')" class="sortable">
                 Name
-                <span class="sort-icon">{{ getSortIcon('name') }}</span>
+                <span class="sort-icon">{% raw %}{{ getSortIcon('name') }}{% endraw %}</span>
               </th>
               <th @click="sortBy('email')" class="sortable">
                 Email
-                <span class="sort-icon">{{ getSortIcon('email') }}</span>
+                <span class="sort-icon">{% raw %}{{ getSortIcon('email') }}{% endraw %}</span>
               </th>
               <th>Role</th>
               <th>Status</th>
               <th @click="sortBy('lastActive')" class="sortable">
                 Last Active
-                <span class="sort-icon">{{ getSortIcon('lastActive') }}</span>
+                <span class="sort-icon">{% raw %}{{ getSortIcon('lastActive') }}{% endraw %}</span>
               </th>
               <th>Actions</th>
             </tr>
