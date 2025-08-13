@@ -29,18 +29,19 @@ fi
 # Always check and install dependencies
 if [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; then
     echo "Installing Node.js dependencies..."
-    npm install
+    # Use legacy-peer-deps to handle any remaining conflicts
+    npm install --legacy-peer-deps
     echo "Dependencies installed successfully!"
 else
     echo "Dependencies already installed, checking for updates..."
     # Quick check if package.json has changed
-    npm install
+    npm install --legacy-peer-deps
 fi
 
 # Verify vite is installed
 if [ ! -f "node_modules/.bin/vite" ]; then
     echo "Vite not found, installing dependencies..."
-    npm install
+    npm install --legacy-peer-deps
 fi
 
 # Execute the main command

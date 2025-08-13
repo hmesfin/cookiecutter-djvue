@@ -1,0 +1,29 @@
+{% if cookiecutter.use_eslint == 'y' -%}
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended"{% if cookiecutter.use_typescript == 'y' %},
+    "@vue/typescript/recommended"{% endif %}{% if cookiecutter.use_prettier == 'y' %},
+    "prettier"{% endif %}
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"{% if cookiecutter.use_typescript == 'y' %},
+    "parser": "@typescript-eslint/parser"{% endif %}
+  },
+  "plugins": ["vue"{% if cookiecutter.use_typescript == 'y' %}, "@typescript-eslint"{% endif %}],
+  "rules": {
+    "vue/multi-word-component-names": "off",
+    "vue/require-default-prop": "off",
+    "vue/no-v-html": "off"{% if cookiecutter.use_typescript == 'y' %},
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]{% endif %}
+  }
+}
+{%- endif %}
