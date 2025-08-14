@@ -1,18 +1,33 @@
 <template>
-  <div v-if="password" class="password-strength">
-    <div class="strength-meter">
+  <div v-if="password" class="mt-2">
+    <div class="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
       <div 
-        class="strength-meter-fill" 
-        :class="strengthClass"
+        class="h-full transition-all duration-300 ease-out rounded-full"
+        :class="{
+          'bg-red-500': strengthClass === 'strength-very-weak',
+          'bg-amber-500': strengthClass === 'strength-weak',
+          'bg-yellow-500': strengthClass === 'strength-fair',
+          'bg-lime-500': strengthClass === 'strength-good',
+          'bg-green-500': strengthClass === 'strength-strong'
+        }"
         :style="{ width: `${strength.score * 25}%` }"
       ></div>
     </div>
-    <div class="strength-info">
-      <span class="strength-label" :class="strengthClass">
+    <div class="mt-1">
+      <span 
+        class="text-xs font-medium"
+        :class="{
+          'text-red-500': strengthClass === 'strength-very-weak',
+          'text-amber-500': strengthClass === 'strength-weak',
+          'text-yellow-500': strengthClass === 'strength-fair',
+          'text-lime-500': strengthClass === 'strength-good',
+          'text-green-500': strengthClass === 'strength-strong'
+        }"
+      >
         {% raw %}{{ strength.label }}{% endraw %}
       </span>
-      <ul v-if="strength.suggestions.length > 0" class="strength-suggestions">
-        <li v-for="(suggestion, index) in strength.suggestions" :key="index">
+      <ul v-if="strength.suggestions.length > 0" class="mt-2 pl-5 text-xs text-gray-500 dark:text-gray-400 list-disc">
+        <li v-for="(suggestion, index) in strength.suggestions" :key="index" class="mb-1">
           {% raw %}{{ suggestion }}{% endraw %}
         </li>
       </ul>
@@ -117,89 +132,3 @@ const strengthClass = computed(() => {
   return 'strength-very-weak'
 })
 </script>
-
-<style scoped>
-.password-strength {
-  margin-top: 0.5rem;
-}
-
-.strength-meter {
-  height: 4px;
-  background: #e5e7eb;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.dark .strength-meter {
-  background: #374151;
-}
-
-.strength-meter-fill {
-  height: 100%;
-  transition: width 0.3s ease, background-color 0.3s ease;
-}
-
-.strength-meter-fill.strength-very-weak {
-  background: #ef4444;
-}
-
-.strength-meter-fill.strength-weak {
-  background: #f59e0b;
-}
-
-.strength-meter-fill.strength-fair {
-  background: #eab308;
-}
-
-.strength-meter-fill.strength-good {
-  background: #84cc16;
-}
-
-.strength-meter-fill.strength-strong {
-  background: #10b981;
-}
-
-.strength-info {
-  margin-top: 0.25rem;
-}
-
-.strength-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.strength-label.strength-very-weak {
-  color: #ef4444;
-}
-
-.strength-label.strength-weak {
-  color: #f59e0b;
-}
-
-.strength-label.strength-fair {
-  color: #eab308;
-}
-
-.strength-label.strength-good {
-  color: #84cc16;
-}
-
-.strength-label.strength-strong {
-  color: #10b981;
-}
-
-.strength-suggestions {
-  margin: 0.5rem 0 0 0;
-  padding-left: 1.25rem;
-  font-size: 0.75rem;
-  color: #6b7280;
-}
-
-.dark .strength-suggestions {
-  color: #9ca3af;
-}
-
-.strength-suggestions li {
-  margin-bottom: 0.25rem;
-}
-</style>

@@ -1,34 +1,57 @@
 <template>
   <Teleport to="body">
-    <div class="notification-container">
+    <div class="fixed top-4 right-4 z-[9999] pointer-events-none">
       <TransitionGroup name="notification" tag="div">
         <div
           v-for="notification in notifications"
           :key="notification.id"
-          :class="['notification', `notification-${notification.type}`]"
+          :class="[
+            'flex items-start gap-3 min-w-[300px] max-w-[400px] p-4 mb-3',
+            'bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-2xl dark:shadow-gray-900/50',
+            'pointer-events-auto'
+          ]"
         >
-          <div class="notification-icon">
-            <IconLucideCheckCircle class="icon" />
-            <IconLucideXCircle class="icon" />
-            <IconLucideAlertTriangle class="icon" />
-            <IconLucideInfo class="icon" />
+          <div class="flex-shrink-0">
+            <IconLucideCheckCircle 
+              v-if="notification.type === 'success'" 
+              class="w-6 h-6 text-green-500" 
+            />
+            <IconLucideXCircle 
+              v-else-if="notification.type === 'error'" 
+              class="w-6 h-6 text-red-500" 
+            />
+            <IconLucideAlertTriangle 
+              v-else-if="notification.type === 'warning'" 
+              class="w-6 h-6 text-amber-500" 
+            />
+            <IconLucideInfo 
+              v-else 
+              class="w-6 h-6 text-blue-500" 
+            />
           </div>
-          <div class="notification-content">
-            <h4 class="notification-title">{% raw %}{{ notification.title }}{% endraw %}</h4>
-            <p v-if="notification.message" class="notification-message">{% raw %}{{ notification.message }}{% endraw %}</p>
-            <div v-if="notification.actions" class="notification-actions">
+          <div class="flex-1">
+            <h4 class="mb-1 font-semibold text-sm text-gray-900 dark:text-gray-100">
+              {% raw %}{{ notification.title }}{% endraw %}
+            </h4>
+            <p v-if="notification.message" class="text-sm text-gray-600 dark:text-gray-400">
+              {% raw %}{{ notification.message }}{% endraw %}
+            </p>
+            <div v-if="notification.actions" class="flex gap-2 mt-2">
               <button
                 v-for="action in notification.actions"
                 :key="action.label"
                 @click="handleAction(action.handler, notification.id)"
-                class="notification-action"
+                class="px-2 py-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors"
               >
                 {% raw %}{{ action.label }}{% endraw %}
               </button>
             </div>
           </div>
-          <button @click="notificationStore.remove(notification.id)" class="notification-close">
-            <IconLucideX class="icon-sm" />
+          <button 
+            @click="notificationStore.remove(notification.id)" 
+            class="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-all"
+          >
+            <IconLucideX class="w-4 h-4" />
           </button>
         </div>
       </TransitionGroup>
@@ -50,135 +73,6 @@ const handleAction = (handler{% if cookiecutter.use_typescript == 'y' %}: () => 
 </script>
 
 <style scoped>
-.notification-container {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.notification {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  min-width: 300px;
-  max-width: 400px;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  pointer-events: auto;
-}
-
-.dark .notification {
-  background: #1f2937;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-}
-
-.notification-icon {
-  flex-shrink: 0;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-}
-
-.icon-sm {
-  width: 16px;
-  height: 16px;
-}
-
-.notification-success .notification-icon {
-  color: #10b981;
-}
-
-.notification-error .notification-icon {
-  color: #ef4444;
-}
-
-.notification-warning .notification-icon {
-  color: #f59e0b;
-}
-
-.notification-info .notification-icon {
-  color: #3b82f6;
-}
-
-.notification-content {
-  flex: 1;
-}
-
-.notification-title {
-  margin: 0 0 0.25rem 0;
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: #111827;
-}
-
-.dark .notification-title {
-  color: #f3f4f6;
-}
-
-.notification-message {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #6b7280;
-}
-
-.dark .notification-message {
-  color: #9ca3af;
-}
-
-.notification-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.notification-action {
-  padding: 0.25rem 0.5rem;
-  border: none;
-  background: transparent;
-  color: #3b82f6;
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s;
-}
-
-.notification-action:hover {
-  background: #eff6ff;
-}
-
-.dark .notification-action:hover {
-  background: #1e3a8a;
-}
-
-.notification-close {
-  flex-shrink: 0;
-  padding: 0.25rem;
-  border: none;
-  background: transparent;
-  color: #9ca3af;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-}
-
-.notification-close:hover {
-  color: #6b7280;
-  background: #f3f4f6;
-}
-
-.dark .notification-close:hover {
-  color: #d1d5db;
-  background: #374151;
-}
-
 /* Transition animations */
 .notification-enter-active,
 .notification-leave-active {

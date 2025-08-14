@@ -1,19 +1,41 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="cancel">
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-container dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60" @click.stop>
-          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-header dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
-            <h3 class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-title dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">{% raw %}{{ title }}{% endraw %}</h3>
+      <div 
+        v-if="isOpen" 
+        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" 
+        @click="cancel"
+      >
+        <div 
+          class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-[90%] mx-4"
+          @click.stop
+        >
+          <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              {% raw %}{{ title }}{% endraw %}
+            </h3>
           </div>
-          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-body dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
-            <p>{% raw %}{{ message }}{% endraw %}</p>
+          <div class="p-6">
+            <p class="text-gray-600 dark:text-gray-400">
+              {% raw %}{{ message }}{% endraw %}
+            </p>
           </div>
-          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-footer dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
-            <button @click="cancel" class="btn btn-secondary">
+          <div class="flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700">
+            <button 
+              @click="cancel" 
+              class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
+            >
               {% raw %}{{ cancelText }}{% endraw %}
             </button>
-            <button @click="confirm" :class="['btn', confirmClass]">
+            <button 
+              @click="confirm" 
+              :class="[
+                'px-4 py-2 text-sm font-medium rounded-md transition-colors',
+                confirmClass === 'btn-danger' 
+                  ? 'bg-red-600 hover:bg-red-700 text-white' 
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+              ]"
+            >
               {% raw %}{{ confirmText }}{% endraw %}
             </button>
           </div>
@@ -82,118 +104,6 @@ defineExpose({
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9998;
-}
-
-.modal-container {
-  background: white;
-  border-radius: 0.5rem;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.dark .modal-container {
-  background: #1f2937;
-}
-
-.modal-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.dark .modal-header {
-  border-bottom-color: #374151;
-}
-
-.modal-title {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #111827;
-}
-
-.dark .modal-title {
-  color: #f3f4f6;
-}
-
-.modal-body {
-  padding: 1.5rem;
-}
-
-.modal-body p {
-  margin: 0;
-  color: #6b7280;
-}
-
-.dark .modal-body p {
-  color: #9ca3af;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  padding: 1.5rem;
-  border-top: 1px solid #e5e7eb;
-}
-
-.dark .modal-footer {
-  border-top-color: #374151;
-}
-
-.btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-secondary {
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.btn-secondary:hover {
-  background: #e5e7eb;
-}
-
-.dark .btn-secondary {
-  background: #374151;
-  color: #d1d5db;
-}
-
-.dark .btn-secondary:hover {
-  background: #4b5563;
-}
-
-.btn-primary {
-  background: #3b82f6;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #2563eb;
-}
-
-.btn-danger {
-  background: #ef4444;
-  color: white;
-}
-
-.btn-danger:hover {
-  background: #dc2626;
-}
-
 /* Transition animations */
 .modal-enter-active,
 .modal-leave-active {
@@ -205,13 +115,13 @@ defineExpose({
   opacity: 0;
 }
 
-.modal-enter-active .modal-container,
-.modal-leave-active .modal-container {
+.modal-enter-active > div,
+.modal-leave-active > div {
   transition: transform 0.3s ease;
 }
 
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
+.modal-enter-from > div,
+.modal-leave-to > div {
   transform: scale(0.9);
 }
 </style>

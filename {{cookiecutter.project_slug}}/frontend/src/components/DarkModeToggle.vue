@@ -1,11 +1,11 @@
 <template>
   <button
     @click="toggleDarkMode"
-    class="dark-mode-toggle"
+    class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-all"
     :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
   >
-    <IconLucideSun v-if="!isDark" class="icon sun-icon" />
-    <IconLucideMoon v-else class="icon moon-icon" />
+    <IconLucideSun v-if="!isDark" class="w-5 h-5 text-amber-500" />
+    <IconLucideMoon v-else class="w-5 h-5 text-blue-400" />
   </button>
 </template>
 
@@ -14,42 +14,3 @@ import { useDarkMode } from '@/composables/useDarkMode'
 
 const { isDark, toggleDarkMode } = useDarkMode()
 </script>
-
-<style scoped>
-.dark-mode-toggle {
-  padding: 0.5rem;
-  border: none;
-  background: transparent;
-  color: #6b7280;
-  cursor: pointer;
-  border-radius: 0.375rem;
-  transition: all 0.2s;
-}
-
-.dark-mode-toggle:hover {
-  color: #374151;
-  background: #f3f4f6;
-}
-
-.dark .dark-mode-toggle {
-  color: #9ca3af;
-}
-
-.dark .dark-mode-toggle:hover {
-  color: #f3f4f6;
-  background: #4b5563;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-.sun-icon {
-  color: #f59e0b;
-}
-
-.moon-icon {
-  color: #60a5fa;
-}
-</style>
