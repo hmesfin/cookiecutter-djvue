@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-layout">
     {% if cookiecutter.css_framework == 'tailwindcss' -%}
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
       <!-- Sidebar -->
       <aside 
         class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 lg:translate-x-0"
@@ -13,7 +13,7 @@
             <span class="text-xl font-semibold text-white">{{ cookiecutter.project_name }}</span>
             <button 
               @click="sidebarOpen = false"
-              class="lg:hidden text-gray-400 hover:text-white"
+              class="lg:hidden text-gray-400 hover:text-white dark:text-gray-600"
             >
               <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -51,7 +51,7 @@
                 <p class="text-sm font-medium text-white">{% raw %}{{ userName }}{% endraw %}</p>
                 <button
                   @click="handleLogout"
-                  class="text-xs text-gray-400 hover:text-white"
+                  class="text-xs text-gray-400 hover:text-white dark:text-gray-600"
                 >
                   Logout
                 </button>
@@ -64,11 +64,11 @@
       <!-- Main content -->
       <div class="lg:pl-64">
         <!-- Top bar -->
-        <header class="sticky top-0 z-40 bg-white shadow">
+        <header class="sticky top-0 z-40 bg-white shadow dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/30">
           <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
             <button
               @click="sidebarOpen = true"
-              class="lg:hidden text-gray-500 hover:text-gray-900"
+              class="lg:hidden text-gray-500 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-100"
             >
               <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -76,7 +76,7 @@
             </button>
             
             <div class="flex items-center space-x-4">
-              <h1 class="text-2xl font-semibold text-gray-900">{% raw %}{{ pageTitle }}{% endraw %}</h1>
+              <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">{% raw %}{{ pageTitle }}{% endraw %}</h1>
             </div>
 
             <div class="flex items-center space-x-4">
@@ -84,7 +84,7 @@
               <DarkModeToggle />
               
               <!-- Notifications -->
-              <button class="relative text-gray-400 hover:text-gray-500">
+              <button class="relative text-gray-400 hover:text-gray-500 dark:text-gray-600">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
@@ -95,7 +95,7 @@
               <div class="relative">
                 <button
                   @click="userMenuOpen = !userMenuOpen"
-                  class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
                 >
                   <img class="h-8 w-8 rounded-full" :src="userAvatar" :alt="userName">
                 </button>
@@ -103,16 +103,16 @@
                 <div
                   v-if="userMenuOpen"
                   @click.away="userMenuOpen = false"
-                  class="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
+                  class="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/50"
                 >
-                  <RouterLink to="/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <RouterLink to="/dashboard/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                     Your Profile
                   </RouterLink>
-                  <RouterLink to="/dashboard/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <RouterLink to="/dashboard/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                     Settings
                   </RouterLink>
                   <hr class="my-1">
-                  <button @click="handleLogout" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <button @click="handleLogout" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                     Sign out
                   </button>
                 </div>

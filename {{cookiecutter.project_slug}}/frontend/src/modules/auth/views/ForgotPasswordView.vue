@@ -1,57 +1,57 @@
 <template>
-  <div class="forgot-password-view">
-    <div class="auth-container">
-      <div class="auth-card">
-        <div class="auth-header">
-          <h1 class="auth-title">Forgot Password?</h1>
-          <p class="auth-subtitle">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 max-w-5xl w-full bg-white rounded-2xl shadow-xl overflow-hidden dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
+      <div class="p-8 lg:p-12 flex flex-col justify-center">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 mb-2 dark:text-gray-100">Forgot Password?</h1>
+          <p class="text-gray-600 dark:text-gray-400">
             No worries! Enter your email address and we'll send you instructions to reset your password.
           </p>
         </div>
 
-        <form @submit.prevent="handleSubmit" class="auth-form">
-          <div v-if="!isSubmitted">
-            <div class="form-group">
-              <label for="email">Email Address</label>
+        <form @submit.prevent="handleSubmit" class="space-y-6">
+          <div v-if="!isSubmitted" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Email Address</label>
               <input 
                 id="email"
                 v-model="email"
                 type="email"
-                class="form-input"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors disabled:bg-gray-50 disabled:cursor-not-allowed dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 placeholder="Enter your email address"
                 required
                 :disabled="loading"
               >
-              <p v-if="error" class="error-message">{% raw %}{{ error }}{% endraw %}</p>
+              <p v-if="error" class="mt-2 text-sm text-red-600">{% raw %}{{ error }}{% endraw %}</p>
             </div>
 
-            <button type="submit" class="btn btn-primary" :disabled="loading">
+            <button type="submit" class="w-full py-3 px-4 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed" :disabled="loading">
               {% raw %}{{ loading ? 'Sending...' : 'Send Reset Instructions' }}{% endraw %}
             </button>
           </div>
 
-          <div v-else class="success-message">
-            <div class="success-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div v-else class="text-center p-8 bg-green-50 rounded-lg border border-green-200 dark:bg-green-900/20">
+            <div class="w-16 h-16 mx-auto mb-4 text-green-500">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <h2 class="success-title">Check Your Email</h2>
-            <p class="success-text">
-              We've sent password reset instructions to <strong>{% raw %}{{ email }}{% endraw %}</strong>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Check Your Email</h2>
+            <p class="text-gray-600 mb-4 dark:text-gray-400">
+              We've sent password reset instructions to <strong class="text-gray-900 dark:text-gray-100">{% raw %}{{ email }}{% endraw %}</strong>
             </p>
-            <p class="success-note">
+            <p class="text-sm text-gray-500 dark:text-gray-500">
               Didn't receive the email? Check your spam folder or 
-              <button type="button" @click="resendEmail" class="link-btn" :disabled="resending">
+              <button type="button" @click="resendEmail" class="font-medium text-indigo-600 hover:text-indigo-500 underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed" :disabled="resending">
                 {% raw %}{{ resending ? 'Resending...' : 'click here to resend' }}{% endraw %}
               </button>
             </p>
           </div>
         </form>
 
-        <div class="auth-footer">
-          <router-link to="/auth/login" class="auth-link">
-            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="mt-8 text-center">
+          <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
             Back to Login
@@ -59,39 +59,39 @@
         </div>
       </div>
 
-      <div class="auth-decoration">
-        <div class="decoration-content">
-          <h2 class="decoration-title">Password Security Tips</h2>
-          <ul class="tips-list">
-            <li>
-              <svg class="tip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="hidden lg:flex bg-gradient-to-br from-indigo-500 to-purple-600 p-12 items-center justify-center">
+        <div class="text-white">
+          <h2 class="text-2xl font-semibold mb-8">Password Security Tips</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              Use a combination of uppercase and lowercase letters
+              <span class="text-sm leading-relaxed">Use a combination of uppercase and lowercase letters</span>
             </li>
-            <li>
-              <svg class="tip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              Include numbers and special characters
+              <span class="text-sm leading-relaxed">Include numbers and special characters</span>
             </li>
-            <li>
-              <svg class="tip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              Make your password at least 12 characters long
+              <span class="text-sm leading-relaxed">Make your password at least 12 characters long</span>
             </li>
-            <li>
-              <svg class="tip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              Avoid using personal information
+              <span class="text-sm leading-relaxed">Avoid using personal information</span>
             </li>
-            <li>
-              <svg class="tip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              Use unique passwords for each account
+              <span class="text-sm leading-relaxed">Use unique passwords for each account</span>
             </li>
           </ul>
         </div>
@@ -167,263 +167,3 @@ const resendEmail = async () => {
   }
 }
 </script>
-
-<style scoped>
-.forgot-password-view {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.auth-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  max-width: 1000px;
-  width: 100%;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-}
-
-.auth-card {
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.auth-header {
-  margin-bottom: 2rem;
-}
-
-.auth-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 0.5rem 0;
-}
-
-.auth-subtitle {
-  color: #718096;
-  line-height: 1.5;
-}
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #4a5568;
-}
-
-.form-input {
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  transition: all 0.2s;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-}
-
-.form-input:disabled {
-  background: #f7fafc;
-  cursor: not-allowed;
-}
-
-.error-message {
-  color: #e53e3e;
-  font-size: 0.875rem;
-  margin: 0;
-}
-
-.btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-  width: 100%;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.success-message {
-  text-align: center;
-  padding: 2rem;
-  background: #f0fdf4;
-  border-radius: 0.5rem;
-  border: 1px solid #86efac;
-}
-
-.success-icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 1rem;
-  color: #22c55e;
-}
-
-.success-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.success-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 0.5rem 0;
-}
-
-.success-text {
-  color: #4a5568;
-  margin: 0 0 1rem 0;
-}
-
-.success-text strong {
-  color: #1a202c;
-}
-
-.success-note {
-  color: #718096;
-  font-size: 0.875rem;
-  margin: 0;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: #4299e1;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: underline;
-  transition: color 0.2s;
-}
-
-.link-btn:hover:not(:disabled) {
-  color: #3182ce;
-}
-
-.link-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.auth-footer {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.auth-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4299e1;
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.auth-link:hover {
-  color: #3182ce;
-}
-
-.icon {
-  width: 16px;
-  height: 16px;
-}
-
-.auth-decoration {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.decoration-content {
-  color: white;
-}
-
-.decoration-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0 0 2rem 0;
-}
-
-.tips-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.tips-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-.tip-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  margin-top: 0.125rem;
-}
-
-@media (max-width: 768px) {
-  .auth-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .auth-decoration {
-    display: none;
-  }
-  
-  .auth-card {
-    padding: 2rem;
-  }
-  
-  .auth-title {
-    font-size: 1.5rem;
-  }
-}
-</style>

@@ -3,10 +3,10 @@
     {% if cookiecutter.css_framework == 'tailwindcss' -%}
     <div class="space-y-6">
       <!-- Welcome Section -->
-      <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/30">
         <div class="px-4 py-5 sm:p-6">
-          <h1 class="text-2xl font-bold text-gray-900">Welcome back, {% raw %}{{ userName }}{% endraw %}!</h1>
-          <p class="mt-1 text-sm text-gray-600">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome back, {% raw %}{{ userName }}{% endraw %}!</h1>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             Here's what's happening with your account today.
           </p>
         </div>
@@ -17,13 +17,13 @@
         {% raw %}<div
           v-for="stat in stats"
           :key="stat.name"
-          class="bg-white overflow-hidden shadow rounded-lg"
+          class="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/30"
         >
           <div class="px-4 py-5 sm:p-6">
-            <dt class="text-sm font-medium text-gray-500 truncate">
+            <dt class="text-sm font-medium text-gray-500 truncate dark:text-gray-500">
               {{ stat.name }}
             </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
+            <dd class="mt-1 text-3xl font-semibold text-gray-900 dark:text-gray-100">
               {{ stat.value }}
             </dd>
             <dd class="mt-2 flex items-center text-sm">
@@ -33,16 +33,16 @@
               >
                 {{ stat.change }}
               </span>
-              <span class="ml-2 text-gray-500">from last month</span>
+              <span class="ml-2 text-gray-500 dark:text-gray-500">from last month</span>
             </dd>
           </div>
         </div>{% endraw %}
       </div>
 
       <!-- Recent Activity -->
-      <div class="bg-white shadow rounded-lg">
-        <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-          <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+      <div class="bg-white shadow rounded-lg dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/30">
+        <div class="px-4 py-5 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Recent Activity</h3>
         </div>
         <div class="px-4 py-5 sm:p-6">
           <div class="flow-root">
@@ -51,7 +51,7 @@
                 <div class="relative pb-8">
                   <span
                     v-if="idx !== activities.length - 1"
-                    class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
+                    class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700"
                   />
                   <div class="relative flex space-x-3">
                     <div>
@@ -64,11 +64,11 @@
                     </div>
                     <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                       <div>
-                        <p class="text-sm text-gray-500">
+                        <p class="text-sm text-gray-500 dark:text-gray-500">
                           {{ activity.content }}
                         </p>
                       </div>
-                      <div class="whitespace-nowrap text-right text-sm text-gray-500">
+                      <div class="whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-500">
                         <time :datetime="activity.datetime">{{ activity.date }}</time>
                       </div>
                     </div>
@@ -81,9 +81,9 @@
       </div>
 
       <!-- Quick Actions -->
-      <div class="bg-white shadow rounded-lg">
-        <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-          <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+      <div class="bg-white shadow rounded-lg dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/30">
+        <div class="px-4 py-5 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Quick Actions</h3>
         </div>
         <div class="px-4 py-5 sm:p-6">
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -91,13 +91,13 @@
               v-for="action in quickActions"
               :key="action.name"
               @click="action.onClick"
-              class="relative rounded-lg border border-gray-300 bg-white px-6 py-4 shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="relative rounded-lg border border-gray-300 bg-white px-6 py-4 shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-900 dark:shadow-lg dark:shadow-gray-900/30 dark:hover:border-gray-500 dark:focus:ring-indigo-400"
             >
               <div>
-                <span class="block text-sm font-medium text-gray-900">
+                <span class="block text-sm font-medium text-gray-900 dark:text-gray-100">
                   {{ action.name }}
                 </span>
-                <span class="mt-1 block text-sm text-gray-500">
+                <span class="mt-1 block text-sm text-gray-500 dark:text-gray-500">
                   {{ action.description }}
                 </span>
               </div>

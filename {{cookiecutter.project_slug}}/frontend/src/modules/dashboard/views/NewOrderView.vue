@@ -1,9 +1,9 @@
 <template>
-  <div class="new-order-view">
+  <div class="p-8 max-w-6xl mx-auto">
     <div class="page-header">
       <div class="header-left">
         <router-link to="/dashboard/orders" class="back-link">
-          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
           </svg>
           Back to Orders
@@ -16,47 +16,47 @@
       <div class="form-sections">
         <!-- Customer Information -->
         <div class="form-section">
-          <h2 class="section-title">Customer Information</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Customer Information</h2>
           <div class="form-grid">
-            <div class="form-group">
+            <div class="mb-6">
               <label for="customerName">Customer Name *</label>
               <input 
                 id="customerName"
                 v-model="orderForm.customer.name"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
                 placeholder="John Doe"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="customerEmail">Email Address *</label>
               <input 
                 id="customerEmail"
                 v-model="orderForm.customer.email"
                 type="email"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
                 placeholder="john@example.com"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="customerPhone">Phone Number</label>
               <input 
                 id="customerPhone"
                 v-model="orderForm.customer.phone"
                 type="tel"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 placeholder="+1 234 567 8900"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="customerCompany">Company</label>
               <input 
                 id="customerCompany"
                 v-model="orderForm.customer.company"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 placeholder="Acme Corp"
               >
             </div>
@@ -65,7 +65,7 @@
 
         <!-- Shipping Address -->
         <div class="form-section">
-          <h2 class="section-title">Shipping Address</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Shipping Address</h2>
           <div class="form-grid">
             <div class="form-group full-width">
               <label for="shippingAddress">Street Address *</label>
@@ -73,50 +73,50 @@
                 id="shippingAddress"
                 v-model="orderForm.shipping.address"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
                 placeholder="123 Main Street"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="shippingCity">City *</label>
               <input 
                 id="shippingCity"
                 v-model="orderForm.shipping.city"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
                 placeholder="New York"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="shippingState">State/Province *</label>
               <input 
                 id="shippingState"
                 v-model="orderForm.shipping.state"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
                 placeholder="NY"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="shippingZip">ZIP/Postal Code *</label>
               <input 
                 id="shippingZip"
                 v-model="orderForm.shipping.zip"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
                 placeholder="10001"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="shippingCountry">Country *</label>
               <select 
                 id="shippingCountry"
                 v-model="orderForm.shipping.country"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
                 <option value="">Select Country</option>
@@ -133,10 +133,10 @@
 
         <!-- Products -->
         <div class="form-section">
-          <div class="section-header">
-            <h2 class="section-title">Products</h2>
-            <button type="button" @click="addProduct" class="btn btn-secondary">
-              <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Products</h2>
+            <button type="button" @click="addProduct" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
               </svg>
               Add Product
@@ -160,7 +160,7 @@
                   <td>
                     <select 
                       v-model="product.name"
-                      class="form-input"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                       required
                       @change="updateProductDetails(index)"
                     >
@@ -174,7 +174,7 @@
                     <input 
                       v-model="product.sku"
                       type="text"
-                      class="form-input"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                       readonly
                     >
                   </td>
@@ -183,7 +183,7 @@
                       v-model.number="product.quantity"
                       type="number"
                       min="1"
-                      class="form-input"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                       required
                       @input="calculateTotals"
                     >
@@ -194,7 +194,7 @@
                       type="number"
                       step="0.01"
                       min="0"
-                      class="form-input"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                       required
                       @input="calculateTotals"
                     >
@@ -209,7 +209,7 @@
                       class="btn-icon danger"
                       title="Remove"
                     >
-                      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                       </svg>
                     </button>
@@ -222,7 +222,7 @@
 
         <!-- Order Summary -->
         <div class="form-section">
-          <h2 class="section-title">Order Summary</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Order Summary</h2>
           <div class="summary-grid">
             <div class="summary-row">
               <span class="summary-label">Subtotal:</span>
@@ -257,14 +257,14 @@
 
         <!-- Payment & Notes -->
         <div class="form-section">
-          <h2 class="section-title">Payment & Notes</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Payment & Notes</h2>
           <div class="form-grid">
-            <div class="form-group">
+            <div class="mb-6">
               <label for="paymentMethod">Payment Method *</label>
               <select 
                 id="paymentMethod"
                 v-model="orderForm.payment.method"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
                 <option value="">Select Payment Method</option>
@@ -274,12 +274,12 @@
                 <option value="cash">Cash</option>
               </select>
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="paymentStatus">Payment Status *</label>
               <select 
                 id="paymentStatus"
                 v-model="orderForm.payment.status"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
                 <option value="pending">Pending</option>
@@ -293,7 +293,7 @@
                 id="orderNotes"
                 v-model="orderForm.notes"
                 rows="4"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 placeholder="Add any special instructions or notes..."
               ></textarea>
             </div>
@@ -303,10 +303,10 @@
 
       <!-- Form Actions -->
       <div class="form-actions">
-        <router-link to="/dashboard/orders" class="btn btn-secondary">
+        <router-link to="/dashboard/orders" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
           Cancel
         </router-link>
-        <button type="submit" class="btn btn-primary" :disabled="loading">
+        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors" :disabled="loading">
           {% raw %}{{ loading ? 'Creating...' : 'Create Order' }}{% endraw %}
         </button>
       </div>
@@ -492,287 +492,3 @@ const handleSubmit = async () => {
 calculateTotals()
 </script>
 
-<style scoped>
-.new-order-view {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.page-header {
-  margin-bottom: 2rem;
-}
-
-.header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4299e1;
-  font-size: 0.875rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.back-link:hover {
-  color: #3182ce;
-}
-
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0;
-}
-
-.order-form {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.form-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.form-section {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.section-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 1.5rem 0;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group.full-width {
-  grid-column: span 2;
-}
-
-.form-group label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #4a5568;
-}
-
-.form-input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-}
-
-.form-input.small {
-  width: 120px;
-}
-
-textarea.form-input {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-  text-decoration: none;
-}
-
-.btn-primary {
-  background: #4299e1;
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #3182ce;
-}
-
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  background: #e2e8f0;
-  color: #4a5568;
-}
-
-.btn-secondary:hover {
-  background: #cbd5e0;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-.products-table {
-  overflow-x: auto;
-}
-
-.products-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.products-table th {
-  text-align: left;
-  padding: 0.75rem;
-  background: #f7fafc;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #718096;
-  text-transform: uppercase;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.products-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #f7fafc;
-}
-
-.products-table .form-input {
-  width: 100%;
-}
-
-.product-total {
-  font-weight: 600;
-  color: #1a202c;
-}
-
-.btn-icon {
-  padding: 0.25rem;
-  border: none;
-  background: transparent;
-  color: #718096;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-}
-
-.btn-icon:hover {
-  background: #f7fafc;
-  color: #4a5568;
-}
-
-.btn-icon.danger:hover {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.summary-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 400px;
-  margin-left: auto;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.summary-row.total {
-  padding-top: 0.75rem;
-  border-top: 2px solid #e2e8f0;
-  font-size: 1.125rem;
-  font-weight: 600;
-}
-
-.summary-label {
-  color: #4a5568;
-}
-
-.summary-value {
-  color: #1a202c;
-  font-weight: 500;
-}
-
-.summary-row.total .summary-value {
-  color: #4299e1;
-  font-weight: 700;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  padding-top: 1rem;
-}
-
-@media (max-width: 768px) {
-  .new-order-view {
-    padding: 1rem;
-  }
-  
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .form-group.full-width {
-    grid-column: span 1;
-  }
-  
-  .products-table {
-    overflow-x: scroll;
-  }
-  
-  .summary-grid {
-    max-width: 100%;
-  }
-  
-  .form-actions {
-    flex-direction: column-reverse;
-  }
-  
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-</style>

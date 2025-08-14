@@ -2,20 +2,20 @@
   <div class="home">
     {% if cookiecutter.css_framework == 'tailwindcss' -%}
     <!-- Hero Section -->
-    <section class="relative bg-white overflow-hidden">
+    <section class="relative bg-white overflow-hidden dark:bg-gray-900">
       <div class="max-w-7xl mx-auto">
-        <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+        <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 dark:bg-gray-900">
           <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div class="sm:text-center lg:text-left">
-              <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+              <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl dark:text-gray-100">
                 <span class="block xl:inline">{{ cookiecutter.project_name }}</span>
                 <span class="block text-indigo-600 xl:inline">made simple</span>
               </h1>
-              <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 dark:text-gray-500">
                 {{ cookiecutter.project_description }}
               </p>
               <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div class="rounded-md shadow">
+                <div class="rounded-md shadow dark:shadow-xl dark:shadow-gray-900/30">
                   <RouterLink
                     to="/auth/register"
                     class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
@@ -39,14 +39,14 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-12 bg-gray-50">
+    <section class="py-12 bg-gray-50 dark:bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
-          <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">
             Everything you need
           </p>
-          <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+          <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto dark:text-gray-500">
             Built with modern technologies and best practices.
           </p>
         </div>
@@ -58,9 +58,9 @@
                 <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
                   <component :is="feature.icon" class="h-6 w-6" aria-hidden="true" />
                 </div>
-                <p class="ml-16 text-lg leading-6 font-medium text-gray-900">{{ feature.name }}</p>
+                <p class="ml-16 text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">{{ feature.name }}</p>
               </dt>
-              <dd class="mt-2 ml-16 text-base text-gray-500">{{ feature.description }}</dd>
+              <dd class="mt-2 ml-16 text-base text-gray-500 dark:text-gray-500">{{ feature.description }}</dd>
             </div>{% endraw %}
           </dl>
         </div>
@@ -79,7 +79,7 @@
         </p>
         <RouterLink
           to="/auth/register"
-          class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 sm:w-auto"
+          class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 sm:w-auto dark:bg-gray-900"
         >
           Sign up for free
         </RouterLink>

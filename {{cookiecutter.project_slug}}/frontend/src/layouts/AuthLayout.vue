@@ -3,7 +3,7 @@
     {% if cookiecutter.css_framework == 'tailwindcss' -%}
     <div class="min-h-screen flex flex-col">
       <!-- Auth Header -->
-      <header class="bg-white shadow-sm">
+      <header class="bg-white shadow-sm dark:bg-gray-900 dark:shadow-lg dark:shadow-gray-900/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center py-4">
             <RouterLink to="/" class="flex items-center">
@@ -12,14 +12,14 @@
             <nav class="flex space-x-4">
               <RouterLink 
                 to="/auth/login" 
-                class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium dark:text-gray-400 dark:hover:text-gray-100"
                 :class="{ 'bg-gray-100': $route.path === '/auth/login' }"
               >
                 Login
               </RouterLink>
               <RouterLink 
                 to="/auth/register"
-                class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium dark:text-gray-400 dark:hover:text-gray-100"
                 :class="{ 'bg-gray-100': $route.path === '/auth/register' }"
               >
                 Register
@@ -30,7 +30,7 @@
       </header>
 
       <!-- Main Content -->
-      <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
         <div class="w-full max-w-md">
           <transition name="fade" mode="out-in">
             <RouterView />
@@ -39,9 +39,9 @@
       </main>
 
       <!-- Footer -->
-      <footer class="bg-white border-t">
+      <footer class="bg-white border-t dark:bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <p class="text-center text-sm text-gray-500">
+          <p class="text-center text-sm text-gray-500 dark:text-gray-500">
             © {% raw %}{{ new Date().getFullYear() }}{% endraw %} {{ cookiecutter.project_name }}. All rights reserved.
           </p>
         </div>
@@ -50,7 +50,7 @@
     {% elif cookiecutter.css_framework == 'bootstrap-vue-3' -%}
     <div class="auth-layout d-flex flex-column min-vh-100">
       <!-- Auth Header -->
-      <b-navbar toggleable="lg" type="light" variant="white" class="shadow-sm">
+      <b-navbar toggleable="lg" type="light" variant="white" class="shadow-sm dark:shadow-lg dark:shadow-gray-900/30">
         <b-container>
           <b-navbar-brand to="/">
             <span class="fs-4 fw-bold text-primary">{{ cookiecutter.project_name }}</span>
@@ -76,7 +76,7 @@
       </b-container>
 
       <!-- Footer -->
-      <footer class="bg-white border-top py-3">
+      <footer class="bg-white border-top py-3 dark:bg-gray-900">
         <b-container>
           <p class="text-center text-muted mb-0">
             © {% raw %}{{ new Date().getFullYear() }}{% endraw %} {{ cookiecutter.project_name }}. All rights reserved.

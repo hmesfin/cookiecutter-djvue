@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-view">
+  <div class="p-8 max-w-7xl mx-auto">
     <div class="page-header">
       <h1 class="page-title">Settings</h1>
       <p class="page-description">Manage your application preferences and configurations</p>
@@ -33,7 +33,7 @@
                 <label>Language</label>
                 <p class="setting-description">Select your preferred language</p>
               </div>
-              <select v-model="settings.language" class="form-select">
+              <select v-model="settings.language" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
                 <option value="fr">French</option>
@@ -48,7 +48,7 @@
                 <label>Time Zone</label>
                 <p class="setting-description">Set your local time zone</p>
               </div>
-              <select v-model="settings.timezone" class="form-select">
+              <select v-model="settings.timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="UTC">UTC</option>
                 <option value="America/New_York">Eastern Time</option>
                 <option value="America/Chicago">Central Time</option>
@@ -65,7 +65,7 @@
                 <label>Date Format</label>
                 <p class="setting-description">Choose how dates are displayed</p>
               </div>
-              <select v-model="settings.dateFormat" class="form-select">
+              <select v-model="settings.dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                 <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                 <option value="YYYY-MM-DD">YYYY-MM-DD</option>
@@ -183,7 +183,7 @@
                 <label>Profile Visibility</label>
                 <p class="setting-description">Control who can see your profile</p>
               </div>
-              <select v-model="settings.privacy.profileVisibility" class="form-select">
+              <select v-model="settings.privacy.profileVisibility" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="public">Public</option>
                 <option value="friends">Friends Only</option>
                 <option value="private">Private</option>
@@ -221,7 +221,7 @@
                 <label>Two-Factor Authentication</label>
                 <p class="setting-description">Add an extra layer of security to your account</p>
               </div>
-              <button class="btn btn-secondary">
+              <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
                 {% raw %}{{ settings.security.twoFactorEnabled ? 'Manage' : 'Enable' }}{% endraw %}
               </button>
             </div>
@@ -242,7 +242,7 @@
                 <label>Active Sessions</label>
                 <p class="setting-description">Manage your active login sessions</p>
               </div>
-              <button class="btn btn-secondary">View Sessions</button>
+              <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">View Sessions</button>
             </div>
           </div>
         </div>
@@ -276,10 +276,10 @@
 
         <!-- Save Button -->
         <div class="settings-actions">
-          <button @click="resetSettings" class="btn btn-secondary">
+          <button @click="resetSettings" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
             Reset to Defaults
           </button>
-          <button @click="saveSettings" class="btn btn-primary" :disabled="saving">
+          <button @click="saveSettings" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors" :disabled="saving">
             {% raw %}{{ saving ? 'Saving...' : 'Save Changes' }}{% endraw %}
           </button>
         </div>
@@ -437,343 +437,3 @@ const resetSettings = () => {
 }
 </script>
 
-<style scoped>
-.settings-view {
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.page-header {
-  margin-bottom: 2rem;
-}
-
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 0.5rem 0;
-}
-
-.page-description {
-  color: #718096;
-  font-size: 1rem;
-}
-
-.settings-content {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 2rem;
-}
-
-.card {
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-}
-
-.settings-nav {
-  padding: 1rem;
-  height: fit-content;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: none;
-  background: transparent;
-  color: #4a5568;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.nav-item:hover {
-  background: #f7fafc;
-  color: #2d3748;
-}
-
-.nav-item.active {
-  background: #edf2f7;
-  color: #4299e1;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.settings-panel {
-  padding: 2rem;
-  min-height: 500px;
-}
-
-.panel-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.panel-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 1rem 0;
-}
-
-.settings-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.group-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 0 0 0.5rem 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.setting-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-}
-
-.setting-info {
-  flex: 1;
-}
-
-.setting-info label {
-  display: block;
-  font-weight: 500;
-  color: #2d3748;
-  margin-bottom: 0.25rem;
-}
-
-.setting-description {
-  font-size: 0.875rem;
-  color: #718096;
-  margin: 0;
-}
-
-.form-select {
-  padding: 0.5rem 2rem 0.5rem 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  background: white;
-  font-size: 0.875rem;
-  cursor: pointer;
-  min-width: 150px;
-}
-
-.theme-selector {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.theme-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 0.5rem;
-  background: white;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.theme-option:hover {
-  border-color: #cbd5e0;
-}
-
-.theme-option.active {
-  border-color: #4299e1;
-  background: #ebf8ff;
-}
-
-.theme-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.toggle {
-  position: relative;
-  display: inline-block;
-  width: 48px;
-  height: 24px;
-}
-
-.toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #cbd5e0;
-  transition: 0.3s;
-  border-radius: 24px;
-}
-
-.toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.3s;
-  border-radius: 50%;
-}
-
-.toggle input:checked + .toggle-slider {
-  background-color: #4299e1;
-}
-
-.toggle input:checked + .toggle-slider:before {
-  transform: translateX(24px);
-}
-
-.integration-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.integration-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-}
-
-.integration-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.integration-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 0.375rem;
-}
-
-.integration-info h4 {
-  margin: 0 0 0.25rem 0;
-  font-weight: 500;
-  color: #2d3748;
-}
-
-.integration-info p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #718096;
-}
-
-.settings-actions {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 2rem;
-  margin-top: 2rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.btn {
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-}
-
-.btn-primary {
-  background: #4299e1;
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #3182ce;
-}
-
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  background: #e2e8f0;
-  color: #4a5568;
-}
-
-.btn-secondary:hover {
-  background: #cbd5e0;
-}
-
-.btn-danger {
-  background: #f56565;
-  color: white;
-}
-
-.btn-danger:hover {
-  background: #e53e3e;
-}
-
-@media (max-width: 768px) {
-  .settings-view {
-    padding: 1rem;
-  }
-  
-  .settings-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .settings-nav {
-    display: flex;
-    overflow-x: auto;
-    padding: 0.5rem;
-  }
-  
-  .nav-item {
-    white-space: nowrap;
-  }
-  
-  .setting-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .settings-actions {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .btn {
-    width: 100%;
-  }
-}
-</style>

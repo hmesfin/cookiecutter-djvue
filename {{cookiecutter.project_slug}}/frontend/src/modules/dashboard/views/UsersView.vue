@@ -1,9 +1,9 @@
 <template>
-  <div class="users-view">
+  <div class="p-8 max-w-7xl mx-auto">
     <div class="page-header">
       <h1 class="page-title">Users</h1>
-      <button @click="showAddUserModal = true" class="btn btn-primary">
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button @click="showAddUserModal = true" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
         Add User
@@ -99,12 +99,12 @@
               <td>
                 <div class="action-buttons">
                   <button @click="editUser(user)" class="btn-icon" title="Edit">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                     </svg>
                   </button>
                   <button @click="deleteUser(user)" class="btn-icon danger" title="Delete">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>
                   </button>
@@ -153,48 +153,48 @@
         <div class="modal-header">
           <h2 class="modal-title">{% raw %}{{ editingUser ? 'Edit User' : 'Add New User' }}{% endraw %}</h2>
           <button @click="closeModal" class="modal-close">
-            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
         <form @submit.prevent="saveUser" class="modal-body">
           <div class="form-grid">
-            <div class="form-group">
+            <div class="mb-6">
               <label for="userName">Name</label>
               <input 
                 id="userName"
                 v-model="userForm.name"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="userEmail">Email</label>
               <input 
                 id="userEmail"
                 v-model="userForm.email"
                 type="email"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="userDepartment">Department</label>
               <input 
                 id="userDepartment"
                 v-model="userForm.department"
                 type="text"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
               >
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="userRole">Role</label>
               <select 
                 id="userRole"
                 v-model="userForm.role"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
                 <option value="user">User</option>
@@ -202,12 +202,12 @@
                 <option value="admin">Admin</option>
               </select>
             </div>
-            <div class="form-group">
+            <div class="mb-6">
               <label for="userStatus">Status</label>
               <select 
                 id="userStatus"
                 v-model="userForm.status"
-                class="form-input"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
                 required
               >
                 <option value="active">Active</option>
@@ -217,10 +217,10 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" @click="closeModal" class="btn btn-secondary">
+            <button type="button" @click="closeModal" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
               Cancel
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
               {% raw %}{{ editingUser ? 'Update User' : 'Add User' }}{% endraw %}
             </button>
           </div>
@@ -498,422 +498,3 @@ const closeModal = () => {
 }
 </script>
 
-<style scoped>
-.users-view {
-  padding: 2rem;
-  max-width: 1600px;
-  margin: 0 auto;
-}
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-}
-
-.btn-primary {
-  background: #4299e1;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #3182ce;
-}
-
-.btn-secondary {
-  background: #e2e8f0;
-  color: #4a5568;
-}
-
-.btn-secondary:hover {
-  background: #cbd5e0;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-.filters-bar {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.search-box {
-  position: relative;
-  flex: 1;
-}
-
-.search-icon {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  color: #718096;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-}
-
-.filter-group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.filter-select {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  background: white;
-  cursor: pointer;
-}
-
-.table-card {
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.table-wrapper {
-  overflow-x: auto;
-}
-
-.users-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.users-table th {
-  text-align: left;
-  padding: 1rem;
-  background: #f7fafc;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #718096;
-  text-transform: uppercase;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.users-table th.sortable {
-  cursor: pointer;
-  user-select: none;
-}
-
-.users-table th.sortable:hover {
-  background: #edf2f7;
-}
-
-.sort-icon {
-  margin-left: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.users-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #f7fafc;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.avatar-placeholder {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.user-name {
-  font-weight: 500;
-  color: #2d3748;
-}
-
-.user-subtitle {
-  font-size: 0.75rem;
-  color: #718096;
-}
-
-.role-badge,
-.status-badge {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.role-badge.role-admin {
-  background: #fef2f2;
-  color: #991b1b;
-}
-
-.role-badge.role-manager {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.role-badge.role-user {
-  background: #f0f9ff;
-  color: #1e40af;
-}
-
-.status-badge.status-active {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.status-badge.status-inactive {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.status-badge.status-pending {
-  background: #fed7aa;
-  color: #92400e;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.btn-icon {
-  padding: 0.25rem;
-  border: none;
-  background: transparent;
-  color: #718096;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-}
-
-.btn-icon:hover {
-  background: #f7fafc;
-  color: #4a5568;
-}
-
-.btn-icon.danger:hover {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.pagination-info {
-  font-size: 0.875rem;
-  color: #718096;
-}
-
-.pagination-controls {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.pagination-btn {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #e2e8f0;
-  background: white;
-  color: #4a5568;
-  font-size: 0.875rem;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.pagination-btn:hover:not(:disabled) {
-  background: #f7fafc;
-}
-
-.pagination-btn.active {
-  background: #4299e1;
-  color: white;
-  border-color: #4299e1;
-}
-
-.pagination-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal {
-  background: white;
-  border-radius: 0.5rem;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0;
-}
-
-.modal-close {
-  padding: 0.25rem;
-  border: none;
-  background: transparent;
-  color: #718096;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-}
-
-.modal-close:hover {
-  background: #f7fafc;
-  color: #4a5568;
-}
-
-.modal-body {
-  padding: 1.5rem;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #4a5568;
-}
-
-.form-input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-@media (max-width: 768px) {
-  .users-view {
-    padding: 1rem;
-  }
-  
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .filters-bar {
-    flex-direction: column;
-  }
-  
-  .filter-group {
-    width: 100%;
-  }
-  
-  .filter-select {
-    width: 100%;
-  }
-  
-  .pagination {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

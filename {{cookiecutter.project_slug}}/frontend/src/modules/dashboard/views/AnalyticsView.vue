@@ -1,5 +1,5 @@
 <template>
-  <div class="analytics-view">
+  <div class="p-8 max-w-7xl mx-auto">
     <div class="page-header">
       <h1 class="page-title">Analytics</h1>
       <div class="header-actions">
@@ -9,8 +9,8 @@
           <option value="90d">Last 90 days</option>
           <option value="1y">Last year</option>
         </select>
-        <button class="btn btn-primary">
-          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
           </svg>
           Export
@@ -40,8 +40,8 @@
     <div class="charts-grid">
       <!-- Revenue Chart -->
       <div class="chart-card">
-        <div class="chart-header">
-          <h3 class="chart-title">Revenue Overview</h3>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Revenue Overview</h3>
           <div class="chart-legend">
             <span class="legend-item">
               <span class="legend-dot" style="background: #4299e1"></span>
@@ -53,17 +53,17 @@
             </span>
           </div>
         </div>
-        <div class="chart-container">
+        <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <canvas ref="revenueChart"></canvas>
         </div>
       </div>
 
       <!-- Traffic Sources -->
       <div class="chart-card">
-        <div class="chart-header">
-          <h3 class="chart-title">Traffic Sources</h3>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Traffic Sources</h3>
         </div>
-        <div class="chart-container">
+        <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <canvas ref="trafficChart"></canvas>
         </div>
         <div class="traffic-legend">
@@ -79,8 +79,8 @@
 
       <!-- User Activity -->
       <div class="chart-card full-width">
-        <div class="chart-header">
-          <h3 class="chart-title">User Activity</h3>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">User Activity</h3>
           <div class="chart-tabs">
             <button 
               v-for="tab in activityTabs" 
@@ -92,7 +92,7 @@
             </button>
           </div>
         </div>
-        <div class="chart-container">
+        <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <canvas ref="activityChart"></canvas>
         </div>
       </div>
@@ -100,12 +100,12 @@
 
     <!-- Top Products Table -->
     <div class="table-card">
-      <div class="table-header">
+      <div class="bg-gray-50 dark:bg-gray-900">
         <h3 class="table-title">Top Products</h3>
         <button class="btn-text">View All</button>
       </div>
       <div class="table-wrapper">
-        <table class="data-table">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead>
             <tr>
               <th>Product</th>
@@ -384,365 +384,3 @@ watch([selectedPeriod, activeActivityTab], () => {
 })
 </script>
 
-<style scoped>
-.analytics-view {
-  padding: 2rem;
-  max-width: 1600px;
-  margin: 0 auto;
-}
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0;
-}
-
-.header-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.period-selector {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.375rem;
-  background: white;
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-}
-
-.btn-primary {
-  background: #4299e1;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #3182ce;
-}
-
-.icon {
-  width: 16px;
-  height: 16px;
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.metric-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.metric-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.metric-label {
-  font-size: 0.875rem;
-  color: #718096;
-  font-weight: 500;
-}
-
-.metric-trend {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.metric-trend.positive {
-  color: #48bb78;
-}
-
-.metric-trend.negative {
-  color: #f56565;
-}
-
-.trend-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.metric-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin-bottom: 0.25rem;
-}
-
-.metric-comparison {
-  font-size: 0.75rem;
-  color: #a0aec0;
-}
-
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.chart-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.chart-card.full-width {
-  grid-column: span 2;
-}
-
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.chart-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0;
-}
-
-.chart-legend {
-  display: flex;
-  gap: 1rem;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: #4a5568;
-}
-
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.chart-container {
-  position: relative;
-  height: 300px;
-}
-
-.chart-tabs {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.tab-btn {
-  padding: 0.25rem 0.75rem;
-  border: none;
-  background: transparent;
-  color: #718096;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-}
-
-.tab-btn:hover {
-  background: #f7fafc;
-}
-
-.tab-btn.active {
-  background: #edf2f7;
-  color: #4299e1;
-}
-
-.traffic-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-.traffic-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.traffic-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.traffic-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.traffic-name {
-  font-size: 0.875rem;
-  color: #4a5568;
-}
-
-.traffic-value {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #1a202c;
-}
-
-.table-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.table-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0;
-}
-
-.btn-text {
-  background: none;
-  border: none;
-  color: #4299e1;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.btn-text:hover {
-  color: #3182ce;
-}
-
-.table-wrapper {
-  overflow-x: auto;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.data-table th {
-  text-align: left;
-  padding: 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #718096;
-  text-transform: uppercase;
-}
-
-.data-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #f7fafc;
-  font-size: 0.875rem;
-  color: #2d3748;
-}
-
-.product-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.product-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 0.375rem;
-  object-fit: cover;
-}
-
-.growth-badge {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.growth-badge.positive {
-  background: #c6f6d5;
-  color: #22543d;
-}
-
-.growth-badge.negative {
-  background: #fed7d7;
-  color: #742a2a;
-}
-
-@media (max-width: 1024px) {
-  .charts-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .chart-card.full-width {
-    grid-column: span 1;
-  }
-}
-
-@media (max-width: 768px) {
-  .analytics-view {
-    padding: 1rem;
-  }
-  
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .metrics-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .table-wrapper {
-    overflow-x: scroll;
-  }
-}
-</style>
