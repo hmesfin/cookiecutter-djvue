@@ -21,8 +21,8 @@
                   class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors"
                   :class="[
                     isActive(item.to)
-                      ? 'border-indigo-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                      ? 'border-indigo-500 text-gray-900 dark:text-gray-100'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300'
                   ]"
                 >
                   {{ item.name }}
@@ -94,8 +94,8 @@
               class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors"
               :class="[
                 isActive(item.to)
-                  ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
-                  : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 border-indigo-500 text-indigo-700 dark:text-indigo-300'
+                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300'
               ]"
               @click="mobileMenuOpen = false"
             >

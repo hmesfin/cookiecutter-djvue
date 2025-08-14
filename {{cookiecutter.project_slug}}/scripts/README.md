@@ -190,6 +190,43 @@ After running the script, you may need to manually adjust:
 - Restore from backups (.backup files)
 - Use git to revert changes
 
+## Handling Dynamic Classes (:class bindings)
+
+The main script only processes static `class` attributes to avoid breaking Vue template syntax. For dynamic `:class` bindings, you have two options:
+
+### Option 1: Use the Helper Script
+
+```bash
+# For simple class strings
+python scripts/dark_mode_helper.py "text-gray-900 hover:text-gray-700"
+
+# Output:
+# Original: text-gray-900 hover:text-gray-700
+# With dark: text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300
+```
+
+### Option 2: Manual Updates
+
+For `:class` bindings, add dark variants manually:
+
+**Before:**
+```vue
+:class="[
+  isActive 
+    ? 'text-gray-900' 
+    : 'text-gray-500'
+]"
+```
+
+**After:**
+```vue
+:class="[
+  isActive 
+    ? 'text-gray-900 dark:text-gray-100' 
+    : 'text-gray-500 dark:text-gray-400'
+]"
+```
+
 ## Customization
 
 To add custom mappings, edit the mapping dictionaries in the script:

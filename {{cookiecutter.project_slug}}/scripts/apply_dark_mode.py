@@ -162,6 +162,11 @@ class DarkModeApplicator:
         
         def replace_class(match):
             nonlocal modified, classes_added
+            # Skip if this is a :class binding (dynamic class)
+            full_match = match.group(0)
+            if ':class' in full_match:
+                return full_match
+                
             classes = match.group(1)
             class_list = classes.split()
             new_classes = []
@@ -180,8 +185,14 @@ class DarkModeApplicator:
                 return f'class="{classes} {" ".join(new_classes)}"'
             return match.group(0)
         
-        # Process class attributes
-        template = re.sub(r'class="([^"]*)"', replace_class, template)
+        # Process only static class attributes (not :class)
+        # Match class="..." but not :class="..."
+        template = re.sub(r'(?<!:)class="([^"]*)"', replace_class, template)
+        
+        # Check for dynamic classes that need manual attention
+        dynamic_classes = re.findall(r':class="[^"]*"', template)
+        if dynamic_classes and self.args.verbose:
+            print(f"  {Colors.WARNING}Note: Found {len(dynamic_classes)} dynamic :class bindings that need manual review{Colors.ENDC}")
         
         return template, classes_added, changes
 
