@@ -3,8 +3,8 @@
     {% if cookiecutter.css_framework == 'tailwindcss' -%}
     <div class="space-y-6">
       <div>
-        <h2 class="text-3xl font-bold text-center text-gray-900">Create your account</h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
+        <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100">Create your account</h2>
+        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           Or
           <RouterLink to="/auth/login" class="font-medium text-indigo-600 hover:text-indigo-500">
             sign in to your existing account
@@ -15,26 +15,26 @@
       <form @submit.prevent="handleRegister" class="space-y-6">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
+            <label for="firstName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">First name</label>
             <input
               id="firstName"
               v-model="form.firstName"
               type="text"
               required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
               :class="{ 'border-red-500': errors.firstName }"
             >
             <p v-if="errors.firstName" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.firstName }}{% endraw %}</p>
           </div>
 
           <div>
-            <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
+            <label for="lastName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last name</label>
             <input
               id="lastName"
               v-model="form.lastName"
               type="text"
               required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
               :class="{ 'border-red-500': errors.lastName }"
             >
             <p v-if="errors.lastName" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.lastName }}{% endraw %}</p>
@@ -42,20 +42,20 @@
         </div>
 
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
           <input
             id="email"
             v-model="form.email"
             type="email"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
             :class="{ 'border-red-500': errors.email }"
           >
           <p v-if="errors.email" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.email }}{% endraw %}</p>
         </div>
 
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
           <PasswordInput
             id="password"
             v-model="form.password"
@@ -69,7 +69,7 @@
         </div>
 
         <div>
-          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm password</label>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm password</label>
           <PasswordInput
             id="confirmPassword"
             v-model="form.confirmPassword"
@@ -87,9 +87,9 @@
             v-model="form.acceptTerms"
             type="checkbox"
             required
-            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded dark:focus:ring-indigo-400 dark:border-gray-600"
           >
-          <label for="terms" class="ml-2 block text-sm text-gray-900">
+          <label for="terms" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">
             I agree to the
             <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms and Conditions</a>
           </label>
@@ -99,14 +99,14 @@
           <button
             type="submit"
             :disabled="loading"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-indigo-400"
           >
             <span v-if="loading">Creating account...</span>
             <span v-else>Create account</span>
           </button>
         </div>
 
-        <div v-if="errors.general" class="rounded-md bg-red-50 p-4">
+        <div v-if="errors.general" class="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
           <p class="text-sm text-red-800">{% raw %}{{ errors.general }}{% endraw %}</p>
         </div>
       </form>

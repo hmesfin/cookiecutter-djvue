@@ -1,105 +1,117 @@
 <template>
-  <div class="email-verification-done-view">
-    <div class="verification-container">
-      <div class="verification-card">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center p-8">
+    <div class="max-w-2xl w-full">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
         <!-- Success State -->
-        <div v-if="verificationStatus === 'success'" class="verification-content">
-          <div class="icon-wrapper success">
-            <svg class="icon animated-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div v-if="verificationStatus === 'success'" class="p-12 text-center">
+          <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+            <svg class="w-10 h-10 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
           
-          <h1 class="title">Email Verified Successfully!</h1>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Email Verified Successfully!</h1>
           
-          <p class="description">
+          <p class="text-lg text-gray-600 mb-8 dark:text-gray-400">
             Your email has been verified and your account is now fully activated.
           </p>
           
-          <div class="welcome-message">
-            <p>Welcome to <strong>{{ cookiecutter.project_name }}</strong>!</p>
-            <p>You can now access all features of your account.</p>
+          <div class="bg-gray-50 border-l-4 border-indigo-500 p-6 mb-8 text-left dark:bg-gray-900">
+            <p class="text-gray-700 mb-2 dark:text-gray-300">Welcome to <strong class="text-indigo-600">{{ cookiecutter.project_name }}</strong>!</p>
+            <p class="text-gray-600 dark:text-gray-400">You can now access all features of your account.</p>
           </div>
           
-          <div class="action-buttons">
-            <router-link to="/dashboard" class="btn btn-primary">
+          <div class="flex gap-4 justify-center mb-8 flex-wrap">
+            <router-link to="/dashboard" class="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-2xl dark:shadow-gray-900/50">
               Go to Dashboard
             </router-link>
-            <router-link to="/profile" class="btn btn-secondary">
+            <router-link to="/profile" class="px-8 py-3 rounded-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200 dark:bg-gray-900">
               Complete Your Profile
             </router-link>
           </div>
           
-          <div class="next-steps">
-            <h3>What's Next?</h3>
-            <ul>
-              <li>Explore your dashboard</li>
-              <li>Complete your profile information</li>
-              <li>Check out our getting started guide</li>
-              <li>Connect with other users</li>
+          <div class="bg-gray-50 rounded-lg p-6 text-left dark:bg-gray-900">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 dark:text-gray-200">What's Next?</h3>
+            <ul class="space-y-2">
+              <li class="flex items-start">
+                <span class="text-green-500 mr-2 font-bold">✓</span>
+                <span class="text-gray-600 dark:text-gray-400">Explore your dashboard</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-green-500 mr-2 font-bold">✓</span>
+                <span class="text-gray-600 dark:text-gray-400">Complete your profile information</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-green-500 mr-2 font-bold">✓</span>
+                <span class="text-gray-600 dark:text-gray-400">Check out our getting started guide</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-green-500 mr-2 font-bold">✓</span>
+                <span class="text-gray-600 dark:text-gray-400">Connect with other users</span>
+              </li>
             </ul>
           </div>
         </div>
 
         <!-- Already Verified State -->
-        <div v-else-if="verificationStatus === 'already_verified'" class="verification-content">
-          <div class="icon-wrapper info">
-            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div v-else-if="verificationStatus === 'already_verified'" class="p-12 text-center">
+          <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
           
-          <h1 class="title">Already Verified</h1>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Already Verified</h1>
           
-          <p class="description">
+          <p class="text-lg text-gray-600 mb-8 dark:text-gray-400">
             Your email address has already been verified.
           </p>
           
-          <div class="action-buttons">
-            <router-link to="/dashboard" class="btn btn-primary">
+          <div class="flex gap-4 justify-center flex-wrap">
+            <router-link to="/dashboard" class="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-2xl dark:shadow-gray-900/50">
               Go to Dashboard
             </router-link>
-            <router-link to="/auth/login" class="btn btn-secondary">
+            <router-link to="/auth/login" class="px-8 py-3 rounded-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200 dark:bg-gray-900">
               Sign In
             </router-link>
           </div>
         </div>
 
         <!-- Error State -->
-        <div v-else-if="verificationStatus === 'error'" class="verification-content">
-          <div class="icon-wrapper error">
-            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div v-else-if="verificationStatus === 'error'" class="p-12 text-center">
+          <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
           
-          <h1 class="title">Verification Failed</h1>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Verification Failed</h1>
           
-          <p class="description">
+          <p class="text-lg text-gray-600 mb-8 dark:text-gray-400">
             {% raw %}{{ errorMessage || 'The verification link is invalid or has expired.' }}{% endraw %}
           </p>
           
-          <div class="action-buttons">
-            <router-link to="/auth/verify-email" class="btn btn-primary">
+          <div class="flex gap-4 justify-center mb-8 flex-wrap">
+            <router-link to="/auth/verify-email" class="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-2xl dark:shadow-gray-900/50">
               Request New Link
             </router-link>
-            <router-link to="/auth/login" class="btn btn-secondary">
+            <router-link to="/auth/login" class="px-8 py-3 rounded-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200 dark:bg-gray-900">
               Back to Login
             </router-link>
           </div>
           
-          <div class="help-text">
-            <p>If you continue to have issues, please contact support.</p>
+          <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <p class="text-gray-500 text-sm dark:text-gray-500">If you continue to have issues, please contact support.</p>
           </div>
         </div>
 
         <!-- Loading State -->
-        <div v-else class="verification-content">
-          <div class="spinner">
-            <div class="spinner-circle"></div>
+        <div v-else class="p-12 text-center">
+          <div class="w-16 h-16 mx-auto mb-8">
+            <div class="w-full h-full border-4 border-gray-200 border-t-indigo-500 rounded-full animate-spin dark:border-gray-700"></div>
           </div>
-          <h1 class="title">Verifying Your Email</h1>
-          <p class="description">Please wait while we verify your email address...</p>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Verifying Your Email</h1>
+          <p class="text-lg text-gray-600 dark:text-gray-400">Please wait while we verify your email address...</p>
         </div>
       </div>
     </div>
@@ -156,236 +168,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style scoped>
-.email-verification-done-view {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.verification-container {
-  max-width: 600px;
-  width: 100%;
-}
-
-.verification-card {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-}
-
-.verification-content {
-  padding: 3rem;
-  text-align: center;
-}
-
-/* Icon Styles */
-.icon-wrapper {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 2rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-wrapper.success {
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-}
-
-.icon-wrapper.info {
-  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-}
-
-.icon-wrapper.error {
-  background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
-}
-
-.icon {
-  width: 40px;
-  height: 40px;
-  color: white;
-}
-
-/* Animated check icon */
-.animated-check {
-  animation: checkmark 0.5s ease-in-out;
-}
-
-@keyframes checkmark {
-  0% {
-    stroke-dasharray: 0 100;
-  }
-  100% {
-    stroke-dasharray: 100 100;
-  }
-}
-
-/* Content Styles */
-.title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 1rem 0;
-}
-
-.description {
-  font-size: 1.125rem;
-  color: #718096;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.welcome-message {
-  background: #f7fafc;
-  border-left: 4px solid #667eea;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-.welcome-message p {
-  margin: 0.5rem 0;
-  color: #4a5568;
-}
-
-.welcome-message strong {
-  color: #667eea;
-}
-
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-  display: inline-block;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-}
-
-.btn-secondary {
-  background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
-}
-
-.btn-secondary:hover {
-  background: #667eea;
-  color: white;
-}
-
-/* Next Steps */
-.next-steps {
-  background: #f7fafc;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  text-align: left;
-}
-
-.next-steps h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 0 0 1rem 0;
-}
-
-.next-steps ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.next-steps li {
-  padding: 0.5rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-  color: #4a5568;
-}
-
-.next-steps li:before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: #48bb78;
-  font-weight: bold;
-}
-
-/* Help Text */
-.help-text {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.help-text p {
-  color: #718096;
-  font-size: 0.875rem;
-}
-
-/* Spinner */
-.spinner {
-  margin: 0 auto 2rem;
-  width: 60px;
-  height: 60px;
-  position: relative;
-}
-
-.spinner-circle {
-  width: 100%;
-  height: 100%;
-  border: 4px solid #e2e8f0;
-  border-top-color: #667eea;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive */
-@media (max-width: 640px) {
-  .verification-content {
-    padding: 2rem 1.5rem;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-  }
-  
-  .action-buttons {
-    flex-direction: column;
-  }
-  
-  .btn {
-    width: 100%;
-    text-align: center;
-  }
-}
-</style>
