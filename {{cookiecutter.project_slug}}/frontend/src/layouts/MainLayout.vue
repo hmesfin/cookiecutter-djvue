@@ -151,16 +151,17 @@
             <div>
               <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Quick Links</h3>
               <ul class="mt-4 space-y-2">
-                <li><a href="#" class="text-gray-300 hover:text-white">About</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white">Features</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white">Pricing</a></li>
+                <li><RouterLink to="/about" class="text-gray-300 hover:text-white">About</RouterLink></li>
+                <li><RouterLink to="/features" class="text-gray-300 hover:text-white">Features</RouterLink></li>
+                <li><RouterLink to="/pricing" class="text-gray-300 hover:text-white">Pricing</RouterLink></li>
+                <li><RouterLink to="/contact" class="text-gray-300 hover:text-white">Contact</RouterLink></li>
               </ul>
             </div>
             <div>
               <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Legal</h3>
               <ul class="mt-4 space-y-2">
-                <li><a href="#" class="text-gray-300 hover:text-white">Privacy Policy</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-white">Terms of Service</a></li>
+                <li><RouterLink to="/privacy" class="text-gray-300 hover:text-white">Privacy Policy</RouterLink></li>
+                <li><RouterLink to="/terms" class="text-gray-300 hover:text-white">Terms of Service</RouterLink></li>
               </ul>
             </div>
           </div>
@@ -208,6 +209,11 @@
       
       <footer class="main-footer">
         <div class="footer-container">
+          <div class="footer-links">
+            <RouterLink to="/privacy">Privacy Policy</RouterLink>
+            <span class="separator">|</span>
+            <RouterLink to="/terms">Terms of Service</RouterLink>
+          </div>
           <p>© {% raw %}{{ new Date().getFullYear() }}{% endraw %} {{ cookiecutter.project_name }}. All rights reserved.</p>
         </div>
       </footer>

@@ -31,6 +31,16 @@ export default [
         name: 'Contact',
         component: () => import('./views/ContactView.vue'),
       },
+      {
+        path: 'privacy',
+        name: 'Privacy',
+        component: () => import('./views/PrivacyView.vue'),
+      },
+      {
+        path: 'terms',
+        name: 'Terms',
+        component: () => import('./views/TermsView.vue'),
+      },
     ],
   },
 ]
