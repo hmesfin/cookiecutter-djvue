@@ -3,7 +3,7 @@
     <div class="verification-container">
       <div class="verification-card">
         <!-- Verification Pending -->
-        <div v-if="status === 'pending'" class="verification-content">
+        <div v-if="{% raw %}status === 'pending'{% endraw %}" class="verification-content">
           <div class="icon-wrapper pending">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Verifying -->
-        <div v-else-if="status === 'verifying'" class="verification-content">
+        <div v-else-if="{% raw %}status === 'verifying'{% endraw %}" class="verification-content">
           <div class="spinner">
             <div class="spinner-circle"></div>
           </div>
@@ -47,7 +47,7 @@
         </div>
 
         <!-- Success -->
-        <div v-else-if="status === 'success'" class="verification-content">
+        <div v-else-if="{% raw %}status === 'success'{% endraw %}" class="verification-content">
           <div class="icon-wrapper success">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -65,7 +65,7 @@
         </div>
 
         <!-- Already Verified -->
-        <div v-else-if="status === 'already_verified'" class="verification-content">
+        <div v-else-if="{% raw %}status === 'already_verified'{% endraw %}" class="verification-content">
           <div class="icon-wrapper info">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -86,7 +86,7 @@
         </div>
 
         <!-- Error -->
-        <div v-else-if="status === 'error'" class="verification-content">
+        <div v-else-if="{% raw %}status === 'error'{% endraw %}" class="verification-content">
           <div class="icon-wrapper error">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -117,7 +117,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import axios from '@/services/api'
 
-type VerificationStatus = 'pending' | 'verifying' | 'success' | 'already_verified' | 'error'
+type VerificationStatus = {% raw %}'pending' | 'verifying' | 'success' | 'already_verified' | 'error'{% endraw %}
 {% else -%}
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -129,7 +129,7 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
-const status = ref({% if cookiecutter.use_typescript == 'y' %}<VerificationStatus>{% endif %}'pending')
+const status = ref({% if cookiecutter.use_typescript == 'y' %}<VerificationStatus>{% endif %}{% raw %}'pending'{% endraw %})
 const email = ref('')
 const resending = ref(false)
 const cooldown = ref(0)
@@ -157,15 +157,15 @@ onUnmounted(() => {
 })
 
 const verifyEmail = async (uid{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}, token{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}) => {
-  status.value = 'verifying'
+  status.value = {% raw %}'verifying'{% endraw %}
   
   try {
     const response = await axios.post(`/auth/verify-email/${uid}/${token}/`)
     
     if (response.data.already_verified) {
-      status.value = 'already_verified'
+      status.value = {% raw %}'already_verified'{% endraw %}
     } else {
-      status.value = 'success'
+      status.value = {% raw %}'success'{% endraw %}
       
       // Update user in auth store if logged in
       if (authStore.isAuthenticated && response.data.user) {
@@ -178,7 +178,7 @@ const verifyEmail = async (uid{% if cookiecutter.use_typescript == 'y' %}: strin
       }, 3000)
     }
   } catch (error) {
-    status.value = 'error'
+    status.value = {% raw %}'error'{% endraw %}
     errorMessage.value = error.response?.data?.message || 'Verification failed. Please try again.'
   }
 }
@@ -194,7 +194,7 @@ const resendEmail = async () => {
     })
     
     if (response.data.already_verified) {
-      status.value = 'already_verified'
+      status.value = {% raw %}'already_verified'{% endraw %}
     } else {
       alert('Verification email sent! Please check your inbox.')
       startCooldown()
@@ -223,7 +223,7 @@ const requestNewLink = () => {
   const userEmail = prompt('Please enter your email address:')
   if (userEmail) {
     email.value = userEmail
-    status.value = 'pending'
+    status.value = {% raw %}'pending'{% endraw %}
     resendEmail()
   }
 }
