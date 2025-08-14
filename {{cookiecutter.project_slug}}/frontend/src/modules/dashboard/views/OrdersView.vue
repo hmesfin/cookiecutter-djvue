@@ -16,11 +16,11 @@
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Pending Orders</p>
-            <p class="text-2xl font-bold text-gray-900">{% raw %}{{ stats.pending }}{% endraw %}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Pending Orders</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.pending }}{% endraw %}</p>
           </div>
           <div class="p-3 bg-yellow-100 rounded-full">
             <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,12 +29,12 @@
           </div>
         </div>
       </div>
-      
-      <div class="bg-white rounded-lg shadow-md p-6">
+
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Processing</p>
-            <p class="text-2xl font-bold text-gray-900">{% raw %}{{ stats.processing }}{% endraw %}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Processing</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.processing }}{% endraw %}</p>
           </div>
           <div class="p-3 bg-blue-100 rounded-full">
             <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,12 +43,12 @@
           </div>
         </div>
       </div>
-      
-      <div class="bg-white rounded-lg shadow-md p-6">
+
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Completed</p>
-            <p class="text-2xl font-bold text-gray-900">{% raw %}{{ stats.completed }}{% endraw %}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Completed</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.completed }}{% endraw %}</p>
           </div>
           <div class="p-3 bg-green-100 rounded-full">
             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,12 +57,12 @@
           </div>
         </div>
       </div>
-      
-      <div class="bg-white rounded-lg shadow-md p-6">
+
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Revenue</p>
-            <p class="text-2xl font-bold text-gray-900">${% raw %}{{ stats.revenue.toLocaleString() }}{% endraw %}</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Revenue</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">${% raw %}{{ stats.revenue.toLocaleString() }}{% endraw %}</p>
           </div>
           <div class="p-3 bg-indigo-100 rounded-full">
             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,19 +119,19 @@
     </div>
 
     <!-- Orders Table -->
-    <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead>
             <tr class="border-b border-gray-200">
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Order ID</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Customer</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Products</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Total</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Status</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Payment</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Date</th>
-              <th class="text-left py-3 px-4 font-medium text-gray-700">Actions</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Order ID</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Customer</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Products</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Total</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Status</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Payment</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Date</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-400">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -141,22 +141,22 @@
               </td>
               <td class="py-3 px-4">
                 <div>
-                  <div class="font-medium text-gray-900">{% raw %}{{ order.customer.name }}{% endraw %}</div>
-                  <div class="text-sm text-gray-500">{% raw %}{{ order.customer.email }}{% endraw %}</div>
+                  <div class="font-medium text-gray-900 dark:text-gray-100">{% raw %}{{ order.customer.name }}{% endraw %}</div>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">{% raw %}{{ order.customer.email }}{% endraw %}</div>
                 </div>
               </td>
               <td class="py-3 px-4">
                 <div class="text-sm">
-                  <div v-for="(product, idx) in order.products.slice(0, 2)" :key="idx" class="text-gray-900">
+                  <div v-for="(product, idx) in order.products.slice(0, 2)" :key="idx" class="text-gray-900 dark:text-gray-100">
                     {% raw %}{{ product.quantity }}{% endraw %}x {% raw %}{{ product.name }}{% endraw %}
                   </div>
-                  <div v-if="order.products.length > 2" class="text-gray-500">
+                  <div v-if="order.products.length > 2" class="text-gray-500 dark:text-gray-400">
                     +{% raw %}{{ order.products.length - 2 }}{% endraw %} more
                   </div>
                 </div>
               </td>
               <td class="py-3 px-4">
-                <span class="font-semibold text-gray-900">${% raw %}{{ order.total.toFixed(2) }}{% endraw %}</span>
+                <span class="font-semibold text-gray-900 dark:text-gray-100">${% raw %}{{ order.total.toFixed(2) }}{% endraw %}</span>
               </td>
               <td class="py-3 px-4">
                 <span 
@@ -186,7 +186,7 @@
                   </span>
                 </div>
               </td>
-              <td class="py-3 px-4 text-sm text-gray-500">
+              <td class="py-3 px-4 text-sm text-gray-500 dark:text-gray-400">
                 {% raw %}{{ formatDate(order.createdAt) }}{% endraw %}
               </td>
               <td class="py-3 px-4">
@@ -195,30 +195,30 @@
                     @click="toggleMenu(order.id)"
                     class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                     </svg>
                   </button>
                   
                   <div 
                     v-if="activeMenu === order.id"
-                    class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10"
+                    class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 z-10"
                   >
                     <button 
                       @click="viewOrder(order)"
-                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
                     >
                       View Details
                     </button>
                     <button 
                       @click="editOrder(order)"
-                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
                     >
                       Edit Order
                     </button>
                     <button 
                       @click="printInvoice(order)"
-                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
                     >
                       Print Invoice
                     </button>
@@ -239,14 +239,14 @@
 
       <!-- Pagination -->
       <div class="flex items-center justify-between mt-6">
-        <div class="text-sm text-gray-600">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
           Showing {% raw %}{{ startIndex + 1 }}{% endraw %} to {% raw %}{{ endIndex }}{% endraw %} of {% raw %}{{ filteredOrders.length }}{% endraw %} orders
         </div>
         <div class="flex gap-2">
           <button 
             @click="currentPage--"
             :disabled="currentPage === 1"
-            class="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-400 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
@@ -258,7 +258,7 @@
               'px-3 py-1 border rounded-lg text-sm font-medium',
               currentPage === page 
                 ? 'bg-indigo-600 text-white border-indigo-600' 
-                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                : 'border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700'
             ]"
           >
             {% raw %}{{ page }}{% endraw %}
@@ -266,7 +266,7 @@
           <button 
             @click="currentPage++"
             :disabled="currentPage === totalPages"
-            class="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>

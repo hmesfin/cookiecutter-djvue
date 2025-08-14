@@ -6,7 +6,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <!-- Settings Navigation -->
-      <div class="lg:col-span-1 bg-white rounded-lg shadow-md p-6">
+      <div class="lg:col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <button
           v-for="tab in tabs"
           :key="tab.id"
@@ -19,18 +19,18 @@
       </div>
 
       <!-- Settings Panel -->
-      <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+      <div class="lg:col-span-3 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <!-- General Settings -->
         <div v-if="activeTab === 'general'" class="space-y-6">
-          <h2 class="text-2xl font-semibold text-gray-900 mb-4">General Settings</h2>
-          
+          <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">General Settings</h2>
+
           <div class="mb-8">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Application</h3>
-            
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Application</h3>
+
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Language</label>
-                <p class="text-sm text-gray-500 mt-1">Select your preferred language</p>
+                <label class="text-gray-900 dark:text-gray-100">Language</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Select your preferred language</p>
               </div>
               <select v-model="settings.language" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="en">English</option>
@@ -44,8 +44,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Time Zone</label>
-                <p class="text-sm text-gray-500 mt-1">Set your local time zone</p>
+                <label class="text-gray-900 dark:text-gray-100">Time Zone</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Set your local time zone</p>
               </div>
               <select v-model="settings.timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="UTC">UTC</option>
@@ -61,8 +61,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Date Format</label>
-                <p class="text-sm text-gray-500 mt-1">Choose how dates are displayed</p>
+                <label class="text-gray-900 dark:text-gray-100">Date Format</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose how dates are displayed</p>
               </div>
               <select v-model="settings.dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="MM/DD/YYYY">MM/DD/YYYY</option>
@@ -73,8 +73,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Theme</label>
-                <p class="text-sm text-gray-500 mt-1">Choose your interface theme</p>
+                <label class="text-gray-900 dark:text-gray-100">Theme</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose your interface theme</p>
               </div>
               <div class="theme-selector">
                 <button
@@ -96,12 +96,12 @@
           <h2 class="text-2xl font-semibold text-gray-900 mb-4">Notification Preferences</h2>
           
           <div class="mb-8">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Email Notifications</h3>
-            
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Email Notifications</h3>
+
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Account Activity</label>
-                <p class="text-sm text-gray-500 mt-1">Get notified about account-related activities</p>
+                <label class="text-gray-900 dark:text-gray-100">Account Activity</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Get notified about account-related activities</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.notifications.accountActivity">
@@ -111,8 +111,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Security Alerts</label>
-                <p class="text-sm text-gray-500 mt-1">Receive alerts about security events</p>
+                <label class="text-gray-900 dark:text-gray-100">Security Alerts</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Receive alerts about security events</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.notifications.securityAlerts">
@@ -122,8 +122,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Newsletter</label>
-                <p class="text-sm text-gray-500 mt-1">Receive our monthly newsletter</p>
+                <label class="text-gray-900 dark:text-gray-100">Newsletter</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Receive our monthly newsletter</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.notifications.newsletter">
@@ -133,8 +133,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Product Updates</label>
-                <p class="text-sm text-gray-500 mt-1">Get notified about new features and updates</p>
+                <label class="text-gray-900 dark:text-gray-100">Product Updates</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Get notified about new features and updates</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.notifications.productUpdates">
@@ -148,8 +148,8 @@
             
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Browser Notifications</label>
-                <p class="text-sm text-gray-500 mt-1">Show desktop notifications</p>
+                <label class="text-gray-900 dark:text-gray-100">Browser Notifications</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Show desktop notifications</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.notifications.browserNotifications">
@@ -159,8 +159,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Sound</label>
-                <p class="text-sm text-gray-500 mt-1">Play sound for notifications</p>
+                <label class="text-gray-900 dark:text-gray-100">Sound</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Play sound for notifications</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.notifications.sound">
@@ -179,8 +179,8 @@
             
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Profile Visibility</label>
-                <p class="text-sm text-gray-500 mt-1">Control who can see your profile</p>
+                <label class="text-gray-900 dark:text-gray-100">Profile Visibility</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Control who can see your profile</p>
               </div>
               <select v-model="settings.privacy.profileVisibility" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="public">Public</option>
@@ -191,8 +191,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Show Online Status</label>
-                <p class="text-sm text-gray-500 mt-1">Let others see when you're online</p>
+                <label class="text-gray-900 dark:text-gray-100">Show Online Status</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Let others see when you're online</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.privacy.showOnlineStatus">
@@ -202,8 +202,8 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Activity Status</label>
-                <p class="text-sm text-gray-500 mt-1">Show your recent activity to others</p>
+                <label class="text-gray-900 dark:text-gray-100">Activity Status</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Show your recent activity to others</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.privacy.activityStatus">
@@ -217,18 +217,18 @@
             
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Two-Factor Authentication</label>
-                <p class="text-sm text-gray-500 mt-1">Add an extra layer of security to your account</p>
+                <label class="text-gray-900 dark:text-gray-100">Two-Factor Authentication</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Add an extra layer of security to your account</p>
               </div>
-              <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
+              <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 transition-colors">
                 {% raw %}{{ settings.security.twoFactorEnabled ? 'Manage' : 'Enable' }}{% endraw %}
               </button>
             </div>
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Login Notifications</label>
-                <p class="text-sm text-gray-500 mt-1">Get notified of new login attempts</p>
+                <label class="text-gray-900 dark:text-gray-100">Login Notifications</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Get notified of new login attempts</p>
               </div>
               <label class="toggle">
                 <input type="checkbox" v-model="settings.security.loginNotifications">
@@ -238,28 +238,28 @@
 
             <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
               <div class="flex-1">
-                <label>Active Sessions</label>
-                <p class="text-sm text-gray-500 mt-1">Manage your active login sessions</p>
+                <label class="text-gray-900 dark:text-gray-100">Active Sessions</label>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your active login sessions</p>
               </div>
-              <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">View Sessions</button>
+              <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 transition-colors">View Sessions</button>
             </div>
           </div>
         </div>
 
         <!-- Integrations Settings -->
         <div v-if="activeTab === 'integrations'" class="space-y-6">
-          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Integrations</h2>
-          
+          <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Integrations</h2>
+
           <div class="mb-8">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Connected Services</h3>
-            
-            <div class="integration-list">
-              <div v-for="integration in integrations" :key="integration.id" class="integration-item">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Connected Services</h3>
+
+            <div class="space-y-4">
+              <div v-for="integration in integrations" :key="integration.id" class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                 <div class="flex items-center gap-3">
                   <img :src="integration.icon" :alt="integration.name" class="w-12 h-12 rounded-lg flex items-center justify-center">
                   <div>
-                    <h4>{% raw %}{{ integration.name }}{% endraw %}</h4>
-                    <p>{% raw %}{{ integration.description }}{% endraw %}</p>
+                    <h4 class="text-gray-900 dark:text-gray-100">{% raw %}{{ integration.name }}{% endraw %}</h4>
+                    <p class="text-gray-500 dark:text-gray-400">{% raw %}{{ integration.description }}{% endraw %}</p>
                   </div>
                 </div>
                 <button 
@@ -275,7 +275,7 @@
 
         <!-- Save Button -->
         <div class="flex justify-end gap-3 mt-6">
-          <button @click="resetSettings" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
+          <button @click="resetSettings" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 transition-colors">
             Reset to Defaults
           </button>
           <button @click="saveSettings" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors" :disabled="saving">

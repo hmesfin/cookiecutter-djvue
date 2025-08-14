@@ -40,7 +40,9 @@
             </span>
           </div>
         </div>
-        <canvas ref="revenueChart" class="w-full h-64"></canvas>
+        <div class="relative h-64">
+          <canvas ref="revenueChart"></canvas>
+        </div>
       </div>
 
       <!-- Traffic Sources -->
@@ -48,7 +50,9 @@
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Traffic Sources</h3>
         </div>
-        <canvas ref="trafficChart" class="w-full h-64"></canvas>
+        <div class="relative h-64">
+          <canvas ref="trafficChart"></canvas>
+        </div>
         <div class="mt-4 space-y-2">
           <div v-for="source in trafficSources" :key="source.name" class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -80,7 +84,9 @@
             </button>
           </div>
         </div>
-        <canvas ref="activityChart" class="w-full h-64"></canvas>
+        <div class="relative h-64">
+          <canvas ref="activityChart"></canvas>
+        </div>
       </div>
     </div>
 

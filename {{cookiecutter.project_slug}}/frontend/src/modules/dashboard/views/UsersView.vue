@@ -233,8 +233,8 @@
   </div>
 </template>
 
-<script setup>
-{% if cookiecutter.use_typescript == 'y' -%}
+<script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
+{%- if cookiecutter.use_typescript == 'y' -%}
 import { ref, computed, reactive } from 'vue'
 
 interface User {
