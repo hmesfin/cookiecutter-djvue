@@ -1,23 +1,15 @@
 <template>
   <div class="p-8 max-w-6xl mx-auto">
-    <div class="page-header">
-      <div class="header-left">
-        <router-link to="/dashboard/orders" class="back-link">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-          </svg>
-          Back to Orders
-        </router-link>
-        <h1 class="page-title">Create New Order</h1>
-      </div>
-    </div>
+        <PageHeader
+      title="Create New Order" :show-back="true" back-link="/dashboard/orders" back-text="Back to Orders"
+    />
 
-    <form @submit.prevent="handleSubmit" class="order-form">
-      <div class="form-sections">
+    <form @submit.prevent="handleSubmit" class="space-y-6">
+      <div class="space-y-6">
         <!-- Customer Information -->
-        <div class="form-section">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Customer Information</h2>
-          <div class="form-grid">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
               <label for="customerName">Customer Name *</label>
               <input 
@@ -64,10 +56,10 @@
         </div>
 
         <!-- Shipping Address -->
-        <div class="form-section">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Shipping Address</h2>
-          <div class="form-grid">
-            <div class="form-group full-width">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="mb-6 md:col-span-2">
               <label for="shippingAddress">Street Address *</label>
               <input 
                 id="shippingAddress"
@@ -132,7 +124,7 @@
         </div>
 
         <!-- Products -->
-        <div class="form-section">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
           <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Products</h2>
             <button type="button" @click="addProduct" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
@@ -143,7 +135,7 @@
             </button>
           </div>
           
-          <div class="products-table">
+          <div class="bg-white rounded-lg shadow-md p-6">
             <table>
               <thead>
                 <tr>
@@ -199,14 +191,14 @@
                       @input="calculateTotals"
                     >
                   </td>
-                  <td class="product-total">
+                  <td class="font-semibold text-gray-900">
                     ${% raw %}{{ (product.quantity * product.price).toFixed(2) }}{% endraw %}
                   </td>
                   <td>
                     <button 
                       type="button"
                       @click="removeProduct(index)"
-                      class="btn-icon danger"
+                      class="p-2 hover:bg-gray-100 rounded-lg transition-colors danger"
                       title="Remove"
                     >
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,23 +213,23 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="form-section">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Order Summary</h2>
-          <div class="summary-grid">
-            <div class="summary-row">
-              <span class="summary-label">Subtotal:</span>
-              <span class="summary-value">${% raw %}{{ orderSummary.subtotal.toFixed(2) }}{% endraw %}</span>
+          <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Subtotal:</span>
+              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.subtotal.toFixed(2) }}{% endraw %}</span>
             </div>
-            <div class="summary-row">
-              <span class="summary-label">Tax ({% raw %}{{ orderSummary.taxRate }}{% endraw %}%):</span>
-              <span class="summary-value">${% raw %}{{ orderSummary.tax.toFixed(2) }}{% endraw %}</span>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Tax ({% raw %}{{ orderSummary.taxRate }}{% endraw %}%):</span>
+              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.tax.toFixed(2) }}{% endraw %}</span>
             </div>
-            <div class="summary-row">
-              <span class="summary-label">Shipping:</span>
-              <span class="summary-value">${% raw %}{{ orderSummary.shipping.toFixed(2) }}{% endraw %}</span>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Shipping:</span>
+              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.shipping.toFixed(2) }}{% endraw %}</span>
             </div>
-            <div class="summary-row">
-              <label for="discount" class="summary-label">Discount:</label>
+            <div class="flex justify-between">
+              <label for="discount" class="text-gray-600">Discount:</label>
               <input 
                 id="discount"
                 v-model.number="orderSummary.discount"
@@ -248,17 +240,17 @@
                 @input="calculateTotals"
               >
             </div>
-            <div class="summary-row total">
-              <span class="summary-label">Total:</span>
-              <span class="summary-value">${% raw %}{{ orderSummary.total.toFixed(2) }}{% endraw %}</span>
+            <div class="flex justify-between total">
+              <span class="text-gray-600">Total:</span>
+              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.total.toFixed(2) }}{% endraw %}</span>
             </div>
           </div>
         </div>
 
         <!-- Payment & Notes -->
-        <div class="form-section">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Payment & Notes</h2>
-          <div class="form-grid">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
               <label for="paymentMethod">Payment Method *</label>
               <select 
@@ -287,7 +279,7 @@
                 <option value="partial">Partial</option>
               </select>
             </div>
-            <div class="form-group full-width">
+            <div class="mb-6 md:col-span-2">
               <label for="orderNotes">Order Notes</label>
               <textarea 
                 id="orderNotes"
@@ -302,7 +294,7 @@
       </div>
 
       <!-- Form Actions -->
-      <div class="form-actions">
+      <div class="flex justify-end gap-3 mt-8">
         <router-link to="/dashboard/orders" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
           Cancel
         </router-link>

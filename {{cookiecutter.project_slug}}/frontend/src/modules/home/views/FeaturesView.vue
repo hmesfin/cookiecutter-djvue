@@ -16,15 +16,15 @@
     <!-- Main Features Grid -->
     <section class="features-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Core Features</h2>
-          <p class="section-description">
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Core Features</h2>
+          <p class="text-gray-600">
             Built with the latest technologies and best practices
           </p>
         </div>
         
         <div class="features-grid">
-          <div v-for="feature in coreFeatures" :key="feature.id" class="feature-card">
+          <div v-for="feature in coreFeatures" :key="feature.id" class="feature-bg-white rounded-lg shadow-md p-6">
             <div class="feature-icon" :style="{ background: feature.color }">
               <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path :d="feature.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -48,9 +48,9 @@
     <!-- Technical Stack -->
     <section class="tech-stack-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Built with Modern Technology</h2>
-          <p class="section-description">
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Built with Modern Technology</h2>
+          <p class="text-gray-600">
             Leveraging the best tools and frameworks for optimal performance
           </p>
         </div>
@@ -70,9 +70,9 @@
     <!-- Feature Comparison -->
     <section class="comparison-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Why Choose Us?</h2>
-          <p class="section-description">
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Why Choose Us?</h2>
+          <p class="text-gray-600">
             See how we compare to traditional solutions
           </p>
         </div>

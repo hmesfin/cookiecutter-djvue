@@ -158,7 +158,7 @@
       <div class="dashboard-main">
         <header class="dashboard-header">
           <h1>{% raw %}{{ pageTitle }}{% endraw %}</h1>
-          <div class="header-actions">
+          <div class="flex items-center gap-3">
             <button @click="handleLogout">Logout</button>
           </div>
         </header>

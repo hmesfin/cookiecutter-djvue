@@ -30,7 +30,7 @@
           <div 
             v-for="plan in pricingPlans" 
             :key="plan.id"
-            :class="['pricing-card', { featured: plan.featured }]"
+            :class="['pricing-bg-white rounded-lg shadow-md p-6', { featured: plan.featured }]"
           >
             <div v-if="plan.featured" class="featured-badge">Most Popular</div>
             
@@ -72,7 +72,7 @@
     <!-- Enterprise Section -->
     <section class="enterprise-section">
       <div class="container">
-        <div class="enterprise-card">
+        <div class="enterprise-bg-white rounded-lg shadow-md p-6">
           <div class="enterprise-content">
             <h2 class="enterprise-title">Need a Custom Solution?</h2>
             <p class="enterprise-description">
@@ -99,8 +99,8 @@
     <!-- FAQ Section -->
     <section class="faq-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Frequently Asked Questions</h2>
         </div>
         
         <div class="faq-grid">

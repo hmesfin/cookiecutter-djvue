@@ -17,7 +17,7 @@
       <div class="container">
         <div class="mission-grid">
           <div class="mission-content">
-            <h2 class="section-title">Our Mission</h2>
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">Our Mission</h2>
             <p class="mission-text">
               We believe in empowering developers and businesses with tools that make 
               building web applications faster, easier, and more enjoyable. Our mission 
@@ -43,15 +43,15 @@
     <!-- Values Section -->
     <section class="values-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Our Values</h2>
-          <p class="section-description">
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Our Values</h2>
+          <p class="text-gray-600">
             The principles that guide everything we do
           </p>
         </div>
         
         <div class="values-grid">
-          <div v-for="value in values" :key="value.title" class="value-card">
+          <div v-for="value in values" :key="value.title" class="value-bg-white rounded-lg shadow-md p-6">
             <div class="value-icon" :style="{ background: value.color }">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path :d="value.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
@@ -67,18 +67,18 @@
     <!-- Team Section -->
     <section class="team-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Meet Our Team</h2>
-          <p class="section-description">
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Meet Our Team</h2>
+          <p class="text-gray-600">
             Passionate professionals dedicated to your success
           </p>
         </div>
         
         <div class="team-grid">
-          <div v-for="member in teamMembers" :key="member.name" class="team-card">
+          <div v-for="member in teamMembers" :key="member.name" class="team-bg-white rounded-lg shadow-md p-6">
             <div class="member-avatar">
               <img v-if="member.avatar" :src="member.avatar" :alt="member.name">
-              <div v-else class="avatar-placeholder">
+              <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
                 {% raw %}{{ getInitials(member.name) }}{% endraw %}
               </div>
             </div>
@@ -100,10 +100,10 @@
     <!-- Stats Section -->
     <section class="stats-section">
       <div class="container">
-        <div class="stats-grid">
-          <div v-for="stat in stats" :key="stat.label" class="stat-card">
-            <div class="stat-value">{% raw %}{{ stat.value }}{% endraw %}</div>
-            <div class="stat-label">{% raw %}{{ stat.label }}{% endraw %}</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div v-for="stat in stats" :key="stat.label" class="stat-bg-white rounded-lg shadow-md p-6">
+            <div class="text-3xl font-bold text-gray-900">{% raw %}{{ stat.value }}{% endraw %}</div>
+            <div class="text-sm font-medium text-gray-600">{% raw %}{{ stat.label }}{% endraw %}</div>
           </div>
         </div>
       </div>
@@ -112,8 +112,8 @@
     <!-- Timeline Section -->
     <section class="timeline-section">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Our Journey</h2>
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Our Journey</h2>
         </div>
         
         <div class="timeline">

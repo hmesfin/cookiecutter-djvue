@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-form">
+  <div class="space-y-6">
     {% if cookiecutter.css_framework == 'tailwindcss' -%}
     <div class="space-y-6">
       <div>
@@ -120,7 +120,7 @@
       
       <form @submit.prevent="handleRegister">
         <div class="form-row">
-          <div class="form-group">
+          <div class="mb-6">
             <label for="firstName">First name</label>
             <input
               id="firstName"
@@ -132,7 +132,7 @@
             <span v-if="errors.firstName" class="error-message">{% raw %}{{ errors.firstName }}{% endraw %}</span>
           </div>
 
-          <div class="form-group">
+          <div class="mb-6">
             <label for="lastName">Last name</label>
             <input
               id="lastName"
@@ -145,7 +145,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="mb-6">
           <label for="email">Email address</label>
           <input
             id="email"
@@ -157,7 +157,7 @@
           <span v-if="errors.email" class="error-message">{% raw %}{{ errors.email }}{% endraw %}</span>
         </div>
 
-        <div class="form-group">
+        <div class="mb-6">
           <label for="password">Password</label>
           <input
             id="password"
@@ -169,7 +169,7 @@
           <span v-if="errors.password" class="error-message">{% raw %}{{ errors.password }}{% endraw %}</span>
         </div>
 
-        <div class="form-group">
+        <div class="mb-6">
           <label for="confirmPassword">Confirm password</label>
           <input
             id="confirmPassword"
@@ -288,98 +288,3 @@ const handleRegister = async () => {
 }
 </script>
 
-<style scoped>
-{% if cookiecutter.css_framework == 'none' -%}
-.auth-form {
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.register-form h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.875rem;
-  text-align: center;
-}
-
-.subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-.subtitle a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
-  font-size: 1rem;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
-
-.form-group input.error {
-  border-color: #dc3545;
-}
-
-.error-message {
-  color: #dc3545;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-  display: block;
-}
-
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.checkbox a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.btn-block {
-  width: 100%;
-}
-
-.alert {
-  padding: 0.75rem;
-  border-radius: 0.25rem;
-  margin-top: 1rem;
-}
-
-.alert-error {
-  background: #fee;
-  color: #c33;
-  border: 1px solid #fcc;
-}
-{%- endif %}
-</style>

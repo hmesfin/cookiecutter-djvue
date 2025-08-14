@@ -1,38 +1,41 @@
 <template>
   <div class="p-8 max-w-7xl mx-auto">
-    <div class="page-header">
-      <h1 class="page-title">Users</h1>
+        <PageHeader
+      title="Users" description="Manage user accounts and permissions"
+    >
+      <template #actions>
       <button @click="showAddUserModal = true" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
         Add User
       </button>
-    </div>
+      </template>
+    </PageHeader>
 
     <!-- Filters -->
-    <div class="filters-bar">
-      <div class="search-box">
-        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex gap-4 mb-6">
+      <div class="relative flex-1">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
         <input 
           v-model="searchQuery"
           type="text"
           placeholder="Search users..."
-          class="search-input"
+          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         >
       </div>
       
       <div class="filter-group">
-        <select v-model="roleFilter" class="filter-select">
+        <select v-model="roleFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
           <option value="">All Roles</option>
           <option value="admin">Admin</option>
           <option value="manager">Manager</option>
           <option value="user">User</option>
         </select>
         
-        <select v-model="statusFilter" class="filter-select">
+        <select v-model="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
           <option value="">All Status</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -42,9 +45,9 @@
     </div>
 
     <!-- Users Table -->
-    <div class="table-card">
-      <div class="table-wrapper">
-        <table class="users-table">
+    <div class="table-bg-white rounded-lg shadow-md p-6">
+      <div class="overflow-x-auto">
+        <table class="bg-white rounded-lg shadow-md overflow-hidden">
           <thead>
             <tr>
               <th>
@@ -73,13 +76,13 @@
                 <input type="checkbox" v-model="selectedUsers" :value="user.id">
               </td>
               <td>
-                <div class="user-info">
-                  <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="user-avatar">
-                  <div v-else class="avatar-placeholder">
+                <div class="flex items-center gap-3">
+                  <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="w-10 h-10 rounded-full">
+                  <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
                     {% raw %}{{ getInitials(user.name) }}{% endraw %}
                   </div>
                   <div>
-                    <div class="user-name">{% raw %}{{ user.name }}{% endraw %}</div>
+                    <div class="font-medium text-gray-900">{% raw %}{{ user.name }}{% endraw %}</div>
                     <div class="user-subtitle">{% raw %}{{ user.department }}{% endraw %}</div>
                   </div>
                 </div>
@@ -91,19 +94,19 @@
                 </span>
               </td>
               <td>
-                <span :class="['status-badge', `status-${user.status}`]">
+                <span :class="['inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium', `status-${user.status}`]">
                   {% raw %}{{ user.status }}{% endraw %}
                 </span>
               </td>
               <td>{% raw %}{{ formatDate(user.lastActive) }}{% endraw %}</td>
               <td>
-                <div class="action-buttons">
-                  <button @click="editUser(user)" class="btn-icon" title="Edit">
+                <div class="flex gap-2">
+                  <button @click="editUser(user)" class="p-2 hover:bg-gray-100 rounded-lg transition-colors" title="Edit">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                     </svg>
                   </button>
-                  <button @click="deleteUser(user)" class="btn-icon danger" title="Delete">
+                  <button @click="deleteUser(user)" class="p-2 hover:bg-gray-100 rounded-lg transition-colors danger" title="Delete">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>
@@ -116,15 +119,15 @@
       </div>
 
       <!-- Pagination -->
-      <div class="pagination">
-        <div class="pagination-info">
+      <div class="flex items-center justify-between mt-6">
+        <div class="flex items-center justify-between mt-6-info">
           Showing {% raw %}{{ startIndex + 1 }}{% endraw %} to {% raw %}{{ endIndex }}{% endraw %} of {% raw %}{{ filteredUsers.length }}{% endraw %} users
         </div>
-        <div class="pagination-controls">
+        <div class="flex items-center justify-between mt-6-controls">
           <button 
             @click="currentPage--"
             :disabled="currentPage === 1"
-            class="pagination-btn"
+            class="flex items-center justify-between mt-6-btn"
           >
             Previous
           </button>
@@ -132,14 +135,14 @@
             v-for="page in visiblePages"
             :key="page"
             @click="currentPage = page"
-            :class="['pagination-btn', { active: currentPage === page }]"
+            :class="['flex items-center justify-between mt-6-btn', { active: currentPage === page }]"
           >
             {% raw %}{{ page }}{% endraw %}
           </button>
           <button 
             @click="currentPage++"
             :disabled="currentPage === totalPages"
-            class="pagination-btn"
+            class="flex items-center justify-between mt-6-btn"
           >
             Next
           </button>
@@ -148,18 +151,18 @@
     </div>
 
     <!-- Add/Edit User Modal -->
-    <div v-if="showAddUserModal || editingUser" class="modal-overlay" @click.self="closeModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h2 class="modal-title">{% raw %}{{ editingUser ? 'Edit User' : 'Add New User' }}{% endraw %}</h2>
-          <button @click="closeModal" class="modal-close">
+    <div v-if="showAddUserModal || editingUser" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="closeModal">
+      <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-header">
+          <h2 class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-title">{% raw %}{{ editingUser ? 'Edit User' : 'Add New User' }}{% endraw %}</h2>
+          <button @click="closeModal" class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-close">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
-        <form @submit.prevent="saveUser" class="modal-body">
-          <div class="form-grid">
+        <form @submit.prevent="saveUser" class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-body">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
               <label for="userName">Name</label>
               <input 
@@ -216,7 +219,7 @@
               </select>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-footer">
             <button type="button" @click="closeModal" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
               Cancel
             </button>

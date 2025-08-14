@@ -1,28 +1,14 @@
 <template>
   <div class="p-8 max-w-7xl mx-auto">
-    <div class="page-header">
-      <h1 class="page-title">Analytics</h1>
-      <div class="header-actions">
-        <select v-model="selectedPeriod" class="period-selector">
-          <option value="7d">Last 7 days</option>
-          <option value="30d">Last 30 days</option>
-          <option value="90d">Last 90 days</option>
-          <option value="1y">Last year</option>
-        </select>
-        <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-          </svg>
-          Export
-        </button>
-      </div>
-    </div>
+        <PageHeader
+      title="Analytics Dashboard" description="Track performance metrics and user engagement"
+    />
 
     <!-- Key Metrics -->
     <div class="metrics-grid">
-      <div v-for="metric in keyMetrics" :key="metric.id" class="metric-card">
+      <div v-for="metric in keyMetrics" :key="metric.id" class="metric-bg-white rounded-lg shadow-md p-6">
         <div class="metric-header">
-          <span class="metric-label">{% raw %}{{ metric.label }}{% endraw %}</span>
+          <span class="text-sm font-medium text-gray-600 mb-2">{% raw %}{{ metric.label }}{% endraw %}</span>
           <span :class="['metric-trend', metric.trend > 0 ? 'positive' : 'negative']">
             <svg class="trend-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path v-if="metric.trend > 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
@@ -31,24 +17,24 @@
             {% raw %}{{ Math.abs(metric.trend) }}%{% endraw %}
           </span>
         </div>
-        <div class="metric-value">{% raw %}{{ metric.value }}{% endraw %}</div>
-        <div class="metric-comparison">{% raw %}{{ metric.comparison }}{% endraw %}</div>
+        <div class="text-3xl font-bold text-gray-900">{% raw %}{{ metric.value }}{% endraw %}</div>
+        <div class="text-sm text-gray-500">{% raw %}{{ metric.comparison }}{% endraw %}</div>
       </div>
     </div>
 
     <!-- Charts -->
-    <div class="charts-grid">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
       <!-- Revenue Chart -->
-      <div class="chart-card">
+      <div class="chart-bg-white rounded-lg shadow-md p-6">
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Revenue Overview</h3>
-          <div class="chart-legend">
-            <span class="legend-item">
-              <span class="legend-dot" style="background: #4299e1"></span>
+          <div class="flex gap-4 mt-2">
+            <span class="flex items-center gap-2 text-sm text-gray-600">
+              <span class="w-3 h-3 rounded-full" style="background: #4299e1"></span>
               Revenue
             </span>
-            <span class="legend-item">
-              <span class="legend-dot" style="background: #48bb78"></span>
+            <span class="flex items-center gap-2 text-sm text-gray-600">
+              <span class="w-3 h-3 rounded-full" style="background: #48bb78"></span>
               Profit
             </span>
           </div>
@@ -59,34 +45,34 @@
       </div>
 
       <!-- Traffic Sources -->
-      <div class="chart-card">
+      <div class="chart-bg-white rounded-lg shadow-md p-6">
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Traffic Sources</h3>
         </div>
         <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <canvas ref="trafficChart"></canvas>
         </div>
-        <div class="traffic-legend">
-          <div v-for="source in trafficSources" :key="source.name" class="traffic-item">
-            <div class="traffic-info">
-              <span class="traffic-dot" :style="{ background: source.color }"></span>
-              <span class="traffic-name">{% raw %}{{ source.name }}{% endraw %}</span>
+        <div class="mt-4 space-y-2">
+          <div v-for="source in trafficSources" :key="source.name" class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full" :style="{ background: source.color }"></span>
+              <span class="text-sm text-gray-600">{% raw %}{{ source.name }}{% endraw %}</span>
             </div>
-            <span class="traffic-value">{% raw %}{{ source.value }}%{% endraw %}</span>
+            <span class="text-sm font-medium text-gray-900">{% raw %}{{ source.value }}%{% endraw %}</span>
           </div>
         </div>
       </div>
 
       <!-- User Activity -->
-      <div class="chart-card full-width">
+      <div class="chart-bg-white rounded-lg shadow-md p-6 md:col-span-2">
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">User Activity</h3>
-          <div class="chart-tabs">
+          <div class="flex gap-2 mt-2">
             <button 
               v-for="tab in activityTabs" 
               :key="tab"
               @click="activeActivityTab = tab"
-              :class="['tab-btn', { active: activeActivityTab === tab }]"
+              :class="['px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors', { active: activeActivityTab === tab }]"
             >
               {% raw %}{{ tab }}{% endraw %}
             </button>
@@ -99,12 +85,12 @@
     </div>
 
     <!-- Top Products Table -->
-    <div class="table-card">
+    <div class="table-bg-white rounded-lg shadow-md p-6">
       <div class="bg-gray-50 dark:bg-gray-900">
-        <h3 class="table-title">Top Products</h3>
-        <button class="btn-text">View All</button>
+        <h3 class="text-lg font-semibold text-gray-900 p-6">Top Products</h3>
+        <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">View All</button>
       </div>
-      <div class="table-wrapper">
+      <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead>
             <tr>

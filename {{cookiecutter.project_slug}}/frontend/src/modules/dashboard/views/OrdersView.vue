@@ -1,188 +1,232 @@
 <template>
   <div class="p-8 max-w-7xl mx-auto">
-    <div class="page-header">
-      <h1 class="page-title">Orders</h1>
-      <div class="header-actions">
-        <button @click="exportOrders" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-          </svg>
-          Export
-        </button>
-        <router-link to="/dashboard/orders/new" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+    <PageHeader
+      title="Orders" 
+      description="Manage and track all customer orders"
+    >
+      <template #actions>
+        <button @click="router.push('/dashboard/orders/new')" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
           </svg>
           New Order
-        </router-link>
-      </div>
-    </div>
+        </button>
+      </template>
+    </PageHeader>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-        <div class="stat-icon pending">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.pending }}{% endraw %}</div>
-          <div class="text-sm font-medium text-gray-600 mb-2 dark:text-gray-400">Pending Orders</div>
-        </div>
-      </div>
-      
-      <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-        <div class="stat-icon processing">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.processing }}{% endraw %}</div>
-          <div class="text-sm font-medium text-gray-600 mb-2 dark:text-gray-400">Processing</div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Pending Orders</p>
+            <p class="text-2xl font-bold text-gray-900">{% raw %}{{ stats.pending }}{% endraw %}</p>
+          </div>
+          <div class="p-3 bg-yellow-100 rounded-full">
+            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
         </div>
       </div>
       
-      <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-        <div class="stat-icon completed">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.completed }}{% endraw %}</div>
-          <div class="text-sm font-medium text-gray-600 mb-2 dark:text-gray-400">Completed Today</div>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Processing</p>
+            <p class="text-2xl font-bold text-gray-900">{% raw %}{{ stats.processing }}{% endraw %}</p>
+          </div>
+          <div class="p-3 bg-blue-100 rounded-full">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+          </div>
         </div>
       </div>
       
-      <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-        <div class="stat-icon revenue">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Completed</p>
+            <p class="text-2xl font-bold text-gray-900">{% raw %}{{ stats.completed }}{% endraw %}</p>
+          </div>
+          <div class="p-3 bg-green-100 rounded-full">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
         </div>
-        <div class="stat-content">
-          <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">${% raw %}{{ stats.revenue.toLocaleString() }}{% endraw %}</div>
-          <div class="text-sm font-medium text-gray-600 mb-2 dark:text-gray-400">Today's Revenue</div>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">Revenue</p>
+            <p class="text-2xl font-bold text-gray-900">${% raw %}{{ stats.revenue.toLocaleString() }}{% endraw %}</p>
+          </div>
+          <div class="p-3 bg-indigo-100 rounded-full">
+            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Filters and Search -->
-    <div class="filters-section">
-      <div class="search-box">
-        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Filters -->
+    <div class="flex gap-4 mb-6">
+      <div class="relative flex-1">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
         <input 
           v-model="searchQuery"
           type="text"
-          placeholder="Search orders by ID, customer, or product..."
-          class="search-input"
+          placeholder="Search orders..."
+          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         >
       </div>
       
-      <div class="filters">
-        <select v-model="statusFilter" class="filter-select">
-          <option value="">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-        
-        <select v-model="dateFilter" class="filter-select">
-          <option value="">All Time</option>
-          <option value="today">Today</option>
-          <option value="yesterday">Yesterday</option>
-          <option value="week">This Week</option>
-          <option value="month">This Month</option>
-        </select>
-      </div>
+      <select 
+        v-model="statusFilter"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="processing">Processing</option>
+        <option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      
+      <select 
+        v-model="dateFilter"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="">All Time</option>
+        <option value="today">Today</option>
+        <option value="yesterday">Yesterday</option>
+        <option value="week">This Week</option>
+        <option value="month">This Month</option>
+      </select>
+      
+      <button @click="exportOrders" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        Export
+      </button>
     </div>
 
     <!-- Orders Table -->
-    <div class="orders-table-card">
-      <div class="table-wrapper">
-        <table class="orders-table">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="overflow-x-auto">
+        <table class="w-full">
           <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Products</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Payment</th>
-              <th>Date</th>
-              <th>Actions</th>
+            <tr class="border-b border-gray-200">
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Order ID</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Customer</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Products</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Total</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Status</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Payment</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Date</th>
+              <th class="text-left py-3 px-4 font-medium text-gray-700">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="order in paginatedOrders" :key="order.id">
-              <td>
-                <a href="#" class="order-id">#{% raw %}{{ order.id }}{% endraw %}</a>
+            <tr v-for="order in paginatedOrders" :key="order.id" class="border-b border-gray-100 hover:bg-gray-50">
+              <td class="py-3 px-4">
+                <span class="font-medium text-gray-900">#{% raw %}{{ order.id }}{% endraw %}</span>
               </td>
-              <td>
-                <div class="customer-info">
-                  <div class="customer-name">{% raw %}{{ order.customer.name }}{% endraw %}</div>
-                  <div class="customer-email">{% raw %}{{ order.customer.email }}{% endraw %}</div>
+              <td class="py-3 px-4">
+                <div>
+                  <div class="font-medium text-gray-900">{% raw %}{{ order.customer.name }}{% endraw %}</div>
+                  <div class="text-sm text-gray-500">{% raw %}{{ order.customer.email }}{% endraw %}</div>
                 </div>
               </td>
-              <td>
-                <div class="products-list">
-                  <div v-for="(product, index) in order.products.slice(0, 2)" :key="index" class="product-item">
-                    {% raw %}{{ product.name }}{% endraw %} (x{% raw %}{{ product.quantity }}{% endraw %})
+              <td class="py-3 px-4">
+                <div class="text-sm">
+                  <div v-for="(product, idx) in order.products.slice(0, 2)" :key="idx" class="text-gray-900">
+                    {% raw %}{{ product.quantity }}{% endraw %}x {% raw %}{{ product.name }}{% endraw %}
                   </div>
-                  <div v-if="order.products.length > 2" class="more-products">
+                  <div v-if="order.products.length > 2" class="text-gray-500">
                     +{% raw %}{{ order.products.length - 2 }}{% endraw %} more
                   </div>
                 </div>
               </td>
-              <td class="order-total">${% raw %}{{ order.total.toFixed(2) }}{% endraw %}</td>
-              <td>
-                <span :class="['status-badge', `status-${order.status}`]">
+              <td class="py-3 px-4">
+                <span class="font-semibold text-gray-900">${% raw %}{{ order.total.toFixed(2) }}{% endraw %}</span>
+              </td>
+              <td class="py-3 px-4">
+                <span 
+                  :class="[
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                    order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                    order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
+                    order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
+                    order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                    'bg-red-100 text-red-800'
+                  ]"
+                >
                   {% raw %}{{ order.status }}{% endraw %}
                 </span>
               </td>
-              <td>
-                <span :class="['payment-badge', `payment-${order.payment.status}`]">
-                  {% raw %}{{ order.payment.status }}{% endraw %}
-                </span>
+              <td class="py-3 px-4">
+                <div class="flex items-center gap-2">
+                  <span 
+                    :class="[
+                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                      order.payment.status === 'paid' ? 'bg-green-100 text-green-800' :
+                      order.payment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
+                    ]"
+                  >
+                    {% raw %}{{ order.payment.status }}{% endraw %}
+                  </span>
+                </div>
               </td>
-              <td class="order-date">{% raw %}{{ formatDate(order.createdAt) }}{% endraw %}</td>
-              <td>
-                <div class="action-menu">
-                  <button @click="toggleMenu(order.id)" class="action-btn">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <td class="py-3 px-4 text-sm text-gray-500">
+                {% raw %}{{ formatDate(order.createdAt) }}{% endraw %}
+              </td>
+              <td class="py-3 px-4">
+                <div class="relative">
+                  <button 
+                    @click="toggleMenu(order.id)"
+                    class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                     </svg>
                   </button>
-                  <div v-if="activeMenu === order.id" class="dropdown-menu">
-                    <button @click="viewOrder(order)" class="dropdown-item">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                      </svg>
+                  
+                  <div 
+                    v-if="activeMenu === order.id"
+                    class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10"
+                  >
+                    <button 
+                      @click="viewOrder(order)"
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
                       View Details
                     </button>
-                    <button @click="editOrder(order)" class="dropdown-item">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                      </svg>
-                      Edit
+                    <button 
+                      @click="editOrder(order)"
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Edit Order
                     </button>
-                    <button @click="printInvoice(order)" class="dropdown-item">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-                      </svg>
+                    <button 
+                      @click="printInvoice(order)"
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
                       Print Invoice
                     </button>
-                    <button @click="cancelOrder(order)" class="dropdown-item danger">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                      </svg>
+                    <hr class="my-1">
+                    <button 
+                      @click="cancelOrder(order)"
+                      class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    >
                       Cancel Order
                     </button>
                   </div>
@@ -194,15 +238,15 @@
       </div>
 
       <!-- Pagination -->
-      <div class="pagination">
-        <div class="pagination-info">
+      <div class="flex items-center justify-between mt-6">
+        <div class="text-sm text-gray-600">
           Showing {% raw %}{{ startIndex + 1 }}{% endraw %} to {% raw %}{{ endIndex }}{% endraw %} of {% raw %}{{ filteredOrders.length }}{% endraw %} orders
         </div>
-        <div class="pagination-controls">
+        <div class="flex gap-2">
           <button 
             @click="currentPage--"
             :disabled="currentPage === 1"
-            class="pagination-btn"
+            class="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
@@ -210,14 +254,19 @@
             v-for="page in visiblePages"
             :key="page"
             @click="currentPage = page"
-            :class="['pagination-btn', { active: currentPage === page }]"
+            :class="[
+              'px-3 py-1 border rounded-lg text-sm font-medium',
+              currentPage === page 
+                ? 'bg-indigo-600 text-white border-indigo-600' 
+                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+            ]"
           >
             {% raw %}{{ page }}{% endraw %}
           </button>
           <button 
             @click="currentPage++"
             :disabled="currentPage === totalPages"
-            class="pagination-btn"
+            class="px-3 py-1 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>
@@ -230,6 +279,7 @@
 <script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import PageHeader from '@/components/PageHeader.vue'
 
 {% if cookiecutter.use_typescript == 'y' -%}
 interface Customer {
@@ -485,4 +535,3 @@ const exportOrders = () => {
   console.log('Exporting orders...')
 }
 </script>
-

@@ -17,11 +17,11 @@
       <div class="container">
         <div class="contact-grid">
           <!-- Contact Form -->
-          <div class="contact-form-card">
-            <h2 class="section-title">Send us a Message</h2>
+          <div class="contact-form-bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">Send us a Message</h2>
             <form @submit.prevent="handleSubmit" class="contact-form">
               <div class="form-row">
-                <div class="form-group">
+                <div class="mb-6">
                   <label for="firstName">First Name</label>
                   <input 
                     id="firstName"
@@ -31,7 +31,7 @@
                     required
                   >
                 </div>
-                <div class="form-group">
+                <div class="mb-6">
                   <label for="lastName">Last Name</label>
                   <input 
                     id="lastName"
@@ -43,7 +43,7 @@
                 </div>
               </div>
               
-              <div class="form-group">
+              <div class="mb-6">
                 <label for="email">Email</label>
                 <input 
                   id="email"
@@ -54,7 +54,7 @@
                 >
               </div>
               
-              <div class="form-group">
+              <div class="mb-6">
                 <label for="company">Company (Optional)</label>
                 <input 
                   id="company"
@@ -64,7 +64,7 @@
                 >
               </div>
               
-              <div class="form-group">
+              <div class="mb-6">
                 <label for="subject">Subject</label>
                 <select 
                   id="subject"
@@ -81,7 +81,7 @@
                 </select>
               </div>
               
-              <div class="form-group">
+              <div class="mb-6">
                 <label for="message">Message</label>
                 <textarea 
                   id="message"
@@ -92,7 +92,7 @@
                 ></textarea>
               </div>
               
-              <div class="form-group">
+              <div class="mb-6">
                 <label class="checkbox-label">
                   <input 
                     v-model="form.subscribe"
@@ -116,7 +116,7 @@
           
           <!-- Contact Information -->
           <div class="contact-info">
-            <div class="info-card">
+            <div class="info-bg-white rounded-lg shadow-md p-6">
               <h3 class="info-title">Contact Information</h3>
               <p class="info-description">
                 Feel free to reach out through any of these channels:
@@ -208,7 +208,7 @@
             </div>
             
             <!-- FAQ Card -->
-            <div class="info-card">
+            <div class="info-bg-white rounded-lg shadow-md p-6">
               <h3 class="info-title">Frequently Asked Questions</h3>
               <div class="faq-items">
                 <div class="faq-item">

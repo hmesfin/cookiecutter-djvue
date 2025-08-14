@@ -1,15 +1,15 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="isOpen" class="modal-overlay" @click="cancel">
-        <div class="modal-container" @click.stop>
-          <div class="modal-header">
-            <h3 class="modal-title">{% raw %}{{ title }}{% endraw %}</h3>
+      <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="cancel">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-container" @click.stop>
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-header">
+            <h3 class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-title">{% raw %}{{ title }}{% endraw %}</h3>
           </div>
-          <div class="modal-body">
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-body">
             <p>{% raw %}{{ message }}{% endraw %}</p>
           </div>
-          <div class="modal-footer">
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-footer">
             <button @click="cancel" class="btn btn-secondary">
               {% raw %}{{ cancelText }}{% endraw %}
             </button>

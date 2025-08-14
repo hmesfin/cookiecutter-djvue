@@ -108,16 +108,16 @@
     <!-- Features Section -->
     <section class="features-section">
       <div class="container">
-        <div class="section-header">
+        <div class="mb-6">
           <h2 class="section-subtitle">Features</h2>
-          <h3 class="section-title">Everything you need</h3>
-          <p class="section-description">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Everything you need</h3>
+          <p class="text-gray-600">
             Built with modern technologies and best practices.
           </p>
         </div>
 
         <div class="features-grid">
-          {% raw %}<div v-for="feature in features" :key="feature.name" class="feature-card">
+          {% raw %}<div v-for="feature in features" :key="feature.name" class="feature-bg-white rounded-lg shadow-md p-6">
             <div class="feature-icon">
               <span>{{ feature.emoji }}</span>
             </div>

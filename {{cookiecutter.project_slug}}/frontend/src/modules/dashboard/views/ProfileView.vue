@@ -1,45 +1,44 @@
 <template>
   <div class="p-8 max-w-6xl mx-auto">
-    <div class="page-header">
-      <h1 class="page-title">Profile</h1>
-      <p class="page-description">Manage your personal information and preferences</p>
-    </div>
+        <PageHeader
+      title="Profile Settings" description="Manage your personal information and preferences"
+    />
 
-    <div class="profile-content">
+    <div class="space-y-6">
       <!-- Profile Header -->
-      <div class="profile-header card">
-        <div class="profile-avatar-section">
+      <div class="bg-white rounded-lg shadow-md p-8 mb-6 bg-white rounded-lg shadow-md p-6">
+        <div class="relative-section">
           <div class="avatar-container">
             <img 
               v-if="user.avatar" 
               :src="user.avatar" 
               :alt="user.name"
-              class="avatar-image"
+              class="w-24 h-24 rounded-full object-cover"
             >
-            <div v-else class="avatar-placeholder">
+            <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
               {% raw %}{{ initials }}{% endraw %}
             </div>
-            <button class="avatar-change-btn">
+            <button class="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
             </button>
           </div>
-          <div class="profile-info">
-            <h2 class="profile-name">{% raw %}{{ user.name }}{% endraw %}</h2>
-            <p class="profile-email">{% raw %}{{ user.email }}{% endraw %}</p>
-            <span class="profile-role">{% raw %}{{ user.role }}{% endraw %}</span>
+          <div class="flex-1">
+            <h2 class="text-2xl font-bold text-gray-900">{% raw %}{{ user.name }}{% endraw %}</h2>
+            <p class="text-gray-600">{% raw %}{{ user.email }}{% endraw %}</p>
+            <span class="inline-block mt-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">{% raw %}{{ user.role }}{% endraw %}</span>
           </div>
         </div>
       </div>
 
       <!-- Profile Form -->
-      <form @submit.prevent="handleSubmit" class="profile-form">
-        <div class="form-section card">
+      <form @submit.prevent="handleSubmit" class="space-y-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 bg-white rounded-lg shadow-md p-6">
           <h3 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Personal Information</h3>
           
-          <div class="form-grid">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
               <label for="firstName">First Name</label>
               <input 
@@ -127,10 +126,10 @@
           </div>
         </div>
 
-        <div class="form-section card">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 bg-white rounded-lg shadow-md p-6">
           <h3 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Change Password</h3>
           
-          <div class="form-grid">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
               <label for="currentPassword">Current Password</label>
               <input 
@@ -163,7 +162,7 @@
           </div>
         </div>
 
-        <div class="form-actions">
+        <div class="flex justify-end gap-3 mt-8">
           <button type="button" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300" @click="handleCancel">
             Cancel
           </button>
