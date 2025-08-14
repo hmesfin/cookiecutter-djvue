@@ -32,9 +32,7 @@
 
           <div v-else class="text-center p-8 bg-green-50 rounded-lg border border-green-200 dark:bg-green-900/20">
             <div class="w-16 h-16 mx-auto mb-4 text-green-500">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-full h-full" />
             </div>
             <h2 class="text-2xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Check Your Email</h2>
             <p class="text-gray-600 mb-4 dark:text-gray-400">
@@ -51,9 +49,7 @@
 
         <div class="mt-8 text-center">
           <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
+            <IconLucideArrowLeft class="w-5 h-5" />
             Back to Login
           </router-link>
         </div>
@@ -64,33 +60,23 @@
           <h2 class="text-2xl font-semibold mb-8">Password Security Tips</h2>
           <ul class="space-y-4">
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span class="text-sm leading-relaxed">Use a combination of uppercase and lowercase letters</span>
             </li>
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span class="text-sm leading-relaxed">Include numbers and special characters</span>
             </li>
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span class="text-sm leading-relaxed">Make your password at least 12 characters long</span>
             </li>
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span class="text-sm leading-relaxed">Avoid using personal information</span>
             </li>
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span class="text-sm leading-relaxed">Use unique passwords for each account</span>
             </li>
           </ul>

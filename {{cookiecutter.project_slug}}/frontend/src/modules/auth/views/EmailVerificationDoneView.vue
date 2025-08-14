@@ -5,9 +5,7 @@
         <!-- Success State -->
         <div v-if="verificationStatus === 'success'" class="p-12 text-center">
           <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-            <svg class="w-10 h-10 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <IconLucideCheckCircle class="w-10 h-10 text-white animate-pulse" />
           </div>
           
           <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Email Verified Successfully!</h1>
@@ -56,9 +54,7 @@
         <!-- Already Verified State -->
         <div v-else-if="verificationStatus === 'already_verified'" class="p-12 text-center">
           <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <IconLucideInfo class="w-10 h-10 text-white" />
           </div>
           
           <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Already Verified</h1>

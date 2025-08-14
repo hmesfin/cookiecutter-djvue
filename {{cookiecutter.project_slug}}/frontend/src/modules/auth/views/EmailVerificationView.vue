@@ -5,9 +5,7 @@
         <!-- Verification Pending -->
         <div v-if="status === 'pending'" class="text-center">
           <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center">
-            <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
+            <IconLucideMail class="w-10 h-10 text-blue-500" />
           </div>
           <h1 class="text-3xl font-bold text-gray-900 mb-2 dark:text-gray-100">Verify Your Email</h1>
           <p class="text-gray-600 mb-2 dark:text-gray-400">
@@ -61,9 +59,7 @@
         <!-- Success -->
         <div v-else-if="status === 'success'" class="text-center">
           <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
-            <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <IconLucideCheckCircle class="w-10 h-10 text-green-500" />
           </div>
           <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Email Verified Successfully!</h1>
           <p class="text-gray-600 mb-8 dark:text-gray-400">
@@ -79,9 +75,7 @@
         <!-- Already Verified -->
         <div v-else-if="status === 'already_verified'" class="text-center">
           <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-teal-100 flex items-center justify-center">
-            <svg class="w-10 h-10 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <IconLucideInfo class="w-10 h-10 text-teal-500" />
           </div>
           <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Already Verified</h1>
           <p class="text-gray-600 mb-8 dark:text-gray-400">

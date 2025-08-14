@@ -27,33 +27,23 @@
               <!-- Password Requirements -->
               <ul class="mt-2 space-y-1 text-xs">
                 <li :class="requirements.length ? 'text-green-600' : 'text-gray-400'" class="flex items-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideCheckCircle class="w-4 h-4" />
                   At least 8 characters
                 </li>
                 <li :class="requirements.uppercase ? 'text-green-600' : 'text-gray-400'" class="flex items-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideCheckCircle class="w-4 h-4" />
                   One uppercase letter
                 </li>
                 <li :class="requirements.lowercase ? 'text-green-600' : 'text-gray-400'" class="flex items-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideCheckCircle class="w-4 h-4" />
                   One lowercase letter
                 </li>
                 <li :class="requirements.number ? 'text-green-600' : 'text-gray-400'" class="flex items-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideCheckCircle class="w-4 h-4" />
                   One number
                 </li>
                 <li :class="requirements.special ? 'text-green-600' : 'text-gray-400'" class="flex items-center gap-2">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideCheckCircle class="w-4 h-4" />
                   One special character
                 </li>
               </ul>
@@ -79,9 +69,7 @@
 
           <div v-else class="text-center p-8 bg-green-50 rounded-lg border border-green-200 dark:bg-green-900/20">
             <div class="w-16 h-16 mx-auto mb-4 text-green-500">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+              <IconLucideCheckCircle class="w-full h-full" />
             </div>
             <h2 class="text-2xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Password Reset Successful!</h2>
             <p class="text-gray-600 mb-6 dark:text-gray-400">
@@ -95,9 +83,7 @@
 
         <div v-if="!isReset" class="mt-8 text-center">
           <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
+            <IconLucideArrowLeft class="w-5 h-5" />
             Back to Login
           </router-link>
         </div>

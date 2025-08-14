@@ -34,9 +34,7 @@
             <p class="feature-description">{% raw %}{{ feature.description }}{% endraw %}</p>
             <ul class="feature-list">
               <li v-for="item in feature.items" :key="item">
-                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
+                <IconLucideCheck class="check-icon" />
                 {% raw %}{{ item }}{% endraw %}
               </li>
             </ul>
@@ -90,18 +88,14 @@
               <tr v-for="comparison in comparisons" :key="comparison.feature">
                 <td class="feature-name">{% raw %}{{ comparison.feature }}{% endraw %}</td>
                 <td class="our-solution">
-                  <svg class="icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideCheckCircle class="icon-check" />
                   {% raw %}{{ comparison.ours }}{% endraw %}
                 </td>
                 <td class="other-solution">
                   <svg v-if="comparison.othersHas" class="icon-partial" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  <svg v-else class="icon-no" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                  <IconLucideXCircle class="icon-no" />
                   {% raw %}{{ comparison.others }}{% endraw %}
                 </td>
               </tr>

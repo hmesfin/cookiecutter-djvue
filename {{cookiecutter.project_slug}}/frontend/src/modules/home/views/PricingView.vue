@@ -51,9 +51,7 @@
             
             <ul class="features-list">
               <li v-for="feature in plan.features" :key="feature" class="feature-item">
-                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
+                <IconLucideCheck class="check-icon" />
                 {% raw %}{{ feature }}{% endraw %}
               </li>
             </ul>
@@ -112,14 +110,7 @@
           >
             <div class="faq-question">
               <h3>{% raw %}{{ faq.question }}{% endraw %}</h3>
-              <svg 
-                :class="['chevron-icon', { rotated: activeFaq === index }]"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
+              <IconLucideChevronDown class="['chevron-icon', { rotated: activeFaq === index }]" />
             </div>
             <div v-if="activeFaq === index" class="faq-answer">
               <p>{% raw %}{{ faq.answer }}{% endraw %}</p>

@@ -2,9 +2,7 @@
   <component :is="iconComponent" v-if="iconComponent" :class="iconClass" />
   <span v-else class="inline-block" :class="iconClass">
     <!-- Fallback icon -->
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-    </svg>
+    <IconLucidePlus class="w-5 h-5" />
   </span>
 </template>
 
