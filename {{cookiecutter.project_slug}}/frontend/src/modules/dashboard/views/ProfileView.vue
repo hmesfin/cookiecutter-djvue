@@ -176,12 +176,12 @@
   </div>
 </template>
 
-<script setup>
-{% if cookiecutter.use_typescript == 'y' -%}
+<script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
+{% if cookiecutter.use_typescript == 'y' -%}
 interface UserProfile {
   id: string
   name: string
@@ -211,10 +211,6 @@ interface PasswordData {
   newPassword: string
   confirmPassword: string
 }
-{% else -%}
-import { ref, computed, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
 {%- endif %}
 
 const authStore = useAuthStore()

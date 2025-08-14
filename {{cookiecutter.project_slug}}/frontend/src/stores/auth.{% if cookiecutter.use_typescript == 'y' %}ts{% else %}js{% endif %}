@@ -27,6 +27,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
     {%- endif %}
     localStorage.setItem('token', accessToken)
+    // Store user data in localStorage for persistence
+    localStorage.setItem('user', JSON.stringify(userData))
     apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
   }
 
@@ -38,6 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('refreshToken')
     {%- endif %}
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     delete apiClient.defaults.headers.common['Authorization']
   }
 
@@ -98,6 +101,8 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await authService.getCurrentUser()
       user.value = response.data
+      // Update stored user data with latest from server
+      localStorage.setItem('user', JSON.stringify(response.data))
       return response.data
     } catch (err) {
       clearAuthData()
@@ -129,21 +134,30 @@ export const useAuthStore = defineStore('auth', () => {
   {%- endif %}
 
   // Initialize auth state from localStorage
-  function initializeAuth() {
+  async function initializeAuth() {
     const storedToken = localStorage.getItem('token')
+    const storedUser = localStorage.getItem('user')
     {% if cookiecutter.api_authentication == 'jwt' -%}
     const storedRefresh = localStorage.getItem('refreshToken')
     {%- endif %}
     
-    if (storedToken) {
-      token.value = storedToken
-      {% if cookiecutter.api_authentication == 'jwt' -%}
-      refreshToken.value = storedRefresh
-      {%- endif %}
-      apiClient.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`
-      fetchCurrentUser().catch(() => {
+    if (storedToken && storedUser) {
+      try {
+        // Restore user data from localStorage
+        user.value = JSON.parse(storedUser)
+        token.value = storedToken
+        {% if cookiecutter.api_authentication == 'jwt' -%}
+        refreshToken.value = storedRefresh
+        {%- endif %}
+        apiClient.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`
+        
+        // Verify the token is still valid by fetching current user
+        // This will also update user data with latest from server
+        await fetchCurrentUser()
+      } catch (error) {
+        console.error('Failed to restore authentication:', error)
         clearAuthData()
-      })
+      }
     }
   }
 

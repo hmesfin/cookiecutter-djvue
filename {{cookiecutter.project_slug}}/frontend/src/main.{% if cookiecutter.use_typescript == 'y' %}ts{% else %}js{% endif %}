@@ -16,7 +16,19 @@ import './assets/main.css'
 
 const app = createApp(App)
 
-app.use(createPinia())
+// Create and install Pinia
+const pinia = createPinia()
+app.use(pinia)
+
+// Initialize auth state from localStorage before mounting the app
+import { useAuthStore } from '@/stores/auth'
+const authStore = useAuthStore(pinia)
+
+// Initialize auth state (this will restore user session if valid)
+authStore.initializeAuth().catch(error => {
+  console.error('Auth initialization error:', error)
+})
+
 app.use(router)
 {% if cookiecutter.css_framework == 'bootstrap-vue-3' -%}
 app.use(BootstrapVue3)

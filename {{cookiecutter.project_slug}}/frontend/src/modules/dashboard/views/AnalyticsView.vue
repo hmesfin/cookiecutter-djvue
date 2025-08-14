@@ -137,11 +137,11 @@
   </div>
 </template>
 
-<script setup>
-{% if cookiecutter.use_typescript == 'y' -%}
+<script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
 import { ref, onMounted, watch } from 'vue'
 import Chart from 'chart.js/auto'
 
+{% if cookiecutter.use_typescript == 'y' -%}
 interface Metric {
   id: string
   label: string
@@ -164,9 +164,6 @@ interface Product {
   revenue: number
   growth: number
 }
-{% else -%}
-import { ref, onMounted, watch } from 'vue'
-import Chart from 'chart.js/auto'
 {%- endif %}
 
 const selectedPeriod = ref('30d')

@@ -288,10 +288,10 @@
   </div>
 </template>
 
-<script setup>
-{% if cookiecutter.use_typescript == 'y' -%}
+<script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
 import { ref, reactive } from 'vue'
 
+{% if cookiecutter.use_typescript == 'y' -%}
 interface Settings {
   language: string
   timezone: string
@@ -323,8 +323,6 @@ interface Integration {
   icon: string
   connected: boolean
 }
-{% else -%}
-import { ref, reactive } from 'vue'
 {%- endif %}
 
 const activeTab = ref('general')
