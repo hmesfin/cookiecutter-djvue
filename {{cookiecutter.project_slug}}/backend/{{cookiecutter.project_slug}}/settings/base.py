@@ -163,6 +163,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom User Model
 AUTH_USER_MODEL = 'users.User'
 
+# Authentication backends - allow login with username or email
+AUTHENTICATION_BACKENDS = [
+    '{{ cookiecutter.project_slug }}.apps.users.backends.EmailOrUsernameBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Keep default as fallback
+]
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 

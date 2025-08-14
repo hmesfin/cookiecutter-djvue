@@ -97,9 +97,11 @@ class LoginView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
-        username = serializer.validated_data['username']
+        # Get username (which might be an email) from serializer
+        username = serializer.validated_data.get('username')
         password = serializer.validated_data['password']
         
+        # Authenticate user (our backend handles both username and email)
         user = authenticate(request, username=username, password=password)
         
         if user:
