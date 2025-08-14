@@ -56,27 +56,28 @@
 
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input
+          <PasswordInput
             id="password"
             v-model="form.password"
-            type="password"
-            required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            :class="{ 'border-red-500': errors.password }"
-          >
+            :required="true"
+            placeholder="Create a strong password"
+            autocomplete="new-password"
+            :show-strength="true"
+            class="mt-1"
+          />
           <p v-if="errors.password" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.password }}{% endraw %}</p>
         </div>
 
         <div>
           <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm password</label>
-          <input
+          <PasswordInput
             id="confirmPassword"
             v-model="form.confirmPassword"
-            type="password"
-            required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            :class="{ 'border-red-500': errors.confirmPassword }"
-          >
+            :required="true"
+            placeholder="Re-enter your password"
+            autocomplete="new-password"
+            class="mt-1"
+          />
           <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.confirmPassword }}{% endraw %}</p>
         </div>
 
@@ -202,6 +203,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import PasswordInput from '@/components/PasswordInput.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()

@@ -1,0 +1,79 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+
+{% if cookiecutter.use_typescript == 'y' -%}
+export interface Notification {
+  id: string
+  type: 'success' | 'error' | 'warning' | 'info'
+  title: string
+  message?: string
+  duration?: number
+  actions?: Array<{
+    label: string
+    handler: () => void
+  }>
+}
+{%- endif %}
+
+export const useNotificationStore = defineStore('notifications', () => {
+  const notifications = ref({% if cookiecutter.use_typescript == 'y' %}<Notification[]>{% endif %}[])
+
+  const add = (notification{% if cookiecutter.use_typescript == 'y' %}: Omit<Notification, 'id'>{% endif %}) => {
+    const id = Date.now().toString()
+    const newNotification = {
+      id,
+      duration: 5000, // Default 5 seconds
+      ...notification
+    }
+    
+    notifications.value.push(newNotification)
+
+    // Auto remove after duration
+    if (newNotification.duration > 0) {
+      setTimeout(() => {
+        remove(id)
+      }, newNotification.duration)
+    }
+
+    return id
+  }
+
+  const remove = (id{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}) => {
+    const index = notifications.value.findIndex(n => n.id === id)
+    if (index > -1) {
+      notifications.value.splice(index, 1)
+    }
+  }
+
+  const clear = () => {
+    notifications.value = []
+  }
+
+  // Helper methods for different types
+  const success = (title{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}, message{% if cookiecutter.use_typescript == 'y' %}?: string{% endif %}) => {
+    return add({ type: 'success', title, message })
+  }
+
+  const error = (title{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}, message{% if cookiecutter.use_typescript == 'y' %}?: string{% endif %}) => {
+    return add({ type: 'error', title, message, duration: 10000 }) // Errors stay longer
+  }
+
+  const warning = (title{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}, message{% if cookiecutter.use_typescript == 'y' %}?: string{% endif %}) => {
+    return add({ type: 'warning', title, message })
+  }
+
+  const info = (title{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}, message{% if cookiecutter.use_typescript == 'y' %}?: string{% endif %}) => {
+    return add({ type: 'info', title, message })
+  }
+
+  return {
+    notifications,
+    add,
+    remove,
+    clear,
+    success,
+    error,
+    warning,
+    info
+  }
+})

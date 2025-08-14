@@ -80,6 +80,9 @@
             </div>
 
             <div class="flex items-center space-x-4">
+              <!-- Dark mode toggle -->
+              <DarkModeToggle />
+              
               <!-- Notifications -->
               <button class="relative text-gray-400 hover:text-gray-500">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,6 +171,9 @@
       </div>
     </div>
     {%- endif %}
+    
+    <!-- Confirmation Dialog -->
+    <ConfirmDialog ref="confirmDialog" />
   </div>
 </template>
 
@@ -175,6 +181,8 @@
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import DarkModeToggle from '@/components/DarkModeToggle.vue'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -182,6 +190,7 @@ const authStore = useAuthStore()
 
 const sidebarOpen = ref(false)
 const userMenuOpen = ref(false)
+const confirmDialog = ref()
 
 // Navigation items
 const navigation = [
@@ -215,8 +224,18 @@ const isActive = (path{% if cookiecutter.use_typescript == 'y' %}: string{% endi
 }
 
 const handleLogout = async () => {
-  await authStore.logout()
-  router.push('/auth/login')
+  const confirmed = await confirmDialog.value.open({
+    title: 'Confirm Logout',
+    message: 'Are you sure you want to log out of your account?',
+    confirmText: 'Log Out',
+    cancelText: 'Cancel',
+    confirmClass: 'btn-danger'
+  })
+  
+  if (confirmed) {
+    await authStore.logout()
+    router.push('/auth/login')
+  }
 }
 </script>
 

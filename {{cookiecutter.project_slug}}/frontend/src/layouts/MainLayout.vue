@@ -32,6 +32,7 @@
 
             <!-- Right side -->
             <div class="flex items-center space-x-4">
+              <DarkModeToggle />
               <template v-if="!authStore.isAuthenticated">
                 <RouterLink
                   to="/auth/login"
@@ -226,6 +227,7 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import DarkModeToggle from '@/components/DarkModeToggle.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()

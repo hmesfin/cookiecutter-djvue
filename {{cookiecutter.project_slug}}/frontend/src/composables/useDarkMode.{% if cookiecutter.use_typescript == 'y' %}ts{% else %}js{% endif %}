@@ -1,0 +1,55 @@
+import { ref, watch, onMounted } from 'vue'
+
+export function useDarkMode() {
+  const isDark = ref(false)
+
+  // Initialize from localStorage or system preference
+  const initDarkMode = () => {
+    const stored = localStorage.getItem('darkMode')
+    if (stored !== null) {
+      isDark.value = stored === 'true'
+    } else {
+      // Check system preference
+      isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+    updateDarkClass()
+  }
+
+  // Update document class
+  const updateDarkClass = () => {
+    if (isDark.value) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    isDark.value = !isDark.value
+  }
+
+  // Watch for changes
+  watch(isDark, (newValue) => {
+    localStorage.setItem('darkMode', String(newValue))
+    updateDarkClass()
+  })
+
+  // Listen for system preference changes
+  onMounted(() => {
+    initDarkMode()
+    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    mediaQuery.addEventListener('change', (e) => {
+      if (localStorage.getItem('darkMode') === null) {
+        isDark.value = e.matches
+      }
+    })
+  })
+
+  return {
+    isDark,
+    toggleDarkMode,
+    initDarkMode
+  }
+}

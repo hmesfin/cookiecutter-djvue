@@ -28,14 +28,14 @@
 
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input
+          <PasswordInput
             id="password"
             v-model="form.password"
-            type="password"
-            required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            :class="{ 'border-red-500': errors.password }"
-          >
+            :required="true"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            class="mt-1"
+          />
           <p v-if="errors.password" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.password }}{% endraw %}</p>
         </div>
 
@@ -130,6 +130,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import PasswordInput from '@/components/PasswordInput.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
