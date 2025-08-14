@@ -43,9 +43,13 @@ CORS_ALLOWED_ORIGINS = [
 # Email backend for development
 {% if cookiecutter.use_mailhog == 'y' -%}
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+# Use 'mailhog' hostname when running in Docker, 'localhost' otherwise
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'mailhog' if os.environ.get('DJANGO_ENV') == 'development' else 'localhost')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 1025))
 EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 {% else -%}
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 {%- endif %}

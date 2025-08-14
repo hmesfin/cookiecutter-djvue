@@ -66,6 +66,9 @@ services:
       - DJANGO_ENV=development
       - DEBUG=True
       - PYTHONPATH=/app
+      {% if cookiecutter.use_mailhog == 'y' -%}
+      - EMAIL_HOST=mailhog
+      {%- endif %}
       {% if cookiecutter.database == 'postgresql' -%}
       - POSTGRES_DB={{ cookiecutter.project_slug }}
       - POSTGRES_USER={{ cookiecutter.project_slug }}
@@ -129,6 +132,9 @@ services:
       - ./backend:/app
     environment:
       - DJANGO_ENV=development
+      {% if cookiecutter.use_mailhog == 'y' -%}
+      - EMAIL_HOST=mailhog
+      {%- endif %}
       {% if cookiecutter.database == 'postgresql' -%}
       - POSTGRES_DB={{ cookiecutter.project_slug }}
       - POSTGRES_USER={{ cookiecutter.project_slug }}
@@ -155,6 +161,9 @@ services:
       - ./backend:/app
     environment:
       - DJANGO_ENV=development
+      {% if cookiecutter.use_mailhog == 'y' -%}
+      - EMAIL_HOST=mailhog
+      {%- endif %}
       {% if cookiecutter.database == 'postgresql' -%}
       - POSTGRES_DB={{ cookiecutter.project_slug }}
       - POSTGRES_USER={{ cookiecutter.project_slug }}
