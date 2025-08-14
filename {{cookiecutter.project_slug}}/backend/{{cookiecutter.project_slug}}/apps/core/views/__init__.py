@@ -7,10 +7,12 @@ from .health import (
     LivenessProbeView,
     ReadinessProbeView,
 )
+from .home import home_view
 
 __all__ = [
     'HealthCheckView',
     'DetailedHealthCheckView',
     'LivenessProbeView',
     'ReadinessProbeView',
+    'home_view',
 ]
