@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 {%- endif %}
 
-from {{ cookiecutter.project_slug }}.apps.core.views import home_view, health_check_view
+from {{ cookiecutter.project_slug }}.apps.core.views import home_view
 
 # Customize admin
 admin.site.site_header = "{{ cookiecutter.project_name }} Admin"
@@ -20,7 +20,7 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('api/', include('{{ cookiecutter.project_slug }}.apps.api.urls')),
-    path('api/health/', health_check_view, name='health_check'),
+    path('api/', include('{{ cookiecutter.project_slug }}.apps.core.urls')),
     
     {% if cookiecutter.use_drf_spectacular == 'y' -%}
     # API Documentation

@@ -1,4 +1,5 @@
 {% if cookiecutter.ci_tool == 'github' -%}
+
 ## Description
 <!-- Provide a brief description of the changes in this PR -->
 
@@ -17,9 +18,9 @@ Fixes #(issue number)
 
 ## Changes Made
 <!-- List the main changes -->
-- 
-- 
-- 
+-
+-
+-
 
 ## Testing
 <!-- Describe the tests you ran to verify your changes -->

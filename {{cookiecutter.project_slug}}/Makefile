@@ -1,17 +1,26 @@
+# Makefile for {{ cookiecutter.project_name }}
+# Run 'make help' for available commands
+
 .PHONY: help dev build test clean
 
 # Variables
 DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE_PROD = docker-compose -f docker-compose.prod.yml
 BACKEND_DIR = backend
 FRONTEND_DIR = frontend
 PYTHON = python
 NPM = npm
 
+# Colors for output
+RED := \033[0;31m
+GREEN := \033[0;32m
+YELLOW := \033[0;33m
+NC := \033[0m # No Color
+
 help: ## Show this help message
-	@echo "Usage: make [target]"
-	@echo ""
-	@echo "Available targets:"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
+	@echo "{{ cookiecutter.project_name }} - Available Commands"
+	@echo "================================================"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 # Development commands
 dev: ## Start development environment
@@ -156,9 +165,80 @@ build: ## Build production images
 	cd $(FRONTEND_DIR) && $(NPM) run build
 {%- endif %}
 
+# Production commands
+prod-up: ## Start production containers
+{% if cookiecutter.use_docker == 'y' -%}
+	$(DOCKER_COMPOSE_PROD) up -d
+{% else -%}
+	@echo "Please configure your production deployment"
+{%- endif %}
+
+prod-down: ## Stop production containers
+{% if cookiecutter.use_docker == 'y' -%}
+	$(DOCKER_COMPOSE_PROD) down
+{% else -%}
+	@echo "Please configure your production deployment"
+{%- endif %}
+
+prod-logs: ## Show production logs
+{% if cookiecutter.use_docker == 'y' -%}
+	$(DOCKER_COMPOSE_PROD) logs -f
+{% else -%}
+	@echo "Please check your production logs"
+{%- endif %}
+
+prod-build: ## Build production images
+{% if cookiecutter.use_docker == 'y' -%}
+	$(DOCKER_COMPOSE_PROD) build
+{% else -%}
+	cd $(BACKEND_DIR) && $(PYTHON) manage.py collectstatic --noinput
+	cd $(FRONTEND_DIR) && $(NPM) run build
+{%- endif %}
+
+# Security commands
+security-check: ## Run security checks
+	@echo "$(YELLOW)Checking Python dependencies...$(NC)"
+	cd $(BACKEND_DIR) && pip audit || true
+	@echo "$(YELLOW)Checking Node dependencies...$(NC)"
+	cd $(FRONTEND_DIR) && npm audit || true
+
+security-fix: ## Auto-fix security issues
+	@echo "$(YELLOW)Fixing Node vulnerabilities...$(NC)"
+	cd $(FRONTEND_DIR) && npm audit fix || true
+	@echo "$(YELLOW)Python vulnerabilities must be fixed manually$(NC)"
+
 # Deployment commands
 deploy: ## Deploy to production
-	@echo "Deployment command not configured. Please set up your deployment process."
+	@echo "$(GREEN)Starting deployment...$(NC)"
+	@echo "Please configure your deployment process in this target"
+	# Example: git push production main
+	# Example: ansible-playbook deploy.yml
+	# Example: kubectl apply -f k8s/
+
+health-check: ## Check application health
+	@echo "$(GREEN)Checking application health...$(NC)"
+	@curl -f http://localhost:8000/api/health/ || echo "$(RED)Backend health check failed$(NC)"
+	@curl -f http://localhost:5173/ || echo "$(RED)Frontend health check failed$(NC)"
+
+backup: ## Backup database
+	@echo "$(GREEN)Creating database backup...$(NC)"
+	@mkdir -p backups
+{% if cookiecutter.database == 'postgresql' -%}
+{% if cookiecutter.use_docker == 'y' -%}
+	$(DOCKER_COMPOSE) exec postgres pg_dump -U {{ cookiecutter.project_slug }} {{ cookiecutter.project_slug }} | gzip > backups/backup_$$(date +%Y%m%d_%H%M%S).sql.gz
+{% else -%}
+	pg_dump {{ cookiecutter.project_slug }} | gzip > backups/backup_$$(date +%Y%m%d_%H%M%S).sql.gz
+{%- endif %}
+{% elif cookiecutter.database == 'mysql' -%}
+{% if cookiecutter.use_docker == 'y' -%}
+	$(DOCKER_COMPOSE) exec mysql mysqldump -u {{ cookiecutter.project_slug }} -p {{ cookiecutter.project_slug }} | gzip > backups/backup_$$(date +%Y%m%d_%H%M%S).sql.gz
+{% else -%}
+	mysqldump -u {{ cookiecutter.project_slug }} -p {{ cookiecutter.project_slug }} | gzip > backups/backup_$$(date +%Y%m%d_%H%M%S).sql.gz
+{%- endif %}
+{% else -%}
+	cp $(BACKEND_DIR)/db.sqlite3 backups/backup_$$(date +%Y%m%d_%H%M%S).sqlite3
+{%- endif %}
+	@echo "$(GREEN)Backup created in backups/ directory$(NC)"
 
 # Utility commands
 shell: ## Open Django shell
