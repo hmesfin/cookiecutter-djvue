@@ -253,8 +253,7 @@ const handleRegister = async () => {
     if (response.email_verification_required) {
       // Redirect to email verification page
       router.push({
-        name: 'EmailVerificationPending',
-        params: { email: form.email }
+        path: `/auth/verify-email/${encodeURIComponent(form.email)}`
       })
     } else {
       // Auto-login after registration if email verification is not required

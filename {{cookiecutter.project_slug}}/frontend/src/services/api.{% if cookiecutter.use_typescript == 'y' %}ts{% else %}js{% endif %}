@@ -47,7 +47,7 @@ apiClient.interceptors.response.use(
         const { useAuthStore } = await import('@/stores/auth')
         const authStore = useAuthStore()
         authStore.clearAuthData()
-        router.push('/login')
+        router.push('/auth/login')
         return Promise.reject(refreshError)
       }
     }

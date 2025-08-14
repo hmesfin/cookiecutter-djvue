@@ -89,9 +89,9 @@ class UserAdmin(BaseUserAdmin):
     is_verified_badge.short_description = _("Verified")
     
     def get_queryset(self, request):
-        """Optimize queryset with select_related."""
+        """Optimize queryset with prefetch_related for ManyToMany fields."""
         qs = super().get_queryset(request)
-        return qs.select_related("groups").prefetch_related("user_permissions")
+        return qs.prefetch_related("groups", "user_permissions")
     
     actions = ["verify_users", "unverify_users"]
     
