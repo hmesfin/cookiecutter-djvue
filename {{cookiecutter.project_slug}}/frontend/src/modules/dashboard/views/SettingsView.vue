@@ -11,7 +11,7 @@
           v-for="tab in tabs"
           :key="tab.id"
           @click="activeTab = tab.id"
-          :class="['block px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer', { active: activeTab === tab.id }]"
+          :class="['block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 font-medium rounded-lg transition-colors cursor-pointer', { active: activeTab === tab.id }]"
         >
           <component :is="tab.icon" class="nav-icon" />
           <span class="nav-label">{% raw %}{{ tab.label }}{% endraw %}</span>
@@ -32,7 +32,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Language</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Select your preferred language</p>
               </div>
-              <select v-model="settings.language" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
+              <select v-model="settings.language" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
                 <option value="fr">French</option>
@@ -47,7 +47,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Time Zone</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Set your local time zone</p>
               </div>
-              <select v-model="settings.timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
+              <select v-model="settings.timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="UTC">UTC</option>
                 <option value="America/New_York">Eastern Time</option>
                 <option value="America/Chicago">Central Time</option>
@@ -64,7 +64,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Date Format</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose how dates are displayed</p>
               </div>
-              <select v-model="settings.dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
+              <select v-model="settings.dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                 <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                 <option value="YYYY-MM-DD">YYYY-MM-DD</option>
@@ -182,7 +182,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Profile Visibility</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Control who can see your profile</p>
               </div>
-              <select v-model="settings.privacy.profileVisibility" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
+              <select v-model="settings.privacy.profileVisibility" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400">
                 <option value="public">Public</option>
                 <option value="friends">Friends Only</option>
                 <option value="private">Private</option>
