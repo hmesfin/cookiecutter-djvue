@@ -43,6 +43,12 @@ export default [
         component: () => import('./views/EmailVerificationView.vue'),
         meta: { requiresGuest: false },
       },
+      {
+        path: 'verify-email-done/:uid/:token',
+        name: 'EmailVerificationDone',
+        component: () => import('./views/EmailVerificationDoneView.vue'),
+        meta: { requiresGuest: false },
+      },
     ],
   },
 ]

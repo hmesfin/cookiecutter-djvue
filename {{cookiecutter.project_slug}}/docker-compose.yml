@@ -66,6 +66,7 @@ services:
       - DJANGO_ENV=development
       - DEBUG=True
       - PYTHONPATH=/app
+      - FRONTEND_URL=http://localhost:{{ cookiecutter.frontend_port }}
       {% if cookiecutter.use_mailhog == 'y' -%}
       - EMAIL_HOST=mailhog
       {%- endif %}

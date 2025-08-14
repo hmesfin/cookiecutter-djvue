@@ -91,16 +91,19 @@ def send_verification_email_to_user(user: User, request=None) -> bool:
     # Generate verification token
     uid, token = generate_verification_token(user)
     
-    # Build verification URL
-    if request:
-        from django.urls import reverse
-        verification_path = reverse('api:verify_email', kwargs={'uidb64': uid, 'token': token})
-        verification_url = request.build_absolute_uri(verification_path)
+    # Build frontend verification URL
+    from django.conf import settings
+    
+    if settings.DEBUG:
+        # In development, use the frontend dev server URL
+        frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:{{ cookiecutter.frontend_port }}')
     else:
-        from django.conf import settings
+        # In production, use the domain
         domain = getattr(settings, 'DOMAIN_NAME', 'example.com')
-        protocol = 'https' if not settings.DEBUG else 'http'
-        verification_url = f"{protocol}://{domain}/verify-email/{uid}/{token}/"
+        frontend_url = f"https://{domain}"
+    
+    # Point to the frontend route for email verification
+    verification_url = f"{frontend_url}/auth/verify-email-done/{uid}/{token}"
     
     # Send email (will use Celery if available)
     result = send_email_task(

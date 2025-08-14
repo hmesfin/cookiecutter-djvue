@@ -8,8 +8,6 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-from .tasks import send_email_task
-
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -18,34 +16,18 @@ logger = logging.getLogger(__name__)
 def handle_new_user(sender, instance, created, **kwargs):
     """
     Handle actions when a new user is created.
-    Sends welcome email either via Celery task or synchronously.
+    Note: Welcome email is now sent after email verification, not on user creation.
     """
     if created and not instance.is_superuser:
-        # Check if welcome emails are enabled
-        send_welcome = getattr(settings, "SEND_WELCOME_EMAIL", True)
+        # Log new user creation
+        logger.info(f"New user created: {instance.email}")
         
-        if send_welcome:
-            try:
-                # This will use Celery if available, otherwise run synchronously
-                result = send_email_task(
-                    user_id=instance.id,
-                    email_type="welcome"
-                )
-                
-                {% if cookiecutter.use_celery == 'y' -%}
-                # Log task ID if using Celery
-                if hasattr(result, "id"):
-                    logger.info(f"Welcome email queued for {instance.email} (Task ID: {result.id})")
-                else:
-                    logger.info(f"Welcome email sent synchronously to {instance.email}")
-                {% else -%}
-                if result:
-                    logger.info(f"Welcome email sent to {instance.email}")
-                {%- endif %}
-                    
-            except Exception as e:
-                # Log the error but don't break the user creation
-                logger.error(f"Failed to queue/send welcome email for {instance.email}: {str(e)}")
+        # Note: We don't send welcome email here anymore.
+        # Welcome email is sent after email verification in the verify_email endpoint.
+        # This prevents users from receiving a welcome email before verifying their email.
+        
+        # You can add other initial setup tasks here if needed
+        # For example: creating user preferences, initializing user stats, etc.
 
 
 @receiver(post_save, sender=User)
