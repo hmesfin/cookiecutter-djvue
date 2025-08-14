@@ -227,11 +227,11 @@
   </div>
 </template>
 
-<script setup>
-{% if cookiecutter.use_typescript == 'y' -%}
+<script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+{% if cookiecutter.use_typescript == 'y' -%}
 interface Customer {
   name: string
   email: string
@@ -264,9 +264,6 @@ interface Stats {
   completed: number
   revenue: number
 }
-{% else -%}
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 {%- endif %}
 
 const router = useRouter()
@@ -448,7 +445,7 @@ const visiblePages = computed(() => {
   return pages
 })
 
-const formatDate = (date) => {
+const formatDate = (date{% if cookiecutter.use_typescript == 'y' %}: Date{% endif %}) => {
   return date.toLocaleDateString('en-US', { 
     month: 'short', 
     day: 'numeric', 
@@ -458,26 +455,26 @@ const formatDate = (date) => {
   })
 }
 
-const toggleMenu = (orderId) => {
+const toggleMenu = (orderId{% if cookiecutter.use_typescript == 'y' %}: string | null{% endif %}) => {
   activeMenu.value = activeMenu.value === orderId ? null : orderId
 }
 
-const viewOrder = (order) => {
+const viewOrder = (order{% if cookiecutter.use_typescript == 'y' %}: Order{% endif %}) => {
   console.log('View order:', order)
   activeMenu.value = null
 }
 
-const editOrder = (order) => {
+const editOrder = (order{% if cookiecutter.use_typescript == 'y' %}: Order{% endif %}) => {
   console.log('Edit order:', order)
   activeMenu.value = null
 }
 
-const printInvoice = (order) => {
+const printInvoice = (order{% if cookiecutter.use_typescript == 'y' %}: Order{% endif %}) => {
   console.log('Print invoice for order:', order)
   activeMenu.value = null
 }
 
-const cancelOrder = (order) => {
+const cancelOrder = (order{% if cookiecutter.use_typescript == 'y' %}: Order{% endif %}) => {
   if (confirm(`Are you sure you want to cancel order #${order.id}?`)) {
     order.status = 'cancelled'
     activeMenu.value = null

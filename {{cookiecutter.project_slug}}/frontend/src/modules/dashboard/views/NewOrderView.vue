@@ -314,11 +314,11 @@
   </div>
 </template>
 
-<script setup>
-{% if cookiecutter.use_typescript == 'y' -%}
+<script setup{% if cookiecutter.use_typescript == 'y' %} lang="ts"{% endif %}>
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+{% if cookiecutter.use_typescript == 'y' -%}
 interface Product {
   id: string
   name: string
@@ -364,9 +364,6 @@ interface OrderSummary {
   discount: number
   total: number
 }
-{% else -%}
-import { ref, reactive, computed } from 'vue'
-import { useRouter } from 'vue-router'
 {%- endif %}
 
 const router = useRouter()
@@ -428,14 +425,14 @@ const addProduct = () => {
   })
 }
 
-const removeProduct = (index) => {
+const removeProduct = (index{% if cookiecutter.use_typescript == 'y' %}: number{% endif %}) => {
   if (orderForm.products.length > 1) {
     orderForm.products.splice(index, 1)
     calculateTotals()
   }
 }
 
-const updateProductDetails = (index) => {
+const updateProductDetails = (index{% if cookiecutter.use_typescript == 'y' %}: number{% endif %}) => {
   const productName = orderForm.products[index].name
   const product = availableProducts.value.find(p => p.name === productName)
   
