@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 """
-Script to automatically apply dark mode classes to Vue components in a cookiecutter template
+Script to automatically apply dark mode classes to Vue components
 Usage: python scripts/apply_dark_mode.py [options]
 
 Options:
-  --dir PATH       Directory to process (default: {{cookiecutter.project_slug}}/frontend/src)
+  --dir PATH       Directory to process (default: frontend/src)
   --dry-run        Show what would be changed without modifying files
   --verbose        Show detailed processing information
   --backup         Create backup files before modifying
@@ -370,8 +370,8 @@ def main():
     
     parser.add_argument(
         '--dir',
-        default='{{cookiecutter.project_slug}}/frontend/src',
-        help='Directory to process (default: {{cookiecutter.project_slug}}/frontend/src)'
+        default='frontend/src',
+        help='Directory to process (default: frontend/src)'
     )
     parser.add_argument(
         '--dry-run',

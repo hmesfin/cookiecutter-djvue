@@ -207,3 +207,16 @@ exec-backend: ## Open backend container shell
 exec-frontend: ## Open frontend container shell
 	$(DOCKER_COMPOSE) exec frontend /bin/sh
 {%- endif %}
+
+# Dark mode commands
+dark-analyze: ## Analyze components for dark mode readiness
+	@echo "Analyzing components for dark mode..."
+	@python scripts/apply_dark_mode.py --analyze
+
+dark-apply: ## Apply dark mode classes to components
+	@echo "Applying dark mode classes..."
+	@python scripts/apply_dark_mode.py
+
+dark-dry-run: ## Preview dark mode changes without applying
+	@echo "Previewing dark mode changes..."
+	@python scripts/apply_dark_mode.py --dry-run --verbose

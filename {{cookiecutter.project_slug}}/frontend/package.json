@@ -16,7 +16,10 @@
     {% if cookiecutter.use_prettier == 'y' -%}
     "format": "prettier --write src/",
     {%- endif %}
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "dark:analyze": "python ../scripts/apply_dark_mode.py --analyze",
+    "dark:apply": "python ../scripts/apply_dark_mode.py",
+    "dark:dry-run": "python ../scripts/apply_dark_mode.py --dry-run --verbose"
   },
   "dependencies": {
     "vue": "^{{ cookiecutter.vue_version }}",
