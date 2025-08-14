@@ -137,9 +137,7 @@
                 
                 <div class="info-item">
                   <div class="info-icon">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                    </svg>
+                    <IconLucidePhone class="w-6 h-6" />
                   </div>
                   <div>
                     <div class="info-label">Phone</div>
@@ -151,10 +149,7 @@
                 
                 <div class="info-item">
                   <div class="info-icon">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
+                    <IconLucideMapPin class="w-6 h-6" />
                   </div>
                   <div>
                     <div class="info-label">Office</div>
@@ -231,10 +226,7 @@
       <div class="map-placeholder">
         <div class="map-overlay">
           <div class="map-content">
-            <svg class="map-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
+            <IconLucideMapPin class="w-6 h-6" />
             <h3>Visit Our Office</h3>
             <p>123 Business Ave, Suite 100<br>San Francisco, CA 94107</p>
             <a href="#" class="btn btn-white">Get Directions</a>
@@ -394,12 +386,24 @@ const handleSubmit = async () => {
   color: #4a5568;
 }
 
+.dark .form-group label {
+  color: #d1d5db;
+}
+
 .form-input {
   padding: 0.75rem;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
   font-size: 1rem;
   transition: all 0.3s;
+  background-color: white;
+  color: #1a202c;
+}
+
+.dark .form-input {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
 }
 
 .form-input:focus {
@@ -408,8 +412,17 @@ const handleSubmit = async () => {
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.dark .form-input:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+}
+
 .form-input::placeholder {
   color: #a0aec0;
+}
+
+.dark .form-input::placeholder {
+  color: #6b7280;
 }
 
 textarea.form-input {

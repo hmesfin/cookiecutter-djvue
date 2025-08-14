@@ -117,7 +117,7 @@
         </div>
 
         <div class="features-grid">
-          {% raw %}<div v-for="feature in features" :key="feature.name" class="feature-bg-white rounded-lg shadow-md p-6">
+          {% raw %}<div v-for="feature in features" :key="feature.name" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div class="feature-icon">
               <span>{{ feature.emoji }}</span>
             </div>

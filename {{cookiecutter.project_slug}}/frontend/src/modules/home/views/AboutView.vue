@@ -31,9 +31,7 @@
           </div>
           <div class="mission-image">
             <div class="image-placeholder">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-              </svg>
+              <IconLucideLightbulb class="w-6 h-6" />
             </div>
           </div>
         </div>
@@ -51,7 +49,7 @@
         </div>
         
         <div class="values-grid">
-          <div v-for="value in values" :key="value.title" class="value-bg-white rounded-lg shadow-md p-6">
+          <div v-for="value in values" :key="value.title" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 value-card">
             <div class="value-icon" :style="{ background: value.color }">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path :d="value.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>

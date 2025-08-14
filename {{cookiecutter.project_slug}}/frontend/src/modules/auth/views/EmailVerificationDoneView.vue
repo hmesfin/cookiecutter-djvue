@@ -76,9 +76,7 @@
         <!-- Error State -->
         <div v-else-if="verificationStatus === 'error'" class="p-12 text-center">
           <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
-            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <IconLucideAlertCircle class="w-6 h-6" />
           </div>
           
           <h1 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Verification Failed</h1>

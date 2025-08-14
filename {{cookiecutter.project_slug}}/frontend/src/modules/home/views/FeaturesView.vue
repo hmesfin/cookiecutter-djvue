@@ -24,7 +24,7 @@
         </div>
         
         <div class="features-grid">
-          <div v-for="feature in coreFeatures" :key="feature.id" class="feature-bg-white rounded-lg shadow-md p-6">
+          <div v-for="feature in coreFeatures" :key="feature.id" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 feature-card">
             <div class="feature-icon" :style="{ background: feature.color }">
               <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path :d="feature.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
