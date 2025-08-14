@@ -208,9 +208,14 @@ class VerifyEmailView(APIView):
             user.is_verified = True
             user.save()
             
-            # Send welcome email
-            from {{ cookiecutter.project_slug }}.apps.users.tasks import send_email_task
-            send_email_task(user_id=user.id, email_type="welcome")
+            # Try to send welcome email, but don't fail verification if it fails
+            try:
+                from {{ cookiecutter.project_slug }}.apps.users.tasks import send_email_task
+                send_email_task(user_id=user.id, email_type="welcome")
+            except Exception as e:
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.warning(f"Failed to send welcome email: {str(e)}")
             
             return Response({
                 'message': 'Email verified successfully!',
@@ -254,9 +259,16 @@ class ResendVerificationEmailView(APIView):
                 'already_verified': True
             }, status=status.HTTP_200_OK)
         
-        # Send verification email
-        send_verification_email_to_user(user, request)
+        # Try to send verification email, but don't fail if email service is unavailable
+        try:
+            send_verification_email_to_user(user, request)
+            message = 'Verification email has been sent. Please check your inbox.'
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Failed to resend verification email: {str(e)}")
+            message = 'Email service is temporarily unavailable. Please try again later.'
         
         return Response({
-            'message': 'Verification email has been sent. Please check your inbox.'
+            'message': message
         }, status=status.HTTP_200_OK)

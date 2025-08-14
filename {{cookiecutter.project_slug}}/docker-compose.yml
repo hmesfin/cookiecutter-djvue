@@ -65,6 +65,7 @@ services:
     environment:
       - DJANGO_ENV=development
       - DEBUG=True
+      - PYTHONPATH=/app
       {% if cookiecutter.database == 'postgresql' -%}
       - POSTGRES_DB={{ cookiecutter.project_slug }}
       - POSTGRES_USER={{ cookiecutter.project_slug }}

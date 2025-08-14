@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Set Python path to ensure imports work correctly
+export PYTHONPATH=/app:$PYTHONPATH
+
 echo "Waiting for database..."
 
 {% if cookiecutter.database == 'postgresql' -%}
