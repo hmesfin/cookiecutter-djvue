@@ -302,4 +302,4 @@ Use this checklist to ensure your {{ cookiecutter.project_name }} application is
 
 **Note**: This checklist should be customized based on your specific requirements, industry regulations, and organizational policies. Not all items may apply to your deployment.
 
-**Last Updated**: {{ cookiecutter.year }}-{{ '%02d' | format(cookiecutter.month|int) }}-{{ '%02d' | format(cookiecutter.day|int) }}
+**Last Updated**: {% now 'local', '%Y-%m-%d' %}
