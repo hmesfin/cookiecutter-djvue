@@ -3,6 +3,7 @@ Async tasks for User app.
 Gracefully handles both Celery and synchronous execution.
 """
 import logging
+import os
 from typing import Optional
 
 from django.conf import settings
@@ -292,6 +293,14 @@ def send_email_task(user_id: int, email_type: str = "welcome", **kwargs) -> bool
     email_func = email_functions[email_type]
     
     {% if cookiecutter.use_celery == 'y' -%}
+    logger.debug(f"CELERY_AVAILABLE: {CELERY_AVAILABLE}")
+    logger.debug(f"CELERY_TASK_ALWAYS_EAGER: {getattr(settings, 'CELERY_TASK_ALWAYS_EAGER', False)}")
+    logger.debug(f"USE_CELERY: {getattr(settings, 'USE_CELERY', True)}")
+    logger.debug(f"REDIS_URL from env: {os.environ.get('REDIS_URL', 'NOT SET')}")
+    logger.debug(f"CELERY_BROKER_URL from settings: {getattr(settings, 'CELERY_BROKER_URL', 'NOT SET')}")
+    {%- endif %}
+    
+    {% if cookiecutter.use_celery == 'y' -%}
     # Check if we should use Celery
     use_celery = (
         CELERY_AVAILABLE
@@ -300,10 +309,19 @@ def send_email_task(user_id: int, email_type: str = "welcome", **kwargs) -> bool
     )
     
     if use_celery:
-        # Queue as Celery task
-        return email_func.delay(user_id=user_id, **kwargs)
+        try:
+            # Queue as Celery task
+            logger.info(f"Attempting to queue {email_type} email task for user {user_id} via Celery")
+            result = email_func.delay(user_id=user_id, **kwargs)
+            logger.info(f"Successfully queued {email_type} email task: {result.id}")
+            return result
+        except Exception as e:
+            logger.error(f"Failed to queue task via Celery, falling back to synchronous: {str(e)}")
+            # Fall back to synchronous execution
+            return email_func(user_id=user_id, **kwargs)
     else:
         # Execute synchronously
+        logger.info(f"Executing {email_type} email task synchronously for user {user_id}")
         return email_func(user_id=user_id, **kwargs)
     {% else -%}
     # Execute synchronously (Celery not configured)
