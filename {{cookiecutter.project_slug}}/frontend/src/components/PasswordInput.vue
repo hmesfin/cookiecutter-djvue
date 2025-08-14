@@ -10,13 +10,13 @@
           :required="required"
           :autocomplete="autocomplete"
           class="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-   bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+   bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
         >
         <button
           type="button"
           @click="togglePassword"
           class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded
-  hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+  hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors dark:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700"
           :aria-label="showPassword ? 'Hide password' : 'Show password'"
         >
           <IconLucideEye v-if="!showPassword" class="w-5 h-5" />

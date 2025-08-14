@@ -7,7 +7,7 @@
     <form @submit.prevent="handleSubmit" class="space-y-6">
       <div class="space-y-6">
         <!-- Customer Information -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Customer Information</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Shipping Address -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Shipping Address</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6 md:col-span-2">
@@ -124,7 +124,7 @@
         </div>
 
         <!-- Products -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <div class="mb-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Products</h2>
             <button type="button" @click="addProduct" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
@@ -133,7 +133,7 @@
             </button>
           </div>
           
-          <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
             <table>
               <thead>
                 <tr>
@@ -189,14 +189,14 @@
                       @input="calculateTotals"
                     >
                   </td>
-                  <td class="font-semibold text-gray-900">
+                  <td class="font-semibold text-gray-900 dark:text-gray-100">
                     ${% raw %}{{ (product.quantity * product.price).toFixed(2) }}{% endraw %}
                   </td>
                   <td>
                     <button 
                       type="button"
                       @click="removeProduct(index)"
-                      class="p-2 hover:bg-gray-100 rounded-lg transition-colors danger"
+                      class="p-2 hover:bg-gray-100 rounded-lg transition-colors danger dark:hover:bg-gray-700"
                       title="Remove"
                     >
                       <IconLucideTrash2 class="w-5 h-5" />
@@ -209,23 +209,23 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Order Summary</h2>
-          <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+          <div class="bg-gray-50 rounded-lg p-4 space-y-2 dark:bg-gray-900">
             <div class="flex justify-between">
-              <span class="text-gray-600">Subtotal:</span>
-              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.subtotal.toFixed(2) }}{% endraw %}</span>
+              <span class="text-gray-600 dark:text-gray-400">Subtotal:</span>
+              <span class="font-semibold text-gray-900 dark:text-gray-100">${% raw %}{{ orderSummary.subtotal.toFixed(2) }}{% endraw %}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-600">Tax ({% raw %}{{ orderSummary.taxRate }}{% endraw %}%):</span>
-              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.tax.toFixed(2) }}{% endraw %}</span>
+              <span class="text-gray-600 dark:text-gray-400">Tax ({% raw %}{{ orderSummary.taxRate }}{% endraw %}%):</span>
+              <span class="font-semibold text-gray-900 dark:text-gray-100">${% raw %}{{ orderSummary.tax.toFixed(2) }}{% endraw %}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-gray-600">Shipping:</span>
-              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.shipping.toFixed(2) }}{% endraw %}</span>
+              <span class="text-gray-600 dark:text-gray-400">Shipping:</span>
+              <span class="font-semibold text-gray-900 dark:text-gray-100">${% raw %}{{ orderSummary.shipping.toFixed(2) }}{% endraw %}</span>
             </div>
             <div class="flex justify-between">
-              <label for="discount" class="text-gray-600">Discount:</label>
+              <label for="discount" class="text-gray-600 dark:text-gray-400">Discount:</label>
               <input 
                 id="discount"
                 v-model.number="orderSummary.discount"
@@ -237,14 +237,14 @@
               >
             </div>
             <div class="flex justify-between total">
-              <span class="text-gray-600">Total:</span>
-              <span class="font-semibold text-gray-900">${% raw %}{{ orderSummary.total.toFixed(2) }}{% endraw %}</span>
+              <span class="text-gray-600 dark:text-gray-400">Total:</span>
+              <span class="font-semibold text-gray-900 dark:text-gray-100">${% raw %}{{ orderSummary.total.toFixed(2) }}{% endraw %}</span>
             </div>
           </div>
         </div>
 
         <!-- Payment & Notes -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Payment & Notes</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">

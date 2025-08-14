@@ -19,7 +19,7 @@
           </span>
         </div>
         <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ metric.value }}{% endraw %}</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">{% raw %}{{ metric.comparison }}{% endraw %}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">{% raw %}{{ metric.comparison }}{% endraw %}</div>
       </div>
     </div>
 
@@ -30,11 +30,11 @@
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Revenue Overview</h3>
           <div class="flex gap-4 mt-2">
-            <span class="flex items-center gap-2 text-sm text-gray-600">
+            <span class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <span class="w-3 h-3 rounded-full" style="background: #4299e1"></span>
               Revenue
             </span>
-            <span class="flex items-center gap-2 text-sm text-gray-600">
+            <span class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <span class="w-3 h-3 rounded-full" style="background: #48bb78"></span>
               Profit
             </span>
@@ -57,9 +57,9 @@
           <div v-for="source in trafficSources" :key="source.name" class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="w-3 h-3 rounded-full" :style="{ background: source.color }"></span>
-              <span class="text-sm text-gray-600">{% raw %}{{ source.name }}{% endraw %}</span>
+              <span class="text-sm text-gray-600 dark:text-gray-400">{% raw %}{{ source.name }}{% endraw %}</span>
             </div>
-            <span class="text-sm font-medium text-gray-900">{% raw %}{{ source.value }}%{% endraw %}</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{% raw %}{{ source.value }}%{% endraw %}</span>
           </div>
         </div>
       </div>

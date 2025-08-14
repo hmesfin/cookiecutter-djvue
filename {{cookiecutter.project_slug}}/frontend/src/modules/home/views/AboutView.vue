@@ -1,11 +1,11 @@
 <template>
   <div class="about-view">
     <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-content">
-          <h1 class="hero-title">About {{ cookiecutter.project_name }}</h1>
-          <p class="hero-description">
+    <section class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-4xl mx-auto">
+          <h1 class="text-5xl font-bold mb-4">About {{ cookiecutter.project_name }}</h1>
+          <p class="text-xl opacity-95">
             Building the future of web applications with modern technology and passionate people
           </p>
         </div>
@@ -13,24 +13,24 @@
     </section>
 
     <!-- Mission Section -->
-    <section class="mission-section">
-      <div class="container">
-        <div class="mission-grid">
-          <div class="mission-content">
-            <h2 class="text-xl font-semibold text-gray-900 mb-2">Our Mission</h2>
-            <p class="mission-text">
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div class="space-y-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Our Mission</h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
               We believe in empowering developers and businesses with tools that make 
               building web applications faster, easier, and more enjoyable. Our mission 
               is to provide a robust, scalable foundation that lets you focus on what 
               makes your application unique.
             </p>
-            <p class="mission-text">
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
               By combining the power of Django and Vue.js with modern development practices, 
               we're creating a platform that grows with your needs—from startup to enterprise.
             </p>
           </div>
-          <div class="mission-image">
-            <div class="image-placeholder">
+          <div class="flex justify-center">
+            <div class="w-64 h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
               <IconLucideLightbulb class="w-6 h-6" />
             </div>
           </div>
@@ -39,53 +39,53 @@
     </section>
 
     <!-- Values Section -->
-    <section class="values-section">
-      <div class="container">
+    <section class="py-20 bg-gray-50 dark:bg-gray-800 dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Our Values</h2>
-          <p class="text-gray-600">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Our Values</h2>
+          <p class="text-gray-600 dark:text-gray-400">
             The principles that guide everything we do
           </p>
         </div>
         
-        <div class="values-grid">
-          <div v-for="value in values" :key="value.title" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 value-card">
-            <div class="value-icon" :style="{ background: value.color }">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="value in values" :key="value.title" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center text-white mb-4" :style="{ background: value.color }">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path :d="value.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
               </svg>
             </div>
-            <h3 class="value-title">{% raw %}{{ value.title }}{% endraw %}</h3>
-            <p class="value-description">{% raw %}{{ value.description }}{% endraw %}</p>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{% raw %}{{ value.title }}{% endraw %}</h3>
+            <p class="text-gray-600 dark:text-gray-400">{% raw %}{{ value.description }}{% endraw %}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Team Section -->
-    <section class="team-section">
-      <div class="container">
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Meet Our Team</h2>
-          <p class="text-gray-600">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Meet Our Team</h2>
+          <p class="text-gray-600 dark:text-gray-400">
             Passionate professionals dedicated to your success
           </p>
         </div>
         
-        <div class="team-grid">
-          <div v-for="member in teamMembers" :key="member.name" class="team-bg-white rounded-lg shadow-md p-6">
-            <div class="member-avatar">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div v-for="member in teamMembers" :key="member.name" class="team-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
+            <div class="w-32 h-32 rounded-full mx-auto mb-4 bg-gray-200 dark:bg-gray-700">
               <img v-if="member.avatar" :src="member.avatar" :alt="member.name">
               <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
                 {% raw %}{{ getInitials(member.name) }}{% endraw %}
               </div>
             </div>
-            <h3 class="member-name">{% raw %}{{ member.name }}{% endraw %}</h3>
-            <p class="member-role">{% raw %}{{ member.role }}{% endraw %}</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{% raw %}{{ member.name }}{% endraw %}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">{% raw %}{{ member.role }}{% endraw %}</p>
             <p class="member-bio">{% raw %}{{ member.bio }}{% endraw %}</p>
-            <div class="member-social">
-              <a v-for="social in member.socials" :key="social.platform" :href="social.url" class="social-link">
-                <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+            <div class="flex justify-center gap-3">
+              <a v-for="social in member.socials" :key="social.platform" :href="social.url" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors dark:text-gray-600 dark:hover:text-gray-400">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path :d="social.iconPath"></path>
                 </svg>
               </a>
@@ -97,11 +97,11 @@
 
     <!-- Stats Section -->
     <section class="stats-section">
-      <div class="container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div v-for="stat in stats" :key="stat.label" class="stat-bg-white rounded-lg shadow-md p-6">
-            <div class="text-3xl font-bold text-gray-900">{% raw %}{{ stat.value }}{% endraw %}</div>
-            <div class="text-sm font-medium text-gray-600">{% raw %}{{ stat.label }}{% endraw %}</div>
+          <div v-for="stat in stats" :key="stat.label" class="stat-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
+            <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stat.value }}{% endraw %}</div>
+            <div class="text-sm font-medium text-gray-600 dark:text-gray-400">{% raw %}{{ stat.label }}{% endraw %}</div>
           </div>
         </div>
       </div>
@@ -109,9 +109,9 @@
 
     <!-- Timeline Section -->
     <section class="timeline-section">
-      <div class="container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Our Journey</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Our Journey</h2>
         </div>
         
         <div class="timeline">
@@ -128,18 +128,18 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="container">
-        <div class="cta-content">
-          <h2 class="cta-title">Ready to Build Something Amazing?</h2>
-          <p class="cta-description">
+    <section class="py-20 bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-4xl font-bold mb-4">Ready to Build Something Amazing?</h2>
+          <p class="text-xl mb-8 opacity-95">
             Join our community and start building your next project today
           </p>
-          <div class="cta-buttons">
-            <router-link to="/auth/register" class="btn btn-primary btn-lg">
+          <div class="flex gap-4 justify-center">
+            <router-link to="/auth/register" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Get Started Free
             </router-link>
-            <router-link to="/contact" class="btn btn-outline btn-lg">
+            <router-link to="/contact" class="btn border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Get in Touch
             </router-link>
           </div>
@@ -325,449 +325,3 @@ const getInitials = (name{% if cookiecutter.use_typescript == 'y' %}: string{% e
 }
 </script>
 
-<style scoped>
-.about-view {
-  min-height: 100vh;
-}
-
-/* Hero Section */
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 5rem 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.hero-content {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  line-height: 1.2;
-}
-
-.hero-description {
-  font-size: 1.25rem;
-  opacity: 0.95;
-}
-
-/* Mission Section */
-.mission-section {
-  padding: 5rem 0;
-  background: white;
-}
-
-.mission-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 1.5rem 0;
-}
-
-.mission-text {
-  color: #4a5568;
-  font-size: 1.125rem;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-.mission-image {
-  display: flex;
-  justify-content: center;
-}
-
-.image-placeholder {
-  width: 300px;
-  height: 300px;
-  background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-placeholder svg {
-  width: 100px;
-  height: 100px;
-  color: #667eea;
-}
-
-/* Values Section */
-.values-section {
-  padding: 5rem 0;
-  background: #f7fafc;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.section-description {
-  font-size: 1.125rem;
-  color: #718096;
-}
-
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.value-card {
-  text-align: center;
-  padding: 2rem;
-}
-
-.value-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1.5rem;
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.value-icon svg {
-  width: 40px;
-  height: 40px;
-  color: white;
-}
-
-.value-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 0.75rem 0;
-}
-
-.value-description {
-  color: #718096;
-  line-height: 1.6;
-}
-
-/* Team Section */
-.team-section {
-  padding: 5rem 0;
-  background: white;
-}
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 3rem;
-  margin-top: 3rem;
-}
-
-.team-card {
-  text-align: center;
-}
-
-.member-avatar {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 1.5rem;
-}
-
-.member-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 2.5rem;
-  font-weight: 600;
-}
-
-.member-name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 0.25rem 0;
-}
-
-.member-role {
-  color: #667eea;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.member-bio {
-  color: #718096;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.member-social {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.social-link {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #f7fafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.social-link:hover {
-  background: #667eea;
-  transform: translateY(-2px);
-}
-
-.social-icon {
-  width: 18px;
-  height: 18px;
-  color: #718096;
-}
-
-.social-link:hover .social-icon {
-  color: white;
-}
-
-/* Stats Section */
-.stats-section {
-  padding: 5rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-}
-
-.stat-card {
-  text-align: center;
-  color: white;
-}
-
-.stat-value {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  font-size: 1.125rem;
-  opacity: 0.9;
-}
-
-/* Timeline Section */
-.timeline-section {
-  padding: 5rem 0;
-  background: #f7fafc;
-}
-
-.timeline {
-  position: relative;
-  max-width: 800px;
-  margin: 3rem auto 0;
-  padding: 0 2rem;
-}
-
-.timeline:before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #e2e8f0;
-  transform: translateX(-50%);
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 3rem;
-}
-
-.timeline-item:nth-child(even) .timeline-content {
-  margin-left: auto;
-  text-align: right;
-}
-
-.timeline-marker {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 16px;
-  height: 16px;
-  background: white;
-  border: 3px solid #667eea;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-.timeline-content {
-  width: calc(50% - 3rem);
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.timeline-date {
-  color: #667eea;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.timeline-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 0.5rem 0;
-}
-
-.timeline-description {
-  color: #718096;
-  line-height: 1.6;
-}
-
-/* CTA Section */
-.cta-section {
-  padding: 5rem 0;
-  background: white;
-}
-
-.cta-content {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.cta-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 1rem 0;
-}
-
-.cta-description {
-  font-size: 1.125rem;
-  color: #718096;
-  margin-bottom: 2rem;
-}
-
-.cta-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-  display: inline-block;
-  border: 2px solid transparent;
-}
-
-.btn-lg {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-}
-
-.btn-outline {
-  background: white;
-  color: #667eea;
-  border-color: #667eea;
-}
-
-.btn-outline:hover {
-  background: #667eea;
-  color: white;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .mission-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .timeline:before {
-    left: 2rem;
-  }
-  
-  .timeline-marker {
-    left: 2rem;
-  }
-  
-  .timeline-content {
-    width: calc(100% - 4rem);
-    margin-left: 4rem !important;
-    text-align: left !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-title {
-    font-size: 1.75rem;
-  }
-  
-  .stat-value {
-    font-size: 2rem;
-  }
-  
-  .team-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-</style>

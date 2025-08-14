@@ -1,15 +1,15 @@
 <template>
   <div class="privacy-view">
-    <div class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">Privacy Policy</h1>
-        <p class="hero-subtitle">Last updated: {% raw %}{{ lastUpdated }}{% endraw %}</p>
+    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-20">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl font-bold mb-4">Privacy Policy</h1>
+        <p class="text-xl opacity-95">Last updated: {% raw %}{{ lastUpdated }}{% endraw %}</p>
       </div>
     </div>
 
-    <div class="content-section">
-      <div class="content-container">
-        <section class="policy-section">
+    <div class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="mb-12">
           <h2>Introduction</h2>
           <p>
             At {{ cookiecutter.project_name }}, we take your privacy seriously. This Privacy Policy explains how we collect, 
@@ -17,7 +17,7 @@
           </p>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Information We Collect</h2>
           <h3>Personal Information</h3>
           <p>
@@ -44,7 +44,7 @@
           </ul>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>How We Use Your Information</h2>
           <p>We use the information we collect or receive:</p>
           <ul>
@@ -59,7 +59,7 @@
           </ul>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Information Sharing and Disclosure</h2>
           <p>We may share or disclose your information in the following situations:</p>
           <ul>
@@ -72,7 +72,7 @@
           </ul>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Data Security</h2>
           <p>
             We implement appropriate technical and organizational security measures designed to protect the security of any 
@@ -86,7 +86,7 @@
           </p>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Data Retention</h2>
           <p>
             We will retain your personal information only for as long as is necessary for the purposes set out in this 
@@ -95,7 +95,7 @@
           </p>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Your Privacy Rights</h2>
           <p>Depending on your location, you may have the following rights regarding your personal information:</p>
           <ul>
@@ -108,7 +108,7 @@
           </ul>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Children's Privacy</h2>
           <p>
             Our service does not address anyone under the age of 13. We do not knowingly collect personally identifiable 
@@ -117,7 +117,7 @@
           </p>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Updates to This Policy</h2>
           <p>
             We may update this privacy policy from time to time. The updated version will be indicated by an updated 
@@ -126,10 +126,10 @@
           </p>
         </section>
 
-        <section class="policy-section">
+        <section class="mb-12">
           <h2>Contact Us</h2>
           <p>If you have questions or comments about this policy, you may contact us at:</p>
-          <div class="contact-info">
+          <div class="space-y-8">
             <p><strong>{{ cookiecutter.project_name }}</strong></p>
             <p>Email: privacy@{{ cookiecutter.domain_name }}</p>
             <p>Address: [Your Company Address]</p>
@@ -154,120 +154,3 @@ const lastUpdated = computed(() => {
 })
 </script>
 
-<style scoped>
-.privacy-view {
-  min-height: 100vh;
-  background: #f7fafc;
-}
-
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 4rem 1rem;
-}
-
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-}
-
-.hero-subtitle {
-  font-size: 1.125rem;
-  opacity: 0.9;
-}
-
-.content-section {
-  padding: 4rem 1rem;
-}
-
-.content-container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.policy-section {
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.policy-section h2 {
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 1.5rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-.policy-section h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 1.5rem 0 1rem 0;
-}
-
-.policy-section p {
-  color: #4a5568;
-  line-height: 1.75;
-  margin-bottom: 1rem;
-}
-
-.policy-section ul {
-  color: #4a5568;
-  line-height: 1.75;
-  margin-left: 2rem;
-  margin-bottom: 1rem;
-}
-
-.policy-section ul li {
-  margin-bottom: 0.5rem;
-}
-
-.policy-section ul li strong {
-  color: #2d3748;
-  font-weight: 600;
-}
-
-.contact-info {
-  background: #f7fafc;
-  padding: 1.5rem;
-  border-radius: 0.375rem;
-  margin-top: 1rem;
-}
-
-.contact-info p {
-  margin: 0.5rem 0;
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-section {
-    padding: 3rem 1rem;
-  }
-  
-  .content-section {
-    padding: 2rem 1rem;
-  }
-  
-  .policy-section {
-    padding: 1.5rem;
-  }
-  
-  .policy-section h2 {
-    font-size: 1.5rem;
-  }
-}
-</style>

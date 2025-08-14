@@ -1,11 +1,11 @@
 <template>
   <div class="features-view">
     <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-content">
-          <h1 class="hero-title">Powerful Features for Modern Teams</h1>
-          <p class="hero-description">
+    <section class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-4xl mx-auto">
+          <h1 class="text-5xl font-bold mb-4">Powerful Features for Modern Teams</h1>
+          <p class="text-xl opacity-95">
             Everything you need to build, deploy, and scale your applications with confidence.
             Our comprehensive feature set empowers teams to work smarter, not harder.
           </p>
@@ -14,27 +14,27 @@
     </section>
 
     <!-- Main Features Grid -->
-    <section class="features-section">
-      <div class="container">
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Core Features</h2>
-          <p class="text-gray-600">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Core Features</h2>
+          <p class="text-gray-600 dark:text-gray-400">
             Built with the latest technologies and best practices
           </p>
         </div>
         
-        <div class="features-grid">
-          <div v-for="feature in coreFeatures" :key="feature.id" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 feature-card">
-            <div class="feature-icon" :style="{ background: feature.color }">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="feature in coreFeatures" :key="feature.id" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center text-white mb-4" :style="{ background: feature.color }">
               <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path :d="feature.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
               </svg>
             </div>
-            <h3 class="feature-title">{% raw %}{{ feature.title }}{% endraw %}</h3>
-            <p class="feature-description">{% raw %}{{ feature.description }}{% endraw %}</p>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{% raw %}{{ feature.title }}{% endraw %}</h3>
+            <p class="text-gray-600 dark:text-gray-400">{% raw %}{{ feature.description }}{% endraw %}</p>
             <ul class="feature-list">
               <li v-for="item in feature.items" :key="item">
-                <IconLucideCheck class="check-icon" />
+                <IconLucideCheck class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 {% raw %}{{ item }}{% endraw %}
               </li>
             </ul>
@@ -45,37 +45,37 @@
 
     <!-- Technical Stack -->
     <section class="tech-stack-section">
-      <div class="container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Built with Modern Technology</h2>
-          <p class="text-gray-600">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Built with Modern Technology</h2>
+          <p class="text-gray-600 dark:text-gray-400">
             Leveraging the best tools and frameworks for optimal performance
           </p>
         </div>
         
-        <div class="tech-grid">
-          <div v-for="tech in techStack" :key="tech.name" class="tech-item">
-            <div class="tech-logo">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          <div v-for="tech in techStack" :key="tech.name" class="text-center">
+            <div class="w-20 h-20 mx-auto mb-3 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
               <img :src="tech.logo" :alt="tech.name">
             </div>
-            <h4 class="tech-name">{% raw %}{{ tech.name }}{% endraw %}</h4>
-            <p class="tech-description">{% raw %}{{ tech.description }}{% endraw %}</p>
+            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">{% raw %}{{ tech.name }}{% endraw %}</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-500">{% raw %}{{ tech.description }}{% endraw %}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Feature Comparison -->
-    <section class="comparison-section">
-      <div class="container">
+    <section class="py-20 bg-gray-50 dark:bg-gray-800 dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Why Choose Us?</h2>
-          <p class="text-gray-600">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Why Choose Us?</h2>
+          <p class="text-gray-600 dark:text-gray-400">
             See how we compare to traditional solutions
           </p>
         </div>
         
-        <div class="comparison-table">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden dark:shadow-2xl dark:shadow-gray-900/50">
           <table>
             <thead>
               <tr>
@@ -106,18 +106,18 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="container">
-        <div class="cta-content">
-          <h2 class="cta-title">Ready to Get Started?</h2>
-          <p class="cta-description">
+    <section class="py-20 bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
+          <p class="text-xl mb-8 opacity-95">
             Join thousands of teams already using our platform to build amazing products
           </p>
-          <div class="cta-buttons">
-            <router-link to="/auth/register" class="btn btn-primary btn-lg">
+          <div class="flex gap-4 justify-center">
+            <router-link to="/auth/register" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Start Free Trial
             </router-link>
-            <router-link to="/contact" class="btn btn-outline btn-lg">
+            <router-link to="/contact" class="btn border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Schedule Demo
             </router-link>
           </div>
@@ -320,345 +320,3 @@ const comparisons = ref({% if cookiecutter.use_typescript == 'y' %}<Comparison[]
 ])
 </script>
 
-<style scoped>
-.features-view {
-  min-height: 100vh;
-}
-
-/* Hero Section */
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 5rem 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.hero-content {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.2;
-}
-
-.hero-description {
-  font-size: 1.25rem;
-  opacity: 0.95;
-  line-height: 1.6;
-}
-
-/* Features Section */
-.features-section {
-  padding: 5rem 0;
-  background: #f7fafc;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 1rem 0;
-}
-
-.section-description {
-  font-size: 1.125rem;
-  color: #718096;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.feature-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-.feature-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.feature-icon .icon {
-  width: 30px;
-  height: 30px;
-  color: white;
-}
-
-.feature-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 0.75rem 0;
-}
-
-.feature-description {
-  color: #718096;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.feature-list li {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-  color: #4a5568;
-}
-
-.check-icon {
-  width: 20px;
-  height: 20px;
-  color: #48bb78;
-  flex-shrink: 0;
-}
-
-/* Tech Stack Section */
-.tech-stack-section {
-  padding: 5rem 0;
-  background: white;
-}
-
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 3rem;
-  margin-top: 3rem;
-}
-
-.tech-item {
-  text-align: center;
-}
-
-.tech-logo {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1rem;
-}
-
-.tech-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.tech-name {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 0.5rem 0;
-}
-
-.tech-description {
-  font-size: 0.875rem;
-  color: #718096;
-}
-
-/* Comparison Section */
-.comparison-section {
-  padding: 5rem 0;
-  background: #f7fafc;
-}
-
-.comparison-table {
-  background: white;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-}
-
-.comparison-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.comparison-table th {
-  background: #4a5568;
-  color: white;
-  padding: 1.25rem;
-  text-align: left;
-  font-weight: 600;
-}
-
-.comparison-table th.highlight {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.comparison-table td {
-  padding: 1.25rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.comparison-table tr:last-child td {
-  border-bottom: none;
-}
-
-.feature-name {
-  font-weight: 500;
-  color: #2d3748;
-}
-
-.our-solution {
-  color: #059669;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.other-solution {
-  color: #718096;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.icon-check {
-  width: 20px;
-  height: 20px;
-  color: #059669;
-}
-
-.icon-partial {
-  width: 20px;
-  height: 20px;
-  color: #d97706;
-}
-
-.icon-no {
-  width: 20px;
-  height: 20px;
-  color: #dc2626;
-}
-
-/* CTA Section */
-.cta-section {
-  padding: 5rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.cta-content {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.cta-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-}
-
-.cta-description {
-  font-size: 1.125rem;
-  margin-bottom: 2rem;
-  opacity: 0.95;
-}
-
-.cta-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-  display: inline-block;
-  border: 2px solid transparent;
-}
-
-.btn-lg {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-}
-
-.btn-primary {
-  background: white;
-  color: #667eea;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.btn-outline {
-  background: transparent;
-  color: white;
-  border-color: white;
-}
-
-.btn-outline:hover {
-  background: white;
-  color: #667eea;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-title {
-    font-size: 1.75rem;
-  }
-  
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .tech-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .comparison-table {
-    overflow-x: auto;
-  }
-  
-  .comparison-table table {
-    min-width: 500px;
-  }
-}
-</style>

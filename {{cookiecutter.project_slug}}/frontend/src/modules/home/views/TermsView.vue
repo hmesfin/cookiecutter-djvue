@@ -1,15 +1,15 @@
 <template>
-  <div class="terms-view">
-    <div class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">Terms of Service</h1>
-        <p class="hero-subtitle">Effective Date: {% raw %}{{ effectiveDate }}{% endraw %}</p>
+  <div class="min-h-screen bg-white dark:bg-gray-900">
+    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-20">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl font-bold mb-4">Terms of Service</h1>
+        <p class="text-xl opacity-95">Effective Date: {% raw %}{{ effectiveDate }}{% endraw %}</p>
       </div>
     </div>
 
-    <div class="content-section">
-      <div class="content-container">
-        <section class="terms-section">
+    <div class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="mb-12">
           <h2>1. Acceptance of Terms</h2>
           <p>
             By accessing and using {{ cookiecutter.project_name }} ("Service"), you accept and agree to be bound by the terms 
@@ -21,7 +21,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>2. Use License</h2>
           <p>
             Permission is granted to temporarily access the materials (information or software) on {{ cookiecutter.project_name }} 
@@ -43,7 +43,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>3. Account Registration</h2>
           <p>
             To use certain features of our Service, you may be required to register for an account. When you register for 
@@ -63,7 +63,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>4. Prohibited Uses</h2>
           <p>
             In addition to other prohibitions as set forth in the Terms of Service, you are prohibited from using the 
@@ -83,7 +83,7 @@
           </ul>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>5. Content and Intellectual Property</h2>
           
           <h3>5.1 Your Content</h3>
@@ -107,7 +107,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>6. Privacy Policy</h2>
           <p>
             Your use of the Service is also governed by our Privacy Policy. Please review our Privacy Policy, which also 
@@ -116,7 +116,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>7. Termination</h2>
           <p>
             We may terminate or suspend your account and bar access to the Service immediately, without prior notice or 
@@ -133,7 +133,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>8. Disclaimer</h2>
           <p>
             The information on the Service is provided on an "as is" basis. To the fullest extent permitted by law, this 
@@ -151,7 +151,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>9. Limitation of Liability</h2>
           <p>
             In no event shall {{ cookiecutter.project_name }}, nor its directors, employees, partners, agents, suppliers, 
@@ -167,7 +167,7 @@
           </ul>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>10. Indemnification</h2>
           <p>
             You agree to defend, indemnify, and hold harmless {{ cookiecutter.project_name }}, its affiliates, licensors, 
@@ -178,7 +178,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>11. Governing Law</h2>
           <p>
             These Terms shall be governed and construed in accordance with the laws of [Your Jurisdiction], without regard 
@@ -192,7 +192,7 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>12. Changes to Terms</h2>
           <p>
             We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is 
@@ -205,10 +205,10 @@
           </p>
         </section>
 
-        <section class="terms-section">
+        <section class="mb-12">
           <h2>13. Contact Information</h2>
           <p>If you have any questions about these Terms of Service, please contact us at:</p>
-          <div class="contact-info">
+          <div class="space-y-8">
             <p><strong>{{ cookiecutter.project_name }}</strong></p>
             <p>Email: legal@{{ cookiecutter.domain_name }}</p>
             <p>Address: [Your Company Address]</p>
@@ -216,7 +216,7 @@
           </div>
         </section>
 
-        <div class="acknowledgment">
+        <div class="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-gray-600 dark:text-gray-400 dark:bg-gray-900">
           <p>
             By using this Service, you signify your acceptance of these Terms of Service. If you do not agree to these 
             Terms of Service, please do not use our Service. Your continued use of the Service following the posting of 
@@ -241,130 +241,3 @@ const effectiveDate = computed(() => {
 })
 </script>
 
-<style scoped>
-.terms-view {
-  min-height: 100vh;
-  background: #f7fafc;
-}
-
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 4rem 1rem;
-}
-
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-}
-
-.hero-subtitle {
-  font-size: 1.125rem;
-  opacity: 0.9;
-}
-
-.content-section {
-  padding: 4rem 1rem;
-}
-
-.content-container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.terms-section {
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.terms-section h2 {
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0 0 1.5rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-.terms-section h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 1.5rem 0 1rem 0;
-}
-
-.terms-section p {
-  color: #4a5568;
-  line-height: 1.75;
-  margin-bottom: 1rem;
-}
-
-.terms-section ul {
-  color: #4a5568;
-  line-height: 1.75;
-  margin-left: 2rem;
-  margin-bottom: 1rem;
-}
-
-.terms-section ul li {
-  margin-bottom: 0.5rem;
-}
-
-.contact-info {
-  background: #f7fafc;
-  padding: 1.5rem;
-  border-radius: 0.375rem;
-  margin-top: 1rem;
-}
-
-.contact-info p {
-  margin: 0.5rem 0;
-}
-
-.acknowledgment {
-  background: #edf2f7;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  border-left: 4px solid #4299e1;
-  margin-top: 2rem;
-}
-
-.acknowledgment p {
-  color: #2d3748;
-  line-height: 1.75;
-  margin: 0;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-section {
-    padding: 3rem 1rem;
-  }
-  
-  .content-section {
-    padding: 2rem 1rem;
-  }
-  
-  .terms-section {
-    padding: 1.5rem;
-  }
-  
-  .terms-section h2 {
-    font-size: 1.5rem;
-  }
-}
-</style>

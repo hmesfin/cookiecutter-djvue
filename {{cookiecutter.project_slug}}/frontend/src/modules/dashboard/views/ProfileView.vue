@@ -6,7 +6,7 @@
 
     <div class="space-y-6">
       <!-- Profile Header -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
         <div class="relative-section">
           <div class="avatar-container">
             <img 
@@ -18,13 +18,13 @@
             <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
               {% raw %}{{ initials }}{% endraw %}
             </div>
-            <button class="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors">
+            <button class="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/50 dark:hover:bg-gray-800">
               <IconLucideCamera class="w-5 h-5" />
             </button>
           </div>
           <div class="flex-1">
-            <h2 class="text-2xl font-bold text-gray-900">{% raw %}{{ user.name }}{% endraw %}</h2>
-            <p class="text-gray-600">{% raw %}{{ user.email }}{% endraw %}</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ user.name }}{% endraw %}</h2>
+            <p class="text-gray-600 dark:text-gray-400">{% raw %}{{ user.email }}{% endraw %}</p>
             <span class="inline-block mt-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">{% raw %}{{ user.role }}{% endraw %}</span>
           </div>
         </div>
@@ -32,7 +32,7 @@
 
       <!-- Profile Form -->
       <form @submit.prevent="handleSubmit" class="space-y-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <h3 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Personal Information</h3>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -42,7 +42,7 @@
                 id="firstName"
                 v-model="formData.firstName"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
                 required
               >
             </div>
@@ -53,7 +53,7 @@
                 id="lastName"
                 v-model="formData.lastName"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
                 required
               >
             </div>
@@ -64,7 +64,7 @@
                 id="email"
                 v-model="formData.email"
                 type="email"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
                 required
               >
             </div>
@@ -75,7 +75,7 @@
                 id="phone"
                 v-model="formData.phone"
                 type="tel"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               >
             </div>
 
@@ -85,7 +85,7 @@
                 id="dateOfBirth"
                 v-model="formData.dateOfBirth"
                 type="date"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               >
             </div>
 
@@ -94,7 +94,7 @@
               <select 
                 id="country"
                 v-model="formData.country"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               >
                 <option value="">Select a country</option>
                 <option value="US">United States</option>
@@ -117,13 +117,13 @@
               id="bio"
               v-model="formData.bio"
               rows="4"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               placeholder="Tell us about yourself..."
             ></textarea>
           </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
           <h3 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Change Password</h3>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -133,7 +133,7 @@
                 id="currentPassword"
                 v-model="passwordData.currentPassword"
                 type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               >
             </div>
 
@@ -143,7 +143,7 @@
                 id="newPassword"
                 v-model="passwordData.newPassword"
                 type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               >
             </div>
 
@@ -153,7 +153,7 @@
                 id="confirmPassword"
                 v-model="passwordData.confirmPassword"
                 type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
               >
             </div>
           </div>

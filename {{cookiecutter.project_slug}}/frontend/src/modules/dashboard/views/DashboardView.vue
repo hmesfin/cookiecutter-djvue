@@ -109,16 +109,16 @@
     {% else -%}
     <div class="dashboard-content">
       <!-- Welcome Section -->
-      <div class="welcome-bg-white rounded-lg shadow-md p-6">
+      <div class="welcome-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
         <h1>Welcome back, {% raw %}{{ userName }}{% endraw %}!</h1>
         <p>Here's what's happening with your account today.</p>
       </div>
 
       <!-- Stats Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {% raw %}<div v-for="stat in stats" :key="stat.name" class="stat-bg-white rounded-lg shadow-md p-6">
+        {% raw %}<div v-for="stat in stats" :key="stat.name" class="stat-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
           <div class="stat-name">{{ stat.name }}</div>
-          <div class="text-3xl font-bold text-gray-900">{{ stat.value }}</div>
+          <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{ stat.value }}</div>
           <div class="stat-change">
             <span :class="stat.changeType">
               {{ stat.change }}
@@ -129,7 +129,7 @@
       </div>
 
       <!-- Recent Activity -->
-      <div class="activity-bg-white rounded-lg shadow-md p-6">
+      <div class="activity-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
         <h3>Recent Activity</h3>
         <div class="activity-list">
           {% raw %}<div v-for="activity in activities" :key="activity.id" class="activity-item">
@@ -140,7 +140,7 @@
       </div>
 
       <!-- Quick Actions -->
-      <div class="actions-bg-white rounded-lg shadow-md p-6">
+      <div class="actions-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
         <h3>Quick Actions</h3>
         <div class="actions-grid">
           {% raw %}<button

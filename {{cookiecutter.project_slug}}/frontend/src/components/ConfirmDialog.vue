@@ -2,14 +2,14 @@
   <Teleport to="body">
     <Transition name="modal">
       <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="cancel">
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-container" @click.stop>
-          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-header">
-            <h3 class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-title">{% raw %}{{ title }}{% endraw %}</h3>
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-container dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60" @click.stop>
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-header dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
+            <h3 class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-title dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">{% raw %}{{ title }}{% endraw %}</h3>
           </div>
-          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-body">
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-body dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
             <p>{% raw %}{{ message }}{% endraw %}</p>
           </div>
-          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-footer">
+          <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto-footer dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/60">
             <button @click="cancel" class="btn btn-secondary">
               {% raw %}{{ cancelText }}{% endraw %}
             </button>

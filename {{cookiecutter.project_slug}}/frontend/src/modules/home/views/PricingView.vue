@@ -1,22 +1,22 @@
 <template>
   <div class="pricing-view">
     <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-content">
-          <h1 class="hero-title">Simple, Transparent Pricing</h1>
-          <p class="hero-description">
+    <section class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-4xl mx-auto">
+          <h1 class="text-5xl font-bold mb-4">Simple, Transparent Pricing</h1>
+          <p class="text-xl opacity-95">
             Choose the perfect plan for your needs. Always flexible to scale up or down.
           </p>
-          <div class="billing-toggle">
-            <span :class="{ active: !isAnnual }">Monthly</span>
-            <label class="toggle">
-              <input type="checkbox" v-model="isAnnual">
-              <span class="toggle-slider"></span>
+          <div class="mt-8 flex items-center justify-center gap-4">
+            <span :class="{ \'text-gray-900 dark:text-gray-100 font-semibold\': !isAnnual, \'text-gray-500 dark:text-gray-400\': !!isAnnual }">Monthly</span>
+            <label class="relative inline-block w-14 h-7">
+              <input type="checkbox" v-model="isAnnual" class="sr-only peer">
+              <span class="absolute cursor-pointer inset-0 bg-gray-300 rounded-full transition-colors peer-checked:bg-indigo-600 dark:bg-gray-600"></span>
             </label>
-            <span :class="{ active: isAnnual }">
+            <span :class="{ \'text-gray-900 dark:text-gray-100 font-semibold\': isAnnual, \'text-gray-500 dark:text-gray-400\': !isAnnual }">
               Annual
-              <span class="badge">Save 20%</span>
+              <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">Save 20%</span>
             </span>
           </div>
         </div>
@@ -24,41 +24,41 @@
     </section>
 
     <!-- Pricing Cards -->
-    <section class="pricing-section">
-      <div class="container">
-        <div class="pricing-grid">
+    <section class="py-0 pb-20 -mt-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <div 
             v-for="plan in pricingPlans" 
             :key="plan.id"
-            :class="['bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 pricing-card', { featured: plan.featured }]"
+            :class="['bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 bg-white p-6', { featured: plan.featured }]"
           >
-            <div v-if="plan.featured" class="featured-badge">Most Popular</div>
+            <div v-if="plan.featured" class="absolute -top-px left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-1 rounded-b-lg text-sm font-semibold">Most Popular</div>
             
-            <div class="plan-header">
-              <h3 class="plan-name">{% raw %}{{ plan.name }}{% endraw %}</h3>
-              <p class="plan-description">{% raw %}{{ plan.description }}{% endraw %}</p>
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{% raw %}{{ plan.name }}{% endraw %}</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">{% raw %}{{ plan.description }}{% endraw %}</p>
             </div>
             
-            <div class="plan-price">
-              <span class="currency">$</span>
-              <span class="amount">{% raw %}{{ isAnnual ? plan.annualPrice : plan.monthlyPrice }}{% endraw %}</span>
-              <span class="period">/{% raw %}{{ isAnnual ? 'year' : 'month' }}{% endraw %}</span>
+            <div class="text-center mb-2">
+              <span class="text-2xl text-gray-600 dark:text-gray-400 align-top">$</span>
+              <span class="text-6xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ isAnnual ? plan.annualPrice : plan.monthlyPrice }}{% endraw %}</span>
+              <span class="text-lg text-gray-600 dark:text-gray-400">/{% raw %}{{ isAnnual ? 'year' : 'month' }}{% endraw %}</span>
             </div>
             
-            <div v-if="isAnnual && plan.monthlyPrice > 0" class="savings">
+            <div v-if="isAnnual && plan.monthlyPrice > 0" class="text-center text-green-600 dark:text-green-400 text-sm font-semibold mb-8">
               Save {% raw %}{{ '$' + (plan.monthlyPrice * 12 - plan.annualPrice).toFixed(0) }}{% endraw %} per year
             </div>
             
-            <ul class="features-list">
-              <li v-for="feature in plan.features" :key="feature" class="feature-item">
-                <IconLucideCheck class="check-icon" />
+            <ul class="space-y-3 mb-8">
+              <li v-for="feature in plan.features" :key="feature" class="flex items-start gap-3 text-gray-600 dark:text-gray-400">
+                <IconLucideCheck class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 {% raw %}{{ feature }}{% endraw %}
               </li>
             </ul>
             
             <button 
               @click="selectPlan(plan)"
-              :class="['btn', plan.featured ? 'btn-primary' : 'btn-outline']"
+              :class="['btn', plan.featured ? 'px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700' : duration-200-outline']"
             >
               {% raw %}{{ plan.cta }}{% endraw %}
             </button>
@@ -68,51 +68,51 @@
     </section>
 
     <!-- Enterprise Section -->
-    <section class="enterprise-section">
-      <div class="container">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 enterprise-card">
-          <div class="enterprise-content">
-            <h2 class="enterprise-title">Need a Custom Solution?</h2>
-            <p class="enterprise-description">
+    <section class="py-20 bg-gray-50 dark:bg-gray-800 dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
+          <div class="lg:col-span-2">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Need a Custom Solution?</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
               Our Enterprise plan offers unlimited flexibility with custom features, 
               dedicated support, and SLA guarantees tailored to your organization's needs.
             </p>
-            <ul class="enterprise-features">
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-gray-600 dark:text-gray-400">
               <li>Custom pricing based on your needs</li>
               <li>Dedicated account manager</li>
               <li>99.9% uptime SLA</li>
               <li>Priority support & training</li>
             </ul>
           </div>
-          <div class="enterprise-action">
-            <router-link to="/contact" class="btn btn-primary btn-lg">
+          <div class="text-center">
+            <router-link to="/contact" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Contact Sales
             </router-link>
-            <p class="enterprise-note">Let's discuss your specific requirements</p>
+            <p class="mt-3 text-gray-600 dark:text-gray-400 text-sm">Let's discuss your specific requirements</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="faq-section">
-      <div class="container">
+    <section class="py-20 bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Frequently Asked Questions</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Frequently Asked Questions</h2>
         </div>
         
-        <div class="faq-grid">
+        <div class="max-w-3xl mx-auto">
           <div 
             v-for="(faq, index) in faqs" 
             :key="index"
-            class="faq-item"
+            class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-4 overflow-hidden transition-shadow hover:shadow-md cursor-pointer dark:bg-gray-900"
             @click="toggleFaq(index)"
           >
-            <div class="faq-question">
+            <div class="p-5 flex justify-between items-center">
               <h3>{% raw %}{{ faq.question }}{% endraw %}</h3>
-              <IconLucideChevronDown class="['chevron-icon', { rotated: activeFaq === index }]" />
+              <IconLucideChevronDown class="['w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform', { rotated: activeFaq === index }]" />
             </div>
-            <div v-if="activeFaq === index" class="faq-answer">
+            <div v-if="activeFaq === index" class="px-5 pb-5 text-gray-600 dark:text-gray-400 leading-relaxed">
               <p>{% raw %}{{ faq.answer }}{% endraw %}</p>
             </div>
           </div>
@@ -121,14 +121,14 @@
     </section>
 
     <!-- Guarantee Section -->
-    <section class="guarantee-section">
-      <div class="container">
-        <div class="guarantee-content">
-          <div class="guarantee-icon">
+    <section class="py-20 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="w-20 h-20 mx-auto mb-6 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
             <IconLucideShieldCheck class="w-6 h-6" />
           </div>
-          <h2 class="guarantee-title">30-Day Money-Back Guarantee</h2>
-          <p class="guarantee-description">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">30-Day Money-Back Guarantee</h2>
+          <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
             Try any plan risk-free for 30 days. If you're not completely satisfied, 
             we'll refund your payment—no questions asked.
           </p>
@@ -266,477 +266,3 @@ const toggleFaq = (index{% if cookiecutter.use_typescript == 'y' %}: number{% en
 }
 </script>
 
-<style scoped>
-.pricing-view {
-  min-height: 100vh;
-}
-
-/* Hero Section */
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 5rem 0 3rem;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.hero-content {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  line-height: 1.2;
-}
-
-.hero-description {
-  font-size: 1.25rem;
-  opacity: 0.95;
-  margin-bottom: 2rem;
-}
-
-/* Billing Toggle */
-.billing-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  font-size: 1rem;
-}
-
-.billing-toggle span {
-  color: rgba(255, 255, 255, 0.7);
-  transition: color 0.3s;
-}
-
-.billing-toggle span.active {
-  color: white;
-  font-weight: 600;
-}
-
-.toggle {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 30px;
-}
-
-.toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: 0.4s;
-  border-radius: 30px;
-}
-
-.toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 22px;
-  width: 22px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-.toggle input:checked + .toggle-slider {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.toggle input:checked + .toggle-slider:before {
-  transform: translateX(30px);
-}
-
-.badge {
-  background: #48bb78;
-  color: white;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-left: 0.5rem;
-}
-
-/* Pricing Section */
-.pricing-section {
-  padding: 0 0 5rem;
-  margin-top: -3rem;
-}
-
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.pricing-card {
-  background: white;
-  border-radius: 1rem;
-  padding: 2.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  position: relative;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.pricing-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-.pricing-card.featured {
-  border: 2px solid #667eea;
-  transform: scale(1.05);
-}
-
-.featured-badge {
-  position: absolute;
-  top: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 0.375rem 1.5rem;
-  border-radius: 0 0 0.5rem 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.plan-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.plan-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 0.5rem 0;
-}
-
-.plan-description {
-  color: #718096;
-  font-size: 0.875rem;
-}
-
-.plan-price {
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.currency {
-  font-size: 1.5rem;
-  color: #718096;
-  vertical-align: top;
-}
-
-.amount {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #1a202c;
-}
-
-.period {
-  font-size: 1.125rem;
-  color: #718096;
-}
-
-.savings {
-  text-align: center;
-  color: #48bb78;
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-}
-
-.features-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 2rem 0;
-}
-
-.feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  color: #4a5568;
-}
-
-.check-icon {
-  width: 20px;
-  height: 20px;
-  color: #48bb78;
-  flex-shrink: 0;
-  margin-top: 0.125rem;
-}
-
-.btn {
-  width: 100%;
-  padding: 0.875rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 2px solid transparent;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-}
-
-.btn-outline {
-  background: white;
-  color: #667eea;
-  border-color: #667eea;
-}
-
-.btn-outline:hover {
-  background: #667eea;
-  color: white;
-}
-
-/* Enterprise Section */
-.enterprise-section {
-  padding: 5rem 0;
-  background: #f7fafc;
-}
-
-.enterprise-card {
-  background: white;
-  border-radius: 1rem;
-  padding: 3rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 3rem;
-  align-items: center;
-}
-
-.enterprise-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 1rem 0;
-}
-
-.enterprise-description {
-  color: #718096;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.enterprise-features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.enterprise-features li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4a5568;
-}
-
-.enterprise-features li:before {
-  content: '✓';
-  color: #48bb78;
-  font-weight: bold;
-}
-
-.enterprise-action {
-  text-align: center;
-}
-
-.btn-lg {
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-}
-
-.enterprise-note {
-  margin-top: 1rem;
-  color: #718096;
-  font-size: 0.875rem;
-}
-
-/* FAQ Section */
-.faq-section {
-  padding: 5rem 0;
-  background: white;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0;
-}
-
-.faq-grid {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.faq-item {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  overflow: hidden;
-  transition: box-shadow 0.3s;
-}
-
-.faq-item:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-}
-
-.faq-question {
-  padding: 1.25rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.faq-question h3 {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1a202c;
-}
-
-.chevron-icon {
-  width: 20px;
-  height: 20px;
-  color: #718096;
-  transition: transform 0.3s;
-}
-
-.chevron-icon.rotated {
-  transform: rotate(180deg);
-}
-
-.faq-answer {
-  padding: 0 1.25rem 1.25rem;
-  color: #718096;
-  line-height: 1.6;
-}
-
-/* Guarantee Section */
-.guarantee-section {
-  padding: 5rem 0;
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-}
-
-.guarantee-content {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.guarantee-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1.5rem;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-}
-
-.guarantee-icon svg {
-  width: 40px;
-  height: 40px;
-  color: #48bb78;
-}
-
-.guarantee-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 1rem 0;
-}
-
-.guarantee-description {
-  color: #4a5568;
-  font-size: 1.125rem;
-  line-height: 1.6;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    max-width: 400px;
-  }
-  
-  .pricing-card.featured {
-    transform: scale(1);
-  }
-  
-  .enterprise-card {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .enterprise-features {
-    grid-template-columns: 1fr;
-    text-align: left;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-title {
-    font-size: 1.75rem;
-  }
-  
-  .amount {
-    font-size: 2.5rem;
-  }
-}
-</style>

@@ -110,14 +110,14 @@
       <div class="container">
         <div class="mb-6">
           <h2 class="section-subtitle">Features</h2>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">Everything you need</h3>
-          <p class="text-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Everything you need</h3>
+          <p class="text-gray-600 dark:text-gray-400">
             Built with modern technologies and best practices.
           </p>
         </div>
 
         <div class="features-grid">
-          {% raw %}<div v-for="feature in features" :key="feature.name" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          {% raw %}<div v-for="feature in features" :key="feature.name" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
             <div class="feature-icon">
               <span>{{ feature.emoji }}</span>
             </div>
