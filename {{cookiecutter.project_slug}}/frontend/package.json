@@ -67,6 +67,10 @@
     "@playwright/test": "^1.45.3",
     "jsdom": "^24.1.1",
     "unplugin-auto-import": "^0.18.2",
-    "unplugin-vue-components": "^0.27.3"
+    "unplugin-vue-components": "^0.27.3",
+    "unplugin-icons": "^0.21.0",
+    "@iconify-json/lucide": "^1.2.20",
+    "@iconify-json/tabler": "^1.2.14",
+    "@iconify-json/heroicons": "^1.2.1"
   }
 }

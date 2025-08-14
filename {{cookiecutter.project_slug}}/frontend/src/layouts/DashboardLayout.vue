@@ -15,9 +15,7 @@
               @click="sidebarOpen = false"
               class="lg:hidden text-gray-400 hover:text-white dark:text-gray-600"
             >
-              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <IconLucideX class="h-6 w-6" />
             </button>
           </div>
 
@@ -34,7 +32,12 @@
                   : 'text-gray-300 hover:bg-gray-700 hover:text-white'
               ]"
             >
-              <component :is="item.icon" class="mr-3 h-5 w-5 flex-shrink-0" />
+              <IconLucideHome v-if="item.icon === 'home'" class="mr-3 h-5 w-5 flex-shrink-0" />
+              <IconLucideUser v-else-if="item.icon === 'user'" class="mr-3 h-5 w-5 flex-shrink-0" />
+              <IconLucideSettings v-else-if="item.icon === 'settings'" class="mr-3 h-5 w-5 flex-shrink-0" />
+              <IconLucideBarChart3 v-else-if="item.icon === 'bar-chart-3'" class="mr-3 h-5 w-5 flex-shrink-0" />
+              <IconLucideShoppingCart v-else-if="item.icon === 'shopping-cart'" class="mr-3 h-5 w-5 flex-shrink-0" />
+              <IconLucideUsers v-else-if="item.icon === 'users'" class="mr-3 h-5 w-5 flex-shrink-0" />
               {{ item.name }}
             </RouterLink>{% endraw %}
           </nav>
@@ -70,9 +73,7 @@
               @click="sidebarOpen = true"
               class="lg:hidden text-gray-500 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-100"
             >
-              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              <IconLucideMenu class="h-6 w-6" />
             </button>
             
             <div class="flex items-center space-x-4">
@@ -85,9 +86,7 @@
               
               <!-- Notifications -->
               <button class="relative text-gray-400 hover:text-gray-500 dark:text-gray-600">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
+                <IconLucideBell class="h-6 w-6" />
                 <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
               </button>
 
@@ -192,12 +191,14 @@ const sidebarOpen = ref(false)
 const userMenuOpen = ref(false)
 const confirmDialog = ref()
 
-// Navigation items
+// Navigation items with Lucide icons
 const navigation = [
-  { name: 'Dashboard', to: '/dashboard', icon: 'HomeIcon' },
-  { name: 'Profile', to: '/dashboard/profile', icon: 'UserIcon' },
-  { name: 'Settings', to: '/dashboard/settings', icon: 'CogIcon' },
-  { name: 'Analytics', to: '/dashboard/analytics', icon: 'ChartBarIcon' },
+  { name: 'Dashboard', to: '/dashboard', icon: 'home' },
+  { name: 'Profile', to: '/dashboard/profile', icon: 'user' },
+  { name: 'Settings', to: '/dashboard/settings', icon: 'settings' },
+  { name: 'Analytics', to: '/dashboard/analytics', icon: 'bar-chart-3' },
+  { name: 'Orders', to: '/dashboard/orders', icon: 'shopping-cart' },
+  { name: 'Users', to: '/dashboard/users', icon: 'users' },
 ]
 
 // Computed properties

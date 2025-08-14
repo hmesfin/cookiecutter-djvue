@@ -5,27 +5,28 @@
     />
 
     <!-- Key Metrics -->
-    <div class="metrics-grid">
-      <div v-for="metric in keyMetrics" :key="metric.id" class="metric-bg-white rounded-lg shadow-md p-6">
-        <div class="metric-header">
-          <span class="text-sm font-medium text-gray-600 mb-2">{% raw %}{{ metric.label }}{% endraw %}</span>
-          <span :class="['metric-trend', metric.trend > 0 ? 'positive' : 'negative']">
-            <svg class="trend-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path v-if="metric.trend > 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-              <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
-            </svg>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div v-for="metric in keyMetrics" :key="metric.id" class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-medium text-gray-600 dark:text-gray-400">{% raw %}{{ metric.label }}{% endraw %}</span>
+          <span :class="[
+            'flex items-center gap-1 text-xs font-medium',
+            metric.trend > 0 ? 'text-green-600' : 'text-red-600'
+          ]">
+            <IconLucideTrendingUp v-if="metric.trend > 0" class="w-4 h-4" />
+            <IconLucideTrendingDown v-else class="w-4 h-4" />
             {% raw %}{{ Math.abs(metric.trend) }}%{% endraw %}
           </span>
         </div>
-        <div class="text-3xl font-bold text-gray-900">{% raw %}{{ metric.value }}{% endraw %}</div>
-        <div class="text-sm text-gray-500">{% raw %}{{ metric.comparison }}{% endraw %}</div>
+        <div class="text-3xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ metric.value }}{% endraw %}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{% raw %}{{ metric.comparison }}{% endraw %}</div>
       </div>
     </div>
 
     <!-- Charts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
       <!-- Revenue Chart -->
-      <div class="chart-bg-white rounded-lg shadow-md p-6">
+      <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Revenue Overview</h3>
           <div class="flex gap-4 mt-2">
@@ -39,19 +40,15 @@
             </span>
           </div>
         </div>
-        <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-          <canvas ref="revenueChart"></canvas>
-        </div>
+        <canvas ref="revenueChart" class="w-full h-64"></canvas>
       </div>
 
       <!-- Traffic Sources -->
-      <div class="chart-bg-white rounded-lg shadow-md p-6">
+      <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Traffic Sources</h3>
         </div>
-        <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-          <canvas ref="trafficChart"></canvas>
-        </div>
+        <canvas ref="trafficChart" class="w-full h-64"></canvas>
         <div class="mt-4 space-y-2">
           <div v-for="source in trafficSources" :key="source.name" class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -64,7 +61,7 @@
       </div>
 
       <!-- User Activity -->
-      <div class="chart-bg-white rounded-lg shadow-md p-6 md:col-span-2">
+      <div class="bg-white rounded-lg shadow-md p-6 md:col-span-2 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
         <div class="mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">User Activity</h3>
           <div class="flex gap-2 mt-2">
@@ -72,23 +69,26 @@
               v-for="tab in activityTabs" 
               :key="tab"
               @click="activeActivityTab = tab"
-              :class="['px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors', { active: activeActivityTab === tab }]"
+              :class="[
+                'px-3 py-1 text-sm font-medium rounded-md transition-colors',
+                activeActivityTab === tab 
+                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
+                  : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
+              ]"
             >
               {% raw %}{{ tab }}{% endraw %}
             </button>
           </div>
         </div>
-        <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-          <canvas ref="activityChart"></canvas>
-        </div>
+        <canvas ref="activityChart" class="w-full h-64"></canvas>
       </div>
     </div>
 
     <!-- Top Products Table -->
-    <div class="table-bg-white rounded-lg shadow-md p-6">
-      <div class="bg-gray-50 dark:bg-gray-900">
-        <h3 class="text-lg font-semibold text-gray-900 p-6">Top Products</h3>
-        <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">View All</button>
+    <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Top Products</h3>
+        <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors dark:text-indigo-400 dark:hover:text-indigo-300">View All</button>
       </div>
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
