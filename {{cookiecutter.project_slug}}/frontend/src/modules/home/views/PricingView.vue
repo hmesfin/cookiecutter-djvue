@@ -30,11 +30,12 @@
           <div 
             v-for="plan in pricingPlans" 
             :key="plan.id"
-            :class="['bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 bg-white p-6', { featured: plan.featured }]"
+            :class="['card relative', { 'ring-2 ring-emerald-500 shadow-xl': plan.featured }]"
           >
-            <div v-if="plan.featured" class="absolute -top-px left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-1 rounded-b-lg text-sm font-semibold">Most Popular</div>
+            <div v-if="plan.featured" class="absolute -top-px left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-1 rounded-b-lg text-sm font-semibold">Most Popular</div>
             
-            <div class="text-center mb-8">
+            <div class="card-body">
+              <div class="text-center mb-8">
               <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{% raw %}{{ plan.name }}{% endraw %}</h3>
               <p class="text-gray-600 dark:text-gray-400 text-sm">{% raw %}{{ plan.description }}{% endraw %}</p>
             </div>
@@ -58,20 +59,22 @@
             
             <button 
               @click="selectPlan(plan)"
-              :class="['btn', plan.featured ? 'px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-emerald-600 text-white hover:bg-emerald-700' : duration-200-outline']"
+              :class="['btn w-full', plan.featured ? 'btn-primary' : 'btn-secondary']"
             >
               {% raw %}{{ plan.cta }}{% endraw %}
             </button>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Enterprise Section -->
-    <section class="py-20 bg-gray-50 dark:bg-gray-800 dark:bg-gray-900">
+    <section class="py-20 bg-gray-50 dark:bg-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-          <div class="lg:col-span-2">
+        <div class="card">
+          <div class="card-body grid lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-2">
             <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Need a Custom Solution?</h2>
             <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
               Our Enterprise plan offers unlimited flexibility with custom features, 
@@ -83,12 +86,13 @@
               <li>99.9% uptime SLA</li>
               <li>Priority support & training</li>
             </ul>
-          </div>
-          <div class="text-center">
+            </div>
+            <div class="text-center">
             <router-link to="/contact" class="btn bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Contact Sales
             </router-link>
             <p class="mt-3 text-gray-600 dark:text-gray-400 text-sm">Let's discuss your specific requirements</p>
+            </div>
           </div>
         </div>
       </div>
@@ -97,22 +101,23 @@
     <!-- FAQ Section -->
     <section class="py-20 bg-white dark:bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Frequently Asked Questions</h2>
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Frequently Asked Questions</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400">Everything you need to know about our pricing</p>
         </div>
         
         <div class="max-w-3xl mx-auto">
           <div 
             v-for="(faq, index) in faqs" 
             :key="index"
-            class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-4 overflow-hidden transition-shadow hover:shadow-md cursor-pointer dark:bg-gray-900"
+            class="card hover-lift cursor-pointer mb-4"
             @click="toggleFaq(index)"
           >
-            <div class="p-5 flex justify-between items-center">
-              <h3>{% raw %}{{ faq.question }}{% endraw %}</h3>
-              <IconLucideChevronDown class="['w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform', { rotated: activeFaq === index }]" />
+            <div class="card-body flex justify-between items-center">
+              <h3 class="font-medium text-gray-900 dark:text-gray-100">{% raw %}{{ faq.question }}{% endraw %}</h3>
+              <IconLucideChevronDown :class="['w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform', { 'rotate-180': activeFaq === index }]" />
             </div>
-            <div v-if="activeFaq === index" class="px-5 pb-5 text-gray-600 dark:text-gray-400 leading-relaxed">
+            <div v-if="activeFaq === index" class="px-6 pb-6 text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
               <p>{% raw %}{{ faq.answer }}{% endraw %}</p>
             </div>
           </div>
@@ -124,8 +129,8 @@
     <section class="py-20 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto">
-          <div class="w-20 h-20 mx-auto mb-6 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-            <IconLucideShieldCheck class="w-6 h-6" />
+          <div class="w-20 h-20 mx-auto mb-6 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg">
+            <IconLucideShieldCheck class="w-10 h-10 text-emerald-600 dark:text-emerald-400" />
           </div>
           <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">30-Day Money-Back Guarantee</h2>
           <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">

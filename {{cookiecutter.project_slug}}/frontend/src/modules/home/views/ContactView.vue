@@ -17,9 +17,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <!-- Contact Form -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8-bg-white p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-            <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Send us a Message</h2>
-            <form @submit.prevent="handleSubmit" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="text-2xl font-semibold text-gray-900 mb-6 dark:text-gray-100">Send us a Message</h2>
+              <form @submit.prevent="handleSubmit" class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="mb-6">
                   <label for="firstName">First Name</label>
@@ -72,7 +73,7 @@
                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                   required
                 >
-                  <option value=">Select a subject</option>
+                  <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
                   <option value="support">Technical Support</option>
                   <option value="sales">Sales Question</option>
@@ -111,7 +112,8 @@
               <div v-if="submitMessage" :class="['mt-4 p-3 rounded-lg text-sm', submitStatus === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200']">
                 {% raw %}{{ submitMessage }}{% endraw %}
               </div>
-            </form>
+              </form>
+            </div>
           </div>
           
           <!-- Contact Information -->
@@ -222,14 +224,14 @@
     </section>
 
     <!-- Map Section -->
-    <section class="py-20 bg-gray-50 dark:bg-gray-800 dark:bg-gray-900">
+    <section class="relative h-96 bg-gray-50 dark:bg-gray-800">
       <div class="absolute inset-0 flex items-center justify-center">
         <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
           <div class="text-center text-white">
-            <IconLucideMapPin class="w-6 h-6" />
-            <h3>Visit Our Office</h3>
-            <p>123 Business Ave, Suite 100<br>San Francisco, CA 94107</p>
-            <a href="#" class="btn px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-white text-emerald-600 hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-700">Get Directions</a>
+            <IconLucideMapPin class="w-12 h-12 mb-4 mx-auto" />
+            <h3 class="text-2xl font-bold mb-3">Visit Our Office</h3>
+            <p class="mb-6">123 Business Ave, Suite 100<br>San Francisco, CA 94107</p>
+            <a href="#" class="btn btn-secondary">Get Directions</a>
           </div>
         </div>
       </div>
