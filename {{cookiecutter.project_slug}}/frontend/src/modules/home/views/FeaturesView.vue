@@ -1,7 +1,7 @@
 <template>
   <div class="features-view">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-20">
+    <section class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-4xl mx-auto">
           <h1 class="text-5xl font-bold mb-4">Powerful Features for Modern Teams</h1>
@@ -16,108 +16,112 @@
     <!-- Main Features Grid -->
     <section class="py-20 bg-white dark:bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Core Features</h2>
-          <p class="text-gray-600 dark:text-gray-400">
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Core Features</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
             Built with the latest technologies and best practices
           </p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="feature in coreFeatures" :key="feature.id" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center text-white mb-4" :style="{ background: feature.color }">
-              <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path :d="feature.iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-              </svg>
+          <div v-for="feature in coreFeatures" :key="feature.id" class="card hover-lift">
+            <div class="card-body">
+              <div class="w-16 h-16 rounded-full flex items-center justify-center text-white mb-6" :style="{ background: feature.color }">
+                <component :is="feature.icon" class="w-8 h-8" />
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">{% raw %}{{ feature.title }}{% endraw %}</h3>
+              <p class="text-gray-600 dark:text-gray-400 mb-4">{% raw %}{{ feature.description }}{% endraw %}</p>
+              <ul class="space-y-2">
+                <li v-for="item in feature.items" :key="item" class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                  <IconLucideCheck class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span class="text-sm">{% raw %}{{ item }}{% endraw %}</span>
+                </li>
+              </ul>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{% raw %}{{ feature.title }}{% endraw %}</h3>
-            <p class="text-gray-600 dark:text-gray-400">{% raw %}{{ feature.description }}{% endraw %}</p>
-            <ul class="feature-list">
-              <li v-for="item in feature.items" :key="item">
-                <IconLucideCheck class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                {% raw %}{{ item }}{% endraw %}
-              </li>
-            </ul>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Technical Stack -->
-    <section class="tech-stack-section">
+    <section class="py-20 bg-gray-50 dark:bg-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Built with Modern Technology</h2>
-          <p class="text-gray-600 dark:text-gray-400">
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Built with Modern Technology</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
             Leveraging the best tools and frameworks for optimal performance
           </p>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          <div v-for="tech in techStack" :key="tech.name" class="text-center">
-            <div class="w-20 h-20 mx-auto mb-3 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <img :src="tech.logo" :alt="tech.name">
+          <div v-for="tech in techStack" :key="tech.name" class="text-center group">
+            <div class="w-20 h-20 mx-auto mb-3 rounded-lg bg-white dark:bg-gray-700 shadow-md flex items-center justify-center group-hover:shadow-lg transition-shadow">
+              <img :src="tech.logo" :alt="tech.name" class="w-12 h-12">
             </div>
-            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">{% raw %}{{ tech.name }}{% endraw %}</h4>
-            <p class="text-xs text-gray-500 dark:text-gray-500">{% raw %}{{ tech.description }}{% endraw %}</p>
+            <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">{% raw %}{{ tech.name }}{% endraw %}</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{% raw %}{{ tech.description }}{% endraw %}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Feature Comparison -->
-    <section class="py-20 bg-gray-50 dark:bg-gray-800 dark:bg-gray-900">
+    <section class="py-20 bg-white dark:bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Why Choose Us?</h2>
-          <p class="text-gray-600 dark:text-gray-400">
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4 dark:text-gray-100">Why Choose Us?</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
             See how we compare to traditional solutions
           </p>
         </div>
         
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden dark:shadow-2xl dark:shadow-gray-900/50">
-          <table>
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th class="highlight">Our Platform</th>
-                <th>Traditional Solutions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="comparison in comparisons" :key="comparison.feature">
-                <td class="feature-name">{% raw %}{{ comparison.feature }}{% endraw %}</td>
-                <td class="our-solution">
-                  <IconLucideCheckCircle class="icon-check" />
-                  {% raw %}{{ comparison.ours }}{% endraw %}
-                </td>
-                <td class="other-solution">
-                  <svg v-if="comparison.othersHas" class="icon-partial" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <IconLucideXCircle class="icon-no" />
-                  {% raw %}{{ comparison.others }}{% endraw %}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="card overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead class="table-header">
+                <tr>
+                  <th class="table-header-cell">Feature</th>
+                  <th class="table-header-cell text-primary bg-emerald-50 dark:bg-emerald-900/20">Our Platform</th>
+                  <th class="table-header-cell">Traditional Solutions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr v-for="comparison in comparisons" :key="comparison.feature" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <td class="table-cell font-medium">{% raw %}{{ comparison.feature }}{% endraw %}</td>
+                  <td class="table-cell bg-emerald-50/50 dark:bg-emerald-900/10">
+                    <div class="flex items-center gap-2">
+                      <IconLucideCheckCircle class="w-5 h-5 text-primary" />
+                      <span>{% raw %}{{ comparison.ours }}{% endraw %}</span>
+                    </div>
+                  </td>
+                  <td class="table-cell">
+                    <div class="flex items-center gap-2">
+                      <IconLucideAlertCircle v-if="comparison.othersHas" class="w-5 h-5 text-amber-500" />
+                      <IconLucideXCircle v-else class="w-5 h-5 text-red-500" />
+                      <span>{% raw %}{{ comparison.others }}{% endraw %}</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-center">
+    <section class="py-20 bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-center">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
           <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
           <p class="text-xl mb-8 opacity-95">
             Join thousands of teams already using our platform to build amazing products
           </p>
-          <div class="flex gap-4 justify-center">
-            <router-link to="/auth/register" class="btn bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+          <div class="flex gap-4 justify-center flex-wrap">
+            <router-link to="/auth/register" class="btn btn-lg bg-white text-emerald-600 hover:bg-gray-100">
               Start Free Trial
             </router-link>
-            <router-link to="/contact" class="btn border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+            <router-link to="/contact" class="btn btn-lg btn-ghost border-2 border-white text-white hover:bg-white hover:text-emerald-600">
               Schedule Demo
             </router-link>
           </div>
@@ -136,7 +140,7 @@ interface Feature {
   title: string
   description: string
   color: string
-  iconPath: string
+  icon: string
   items: string[]
 }
 
@@ -159,8 +163,8 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
     id: 'authentication',
     title: 'Authentication & Security',
     description: 'Enterprise-grade security with modern authentication',
-    color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    iconPath: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+    color: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+    icon: 'IconLucideLock',
     items: [
       'JWT-based authentication',
       'Email verification',
@@ -172,8 +176,8 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
     id: 'realtime',
     title: 'Real-time Updates',
     description: 'Stay synchronized with WebSocket connections',
-    color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
+    color: 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
+    icon: 'IconLucideZap',
     items: [
       'WebSocket support',
       'Real-time notifications',
@@ -185,8 +189,8 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
     id: 'scalability',
     title: 'Built to Scale',
     description: 'Architecture designed for growth',
-    color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    iconPath: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+    color: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+    icon: 'IconLucideServer',
     items: [
       'Docker containerization',
       'Horizontal scaling',
@@ -198,8 +202,8 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
     id: 'developer',
     title: 'Developer Experience',
     description: 'Tools and features developers love',
-    color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    iconPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+    color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+    icon: 'IconLucideCode2',
     items: [
       'Hot module replacement',
       'TypeScript support',
@@ -211,8 +215,8 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
     id: 'analytics',
     title: 'Analytics & Monitoring',
     description: 'Insights into your application performance',
-    color: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    iconPath: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+    color: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
+    icon: 'IconLucideBarChart3',
     items: [
       'Performance monitoring',
       'Error tracking',
@@ -224,8 +228,8 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
     id: 'deployment',
     title: 'Easy Deployment',
     description: 'Deploy anywhere with confidence',
-    color: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-    iconPath: 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12',
+    color: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
+    icon: 'IconLucideCloud',
     items: [
       'One-click deployment',
       'CI/CD pipelines',
@@ -238,33 +242,33 @@ const coreFeatures = ref({% if cookiecutter.use_typescript == 'y' %}<Feature[]>{
 const techStack = ref({% if cookiecutter.use_typescript == 'y' %}<TechStack[]>{% endif %}[
   {
     name: 'Django',
-    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23092E20" width="100" height="100"/><text x="50" y="50" text-anchor="middle" dy=".3em" fill="white" font-size="40">DJ</text></svg>',
-    description: 'High-level Python web framework'
+    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23092E20" width="100" height="100" rx="10"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="40" font-weight="bold">DJ</text></svg>',
+    description: 'Python framework'
   },
   {
     name: 'Vue.js',
-    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%234FC08D" width="100" height="100"/><text x="50" y="50" text-anchor="middle" dy=".3em" fill="white" font-size="40">Vue</text></svg>',
-    description: 'Progressive JavaScript framework'
+    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%234FC08D" width="100" height="100" rx="10"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="35" font-weight="bold">Vue</text></svg>',
+    description: 'JavaScript framework'
   },
   {
     name: 'PostgreSQL',
-    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23336791" width="100" height="100"/><text x="50" y="50" text-anchor="middle" dy=".3em" fill="white" font-size="40">PG</text></svg>',
-    description: 'Advanced open source database'
+    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23336791" width="100" height="100" rx="10"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="35" font-weight="bold">PG</text></svg>',
+    description: 'Database'
   },
   {
     name: 'Docker',
-    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%232496ED" width="100" height="100"/><text x="50" y="50" text-anchor="middle" dy=".3em" fill="white" font-size="30">🐳</text></svg>',
-    description: 'Container platform'
+    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%232496ED" width="100" height="100" rx="10"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="35">🐳</text></svg>',
+    description: 'Containers'
   },
   {
     name: 'Redis',
-    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23DC382D" width="100" height="100"/><text x="50" y="50" text-anchor="middle" dy=".3em" fill="white" font-size="30">Redis</text></svg>',
-    description: 'In-memory data store'
+    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23DC382D" width="100" height="100" rx="10"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="25" font-weight="bold">Redis</text></svg>',
+    description: 'Cache'
   },
   {
     name: 'Celery',
-    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2337814A" width="100" height="100"/><text x="50" y="50" text-anchor="middle" dy=".3em" fill="white" font-size="30">CEL</text></svg>',
-    description: 'Distributed task queue'
+    logo: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2337814A" width="100" height="100" rx="10"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="28" font-weight="bold">CEL</text></svg>',
+    description: 'Task queue'
   }
 ])
 
@@ -319,4 +323,3 @@ const comparisons = ref({% if cookiecutter.use_typescript == 'y' %}<Comparison[]
   }
 ])
 </script>
-
