@@ -9,7 +9,7 @@
             <div class="flex">
               <!-- Logo -->
               <RouterLink to="/" class="flex items-center">
-                <span class="text-xl font-bold text-emerald-600">{{ cookiecutter.project_name }}</span>
+                <AppLogo size="md" />
               </RouterLink>
               
               <!-- Primary navigation -->
@@ -213,6 +213,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
+import AppLogo from '@/components/AppLogo.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()

@@ -10,7 +10,9 @@
         <div class="flex h-full flex-col">
           <!-- Logo -->
           <div class="flex h-16 items-center justify-between px-4 bg-gray-800">
-            <span class="text-xl font-semibold text-white">{{ cookiecutter.project_name }}</span>
+            <RouterLink to="/dashboard" class="flex items-center">
+              <AppLogo size="md" />
+            </RouterLink>
             <button 
               @click="sidebarOpen = false"
               class="lg:hidden text-gray-400 hover:text-white dark:text-gray-600"
@@ -182,6 +184,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import AppLogo from '@/components/AppLogo.vue'
 
 const route = useRoute()
 const router = useRouter()
