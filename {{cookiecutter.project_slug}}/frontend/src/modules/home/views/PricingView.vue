@@ -9,12 +9,12 @@
             Choose the perfect plan for your needs. Always flexible to scale up or down.
           </p>
           <div class="mt-8 flex items-center justify-center gap-4">
-            <span :class="{ \'text-gray-900 dark:text-gray-100 font-semibold\': !isAnnual, \'text-gray-500 dark:text-gray-400\': !!isAnnual }">Monthly</span>
+            <span :class="[!isAnnual ? 'text-gray-900 dark:text-gray-100 font-semibold' : 'text-gray-500 dark:text-gray-400']">Monthly</span>
             <label class="relative inline-block w-14 h-7">
               <input type="checkbox" v-model="isAnnual" class="sr-only peer">
               <span class="absolute cursor-pointer inset-0 bg-gray-300 rounded-full transition-colors peer-checked:bg-emerald-600 dark:bg-gray-600"></span>
             </label>
-            <span :class="{ \'text-gray-900 dark:text-gray-100 font-semibold\': isAnnual, \'text-gray-500 dark:text-gray-400\': !isAnnual }">
+            <span :class="[isAnnual ? 'text-gray-900 dark:text-gray-100 font-semibold' : 'text-gray-500 dark:text-gray-400']">
               Annual
               <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">Save 20%</span>
             </span>
