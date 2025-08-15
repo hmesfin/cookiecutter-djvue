@@ -33,7 +33,7 @@
                 'px-4 py-2 text-sm font-medium rounded-md transition-colors',
                 confirmClass === 'btn-danger' 
                   ? 'bg-red-600 hover:bg-red-700 text-white' 
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'bg-emerald-600 hover:bg-emerald-700 text-white'
               ]"
             >
               {% raw %}{{ confirmText }}{% endraw %}

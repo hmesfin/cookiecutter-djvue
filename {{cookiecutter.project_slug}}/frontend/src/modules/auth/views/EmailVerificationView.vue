@@ -5,7 +5,7 @@
         <!-- Verification Pending -->
         <div v-if="status === 'pending'" class="text-center">
           <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center">
-            <IconLucideMail class="w-10 h-10 text-blue-500" />
+            <IconLucideMail class="w-10 h-10 text-emerald-600" />
           </div>
           <h1 class="text-3xl font-bold text-gray-900 mb-2 dark:text-gray-100">Verify Your Email</h1>
           <p class="text-gray-600 mb-2 dark:text-gray-400">

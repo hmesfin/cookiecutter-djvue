@@ -14,8 +14,8 @@
             Your email has been verified and your account is now fully activated.
           </p>
           
-          <div class="bg-gray-50 border-l-4 border-indigo-500 p-6 mb-8 text-left dark:bg-gray-900">
-            <p class="text-gray-700 mb-2 dark:text-gray-300">Welcome to <strong class="text-indigo-600">{{ cookiecutter.project_name }}</strong>!</p>
+          <div class="bg-gray-50 border-l-4 border-emerald-600 p-6 mb-8 text-left dark:bg-gray-900">
+            <p class="text-gray-700 mb-2 dark:text-gray-300">Welcome to <strong class="text-emerald-600">{{ cookiecutter.project_name }}</strong>!</p>
             <p class="text-gray-600 dark:text-gray-400">You can now access all features of your account.</p>
           </div>
           
@@ -23,7 +23,7 @@
             <router-link to="/dashboard" class="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-2xl dark:shadow-gray-900/50">
               Go to Dashboard
             </router-link>
-            <router-link to="/profile" class="px-8 py-3 rounded-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200 dark:bg-gray-900">
+            <router-link to="/profile" class="px-8 py-3 rounded-lg font-semibold text-emerald-600 bg-white border-2 border-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-200 dark:bg-gray-900">
               Complete Your Profile
             </router-link>
           </div>
@@ -67,7 +67,7 @@
             <router-link to="/dashboard" class="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-2xl dark:shadow-gray-900/50">
               Go to Dashboard
             </router-link>
-            <router-link to="/auth/login" class="px-8 py-3 rounded-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200 dark:bg-gray-900">
+            <router-link to="/auth/login" class="px-8 py-3 rounded-lg font-semibold text-emerald-600 bg-white border-2 border-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-200 dark:bg-gray-900">
               Sign In
             </router-link>
           </div>
@@ -89,7 +89,7 @@
             <router-link to="/auth/verify-email" class="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-2xl dark:shadow-gray-900/50">
               Request New Link
             </router-link>
-            <router-link to="/auth/login" class="px-8 py-3 rounded-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-500 hover:bg-indigo-500 hover:text-white transition-all duration-200 dark:bg-gray-900">
+            <router-link to="/auth/login" class="px-8 py-3 rounded-lg font-semibold text-emerald-600 bg-white border-2 border-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-200 dark:bg-gray-900">
               Back to Login
             </router-link>
           </div>

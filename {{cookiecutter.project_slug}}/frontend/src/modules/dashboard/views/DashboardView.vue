@@ -91,7 +91,7 @@
               v-for="action in quickActions"
               :key="action.name"
               @click="action.onClick"
-              class="relative rounded-lg border border-gray-300 bg-white px-6 py-4 shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-900 dark:shadow-lg dark:shadow-gray-900/30 dark:hover:border-gray-500 dark:focus:ring-indigo-400"
+              class="relative rounded-lg border border-gray-300 bg-white px-6 py-4 shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-900 dark:shadow-lg dark:shadow-gray-900/30 dark:hover:border-gray-500 dark:focus:ring-emerald-400"
             >
               <div>
                 <span class="block text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -197,7 +197,7 @@ const activities = ref([
     date: '5 hours ago',
     datetime: '2024-01-15T07:00:00',
     icon: 'ShoppingCartIcon',
-    bgColor: 'bg-blue-500',
+    bgColor: 'bg-emerald-600',
   },
   {
     id: 3,

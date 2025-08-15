@@ -32,7 +32,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Language</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 dark:text-gray-500">Select your preferred language</p>
               </div>
-              <select v-model="settings.language" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900">
+              <select v-model="settings.language" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900">
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
                 <option value="fr">French</option>
@@ -47,7 +47,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Time Zone</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 dark:text-gray-500">Set your local time zone</p>
               </div>
-              <select v-model="settings.timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900">
+              <select v-model="settings.timezone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900">
                 <option value="UTC">UTC</option>
                 <option value="America/New_York">Eastern Time</option>
                 <option value="America/Chicago">Central Time</option>
@@ -64,7 +64,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Date Format</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 dark:text-gray-500">Choose how dates are displayed</p>
               </div>
-              <select v-model="settings.dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900">
+              <select v-model="settings.dateFormat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900">
                 <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                 <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                 <option value="YYYY-MM-DD">YYYY-MM-DD</option>
@@ -182,7 +182,7 @@
                 <label class="text-gray-900 dark:text-gray-100">Profile Visibility</label>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 dark:text-gray-500">Control who can see your profile</p>
               </div>
-              <select v-model="settings.privacy.profileVisibility" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900">
+              <select v-model="settings.privacy.profileVisibility" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900">
                 <option value="public">Public</option>
                 <option value="friends">Friends Only</option>
                 <option value="private">Private</option>
@@ -278,7 +278,7 @@
           <button @click="resetSettings" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 transition-colors">
             Reset to Defaults
           </button>
-          <button @click="saveSettings" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors" :disabled="saving">
+          <button @click="saveSettings" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors" :disabled="saving">
             {% raw %}{{ saving ? 'Saving...' : 'Save Changes' }}{% endraw %}
           </button>
         </div>

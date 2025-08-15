@@ -11,7 +11,7 @@
         <div class="mt-6 space-x-4">
           <RouterLink
             to="/"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
           >
             Go to Homepage
           </RouterLink>

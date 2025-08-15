@@ -94,7 +94,7 @@
               <div class="relative">
                 <button
                   @click="userMenuOpen = !userMenuOpen"
-                  class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+                  class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400"
                 >
                   <img class="h-8 w-8 rounded-full" :src="userAvatar" :alt="userName">
                 </button>

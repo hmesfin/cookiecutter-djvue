@@ -9,7 +9,7 @@
             <div class="flex">
               <!-- Logo -->
               <RouterLink to="/" class="flex items-center">
-                <span class="text-xl font-bold text-indigo-600">{{ cookiecutter.project_name }}</span>
+                <span class="text-xl font-bold text-emerald-600">{{ cookiecutter.project_name }}</span>
               </RouterLink>
               
               <!-- Primary navigation -->
@@ -21,7 +21,7 @@
                   class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors"
                   :class="[
                     isActive(item.to)
-                      ? 'border-indigo-500 text-gray-900 dark:text-gray-100'
+                      ? 'border-emerald-600 text-gray-900 dark:text-gray-100'
                       : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300'
                   ]"
                 >
@@ -42,7 +42,7 @@
                 </RouterLink>
                 <RouterLink
                   to="/auth/register"
-                  class="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium"
+                  class="bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 rounded-md text-sm font-medium"
                 >
                   Get Started
                 </RouterLink>
@@ -50,7 +50,7 @@
               <template v-else>
                 <RouterLink
                   to="/dashboard"
-                  class="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium"
+                  class="bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 rounded-md text-sm font-medium"
                 >
                   Dashboard
                 </RouterLink>
@@ -79,7 +79,7 @@
               class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors"
               :class="[
                 isActive(item.to)
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 border-indigo-500 text-indigo-700 dark:text-indigo-300'
+                  ? 'bg-emerald-50 dark:bg-indigo-900/30 border-emerald-600 text-emerald-700 dark:text-indigo-300'
                   : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300'
               ]"
               @click="mobileMenuOpen = false"

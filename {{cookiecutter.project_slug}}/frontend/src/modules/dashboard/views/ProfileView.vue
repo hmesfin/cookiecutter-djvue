@@ -15,7 +15,7 @@
               :alt="user.name"
               class="w-24 h-24 rounded-full object-cover"
             >
-            <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
+            <div v-else class="w-24 h-24 rounded-full bg-emerald-600 text-white flex items-center justify-center text-2xl font-bold">
               {% raw %}{{ initials }}{% endraw %}
             </div>
             <button class="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors dark:bg-gray-900 dark:shadow-2xl dark:shadow-gray-900/50 dark:hover:bg-gray-800">
@@ -25,7 +25,7 @@
           <div class="flex-1">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ user.name }}{% endraw %}</h2>
             <p class="text-gray-600 dark:text-gray-400">{% raw %}{{ user.email }}{% endraw %}</p>
-            <span class="inline-block mt-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">{% raw %}{{ user.role }}{% endraw %}</span>
+            <span class="inline-block mt-2 px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">{% raw %}{{ user.role }}{% endraw %}</span>
           </div>
         </div>
       </div>
@@ -37,64 +37,64 @@
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
-              <label for="firstName">First Name</label>
+              <label for="firstName" class="text-gray-700 dark:text-gray-300">First Name</label>
               <input 
                 id="firstName"
                 v-model="formData.firstName"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
                 required
               >
             </div>
 
             <div class="mb-6">
-              <label for="lastName">Last Name</label>
+              <label for="lastName" class="text-gray-700 dark:text-gray-300">Last Name</label>
               <input 
                 id="lastName"
                 v-model="formData.lastName"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
                 required
               >
             </div>
 
             <div class="mb-6">
-              <label for="email">Email Address</label>
+              <label for="email" class="text-gray-700 dark:text-gray-300">Email Address</label>
               <input 
                 id="email"
                 v-model="formData.email"
                 type="email"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
                 required
               >
             </div>
 
             <div class="mb-6">
-              <label for="phone">Phone Number</label>
+              <label for="phone" class="text-gray-700 dark:text-gray-300">Phone Number</label>
               <input 
                 id="phone"
                 v-model="formData.phone"
                 type="tel"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               >
             </div>
 
             <div class="mb-6">
-              <label for="dateOfBirth">Date of Birth</label>
+              <label for="dateOfBirth" class="text-gray-700 dark:text-gray-300">Date of Birth</label>
               <input 
                 id="dateOfBirth"
                 v-model="formData.dateOfBirth"
                 type="date"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               >
             </div>
 
             <div class="mb-6">
-              <label for="country">Country</label>
+              <label for="country" class="text-gray-700 dark:text-gray-300">Country</label>
               <select 
                 id="country"
                 v-model="formData.country"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               >
                 <option value="">Select a country</option>
                 <option value="US">United States</option>
@@ -112,12 +112,12 @@
           </div>
 
           <div class="mb-6">
-            <label for="bio">Bio</label>
+            <label for="bio" class="text-gray-700 dark:text-gray-300">Bio</label>
             <textarea 
               id="bio"
               v-model="formData.bio"
               rows="4"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               placeholder="Tell us about yourself..."
             ></textarea>
           </div>
@@ -128,32 +128,32 @@
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="mb-6">
-              <label for="currentPassword">Current Password</label>
+              <label for="currentPassword" class="text-gray-700 dark:text-gray-300">Current Password</label>
               <input 
                 id="currentPassword"
                 v-model="passwordData.currentPassword"
                 type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               >
             </div>
 
             <div class="mb-6">
-              <label for="newPassword">New Password</label>
+              <label for="newPassword" class="text-gray-700 dark:text-gray-300">New Password</label>
               <input 
                 id="newPassword"
                 v-model="passwordData.newPassword"
                 type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               >
             </div>
 
             <div class="mb-6">
-              <label for="confirmPassword">Confirm New Password</label>
+              <label for="confirmPassword" class="text-gray-700 dark:text-gray-300">Confirm New Password</label>
               <input 
                 id="confirmPassword"
                 v-model="passwordData.confirmPassword"
                 type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-indigo-400 dark:focus:border-indigo-400 dark:bg-gray-900"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-emerald-400 dark:focus:border-emerald-400 dark:bg-gray-900"
               >
             </div>
           </div>
@@ -163,7 +163,7 @@
           <button type="button" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:text-gray-300" @click="handleCancel">
             Cancel
           </button>
-          <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors" :disabled="loading">
+          <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors" :disabled="loading">
             {% raw %}{{ loading ? 'Saving...' : 'Save Changes' }}{% endraw %}
           </button>
         </div>

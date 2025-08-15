@@ -17,7 +17,7 @@
                 id="email"
                 v-model="email"
                 type="email"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors disabled:bg-gray-50 disabled:cursor-not-allowed dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 transition-colors disabled:bg-gray-50 disabled:cursor-not-allowed dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 placeholder="Enter your email address"
                 required
                 :disabled="loading"
@@ -40,7 +40,7 @@
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-500">
               Didn't receive the email? Check your spam folder or 
-              <button type="button" @click="resendEmail" class="font-medium text-indigo-600 hover:text-indigo-500 underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed" :disabled="resending">
+              <button type="button" @click="resendEmail" class="font-medium text-emerald-600 hover:text-emerald-600 underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed" :disabled="resending">
                 {% raw %}{{ resending ? 'Resending...' : 'click here to resend' }}{% endraw %}
               </button>
             </p>
@@ -48,7 +48,7 @@
         </form>
 
         <div class="mt-8 text-center">
-          <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+          <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-emerald-600 hover:text-emerald-600 transition-colors">
             <IconLucideArrowLeft class="w-5 h-5" />
             Back to Login
           </router-link>

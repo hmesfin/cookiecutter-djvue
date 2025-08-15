@@ -114,10 +114,10 @@
             Join thousands of teams already using our platform to build amazing products
           </p>
           <div class="flex gap-4 justify-center">
-            <router-link to="/auth/register" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+            <router-link to="/auth/register" class="btn bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Start Free Trial
             </router-link>
-            <router-link to="/contact" class="btn border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+            <router-link to="/contact" class="btn border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Schedule Demo
             </router-link>
           </div>

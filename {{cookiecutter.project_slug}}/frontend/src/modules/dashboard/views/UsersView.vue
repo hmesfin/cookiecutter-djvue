@@ -4,7 +4,7 @@
       title="Users" description="Manage user accounts and permissions"
     >
       <template #actions>
-      <button @click="showAddUserModal = true" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+      <button @click="showAddUserModal = true" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors">
         <IconLucidePlus class="w-5 h-5" />
         Add User
       </button>
@@ -19,19 +19,19 @@
           v-model="searchQuery"
           type="text"
           placeholder="Search users..."
-          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600"
         >
       </div>
       
       <div class="filter-group">
-        <select v-model="roleFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <select v-model="roleFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600">
           <option value="">All Roles</option>
           <option value="admin">Admin</option>
           <option value="manager">Manager</option>
           <option value="user">User</option>
         </select>
         
-        <select v-model="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <select v-model="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600">
           <option value="">All Status</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
@@ -74,7 +74,7 @@
               <td>
                 <div class="flex items-center gap-3">
                   <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="w-10 h-10 rounded-full">
-                  <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
+                  <div v-else class="w-24 h-24 rounded-full bg-emerald-600 text-white flex items-center justify-center text-2xl font-bold">
                     {% raw %}{{ getInitials(user.name) }}{% endraw %}
                   </div>
                   <div>
@@ -159,7 +159,7 @@
                 id="userName"
                 v-model="userForm.name"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
             </div>
@@ -169,7 +169,7 @@
                 id="userEmail"
                 v-model="userForm.email"
                 type="email"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
             </div>
@@ -179,7 +179,7 @@
                 id="userDepartment"
                 v-model="userForm.department"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
               >
             </div>
             <div class="mb-6">
@@ -187,7 +187,7 @@
               <select 
                 id="userRole"
                 v-model="userForm.role"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
                 <option value="user">User</option>
@@ -200,7 +200,7 @@
               <select 
                 id="userStatus"
                 v-model="userForm.status"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
                 <option value="active">Active</option>
@@ -213,7 +213,7 @@
             <button type="button" @click="closeModal" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
               Cancel
             </button>
-            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+            <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors">
               {% raw %}{{ editingUser ? 'Update User' : 'Add User' }}{% endraw %}
             </button>
           </div>

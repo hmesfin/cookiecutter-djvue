@@ -76,7 +76,7 @@
               :class="[
                 'px-3 py-1 text-sm font-medium rounded-md transition-colors',
                 activeActivityTab === tab 
-                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-indigo-900 dark:text-indigo-300'
                   : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
               ]"
             >
@@ -94,7 +94,7 @@
     <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-900 dark:shadow-xl dark:shadow-gray-900/40">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Top Products</h3>
-        <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors dark:text-indigo-400 dark:hover:text-indigo-300">View All</button>
+        <button class="text-sm font-medium text-emerald-600 hover:text-emerald-600 transition-colors dark:text-emerald-400 dark:hover:text-indigo-300">View All</button>
       </div>
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

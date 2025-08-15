@@ -5,7 +5,7 @@
       description="Manage and track all customer orders"
     >
       <template #actions>
-        <button @click="router.push('/dashboard/orders/new')" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+        <button @click="router.push('/dashboard/orders/new')" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors">
           <IconLucidePlus class="w-5 h-5" />
           New Order
         </button>
@@ -33,7 +33,7 @@
             <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{% raw %}{{ stats.processing }}{% endraw %}</p>
           </div>
           <div class="p-3 bg-blue-100 rounded-full">
-            <IconLucideShoppingBag class="w-6 h-6 text-blue-600" />
+            <IconLucideShoppingBag class="w-6 h-6 text-emerald-600" />
           </div>
         </div>
       </div>
@@ -56,8 +56,8 @@
             <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Revenue</p>
             <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">${% raw %}{{ stats.revenue.toLocaleString() }}{% endraw %}</p>
           </div>
-          <div class="p-3 bg-indigo-100 rounded-full">
-            <IconLucideDollarSign class="w-6 h-6 text-indigo-600" />
+          <div class="p-3 bg-emerald-100 rounded-full">
+            <IconLucideDollarSign class="w-6 h-6 text-emerald-600" />
           </div>
         </div>
       </div>
@@ -71,13 +71,13 @@
           v-model="searchQuery"
           type="text"
           placeholder="Search orders..."
-          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600"
         >
       </div>
       
       <select 
         v-model="statusFilter"
-        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600"
       >
         <option value="">All Status</option>
         <option value="pending">Pending</option>
@@ -89,7 +89,7 @@
       
       <select 
         v-model="dateFilter"
-        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600"
       >
         <option value="">All Time</option>
         <option value="today">Today</option>
@@ -241,7 +241,7 @@
             :class="[
               'px-3 py-1 border rounded-lg text-sm font-medium',
               currentPage === page 
-                ? 'bg-indigo-600 text-white border-indigo-600' 
+                ? 'bg-emerald-600 text-white border-emerald-600' 
                 : 'border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700'
             ]"
           >

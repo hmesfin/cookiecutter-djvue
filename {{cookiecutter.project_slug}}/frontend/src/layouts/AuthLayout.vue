@@ -7,7 +7,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center py-4">
             <RouterLink to="/" class="flex items-center">
-              <span class="text-2xl font-bold text-indigo-600">{{ cookiecutter.project_name }}</span>
+              <span class="text-2xl font-bold text-emerald-600">{{ cookiecutter.project_name }}</span>
             </RouterLink>
             <nav class="flex space-x-4">
               <RouterLink 

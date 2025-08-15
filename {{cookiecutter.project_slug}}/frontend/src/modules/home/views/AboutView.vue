@@ -76,7 +76,7 @@
           <div v-for="member in teamMembers" :key="member.name" class="team-bg-white rounded-lg shadow-md p-6 dark:shadow-xl dark:shadow-gray-900/40">
             <div class="w-32 h-32 rounded-full mx-auto mb-4 bg-gray-200 dark:bg-gray-700">
               <img v-if="member.avatar" :src="member.avatar" :alt="member.name">
-              <div v-else class="w-24 h-24 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold">
+              <div v-else class="w-24 h-24 rounded-full bg-emerald-600 text-white flex items-center justify-center text-2xl font-bold">
                 {% raw %}{{ getInitials(member.name) }}{% endraw %}
               </div>
             </div>
@@ -136,10 +136,10 @@
             Join our community and start building your next project today
           </p>
           <div class="flex gap-4 justify-center">
-            <router-link to="/auth/register" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+            <router-link to="/auth/register" class="btn bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Get Started Free
             </router-link>
-            <router-link to="/contact" class="btn border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+            <router-link to="/contact" class="btn border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Get in Touch
             </router-link>
           </div>

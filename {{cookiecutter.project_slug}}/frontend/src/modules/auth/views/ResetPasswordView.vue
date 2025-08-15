@@ -82,7 +82,7 @@
         </form>
 
         <div v-if="!isReset" class="mt-8 text-center">
-          <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+          <router-link to="/auth/login" class="inline-flex items-center gap-2 text-sm font-medium text-emerald-600 hover:text-emerald-600 transition-colors">
             <IconLucideArrowLeft class="w-5 h-5" />
             Back to Login
           </router-link>

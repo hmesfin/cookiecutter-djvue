@@ -16,7 +16,7 @@
                 id="customerName"
                 v-model="orderForm.customer.name"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
                 placeholder="John Doe"
               >
@@ -27,7 +27,7 @@
                 id="customerEmail"
                 v-model="orderForm.customer.email"
                 type="email"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
                 placeholder="john@example.com"
               >
@@ -38,7 +38,7 @@
                 id="customerPhone"
                 v-model="orderForm.customer.phone"
                 type="tel"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 placeholder="+1 234 567 8900"
               >
             </div>
@@ -48,7 +48,7 @@
                 id="customerCompany"
                 v-model="orderForm.customer.company"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 placeholder="Acme Corp"
               >
             </div>
@@ -65,7 +65,7 @@
                 id="shippingAddress"
                 v-model="orderForm.shipping.address"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
                 placeholder="123 Main Street"
               >
@@ -76,7 +76,7 @@
                 id="shippingCity"
                 v-model="orderForm.shipping.city"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
                 placeholder="New York"
               >
@@ -87,7 +87,7 @@
                 id="shippingState"
                 v-model="orderForm.shipping.state"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
                 placeholder="NY"
               >
@@ -98,7 +98,7 @@
                 id="shippingZip"
                 v-model="orderForm.shipping.zip"
                 type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
                 placeholder="10001"
               >
@@ -108,7 +108,7 @@
               <select 
                 id="shippingCountry"
                 v-model="orderForm.shipping.country"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
                 <option value="">Select Country</option>
@@ -150,7 +150,7 @@
                   <td>
                     <select 
                       v-model="product.name"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                       required
                       @change="updateProductDetails(index)"
                     >
@@ -164,7 +164,7 @@
                     <input 
                       v-model="product.sku"
                       type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                       readonly
                     >
                   </td>
@@ -173,7 +173,7 @@
                       v-model.number="product.quantity"
                       type="number"
                       min="1"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                       required
                       @input="calculateTotals"
                     >
@@ -184,7 +184,7 @@
                       type="number"
                       step="0.01"
                       min="0"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                       required
                       @input="calculateTotals"
                     >
@@ -252,7 +252,7 @@
               <select 
                 id="paymentMethod"
                 v-model="orderForm.payment.method"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
                 <option value="">Select Payment Method</option>
@@ -267,7 +267,7 @@
               <select 
                 id="paymentStatus"
                 v-model="orderForm.payment.status"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 required
               >
                 <option value="pending">Pending</option>
@@ -281,7 +281,7 @@
                 id="orderNotes"
                 v-model="orderForm.notes"
                 rows="4"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
                 placeholder="Add any special instructions or notes..."
               ></textarea>
             </div>
@@ -294,7 +294,7 @@
         <router-link to="/dashboard/orders" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-300">
           Cancel
         </router-link>
-        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors" :disabled="loading">
+        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors" :disabled="loading">
           {% raw %}{{ loading ? 'Creating...' : 'Create Order' }}{% endraw %}
         </button>
       </div>

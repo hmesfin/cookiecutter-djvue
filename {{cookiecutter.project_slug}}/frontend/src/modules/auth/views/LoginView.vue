@@ -6,7 +6,7 @@
         <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100">Welcome back</h2>
         <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           Or
-          <RouterLink to="/auth/register" class="font-medium text-indigo-600 hover:text-indigo-500">
+          <RouterLink to="/auth/register" class="font-medium text-emerald-600 hover:text-emerald-600">
             create a new account
           </RouterLink>
         </p>
@@ -20,7 +20,7 @@
             v-model="form.email"
             type="email"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-600 dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-indigo-400 dark:focus:border-indigo-400"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-600 dark:border-gray-600 dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-emerald-400 dark:focus:border-emerald-400"
             :class="{ 'border-red-500': errors.email }"
           >
           <p v-if="errors.email" class="mt-1 text-sm text-red-600">{% raw %}{{ errors.email }}{% endraw %}</p>
@@ -45,14 +45,14 @@
               id="remember"
               v-model="form.remember"
               type="checkbox"
-              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded dark:focus:ring-indigo-400 dark:border-gray-600"
+              class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded dark:focus:ring-emerald-400 dark:border-gray-600"
             >
             <label for="remember" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">
               Remember me
             </label>
           </div>
 
-          <RouterLink to="/auth/forgot-password" class="text-sm text-indigo-600 hover:text-indigo-500">
+          <RouterLink to="/auth/forgot-password" class="text-sm text-emerald-600 hover:text-emerald-600">
             Forgot your password?
           </RouterLink>
         </div>
@@ -61,7 +61,7 @@
           <button
             type="submit"
             :disabled="loading"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-indigo-400"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed dark:shadow-lg dark:shadow-gray-900/30 dark:focus:ring-emerald-400"
           >
             <span v-if="loading">Signing in...</span>
             <span v-else>Sign in</span>

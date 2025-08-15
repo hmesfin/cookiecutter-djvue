@@ -9,7 +9,7 @@
             <div class="sm:text-center lg:text-left">
               <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl dark:text-gray-100">
                 <span class="block xl:inline">{{ cookiecutter.project_name }}</span>
-                <span class="block text-indigo-600 xl:inline">made simple</span>
+                <span class="block text-emerald-600 xl:inline">made simple</span>
               </h1>
               <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 dark:text-gray-500">
                 {{ cookiecutter.project_description }}
@@ -18,7 +18,7 @@
                 <div class="rounded-md shadow dark:shadow-xl dark:shadow-gray-900/30">
                   <RouterLink
                     to="/auth/register"
-                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 md:py-4 md:text-lg md:px-10"
                   >
                     Get started
                   </RouterLink>
@@ -26,7 +26,7 @@
                 <div class="mt-3 sm:mt-0 sm:ml-3">
                   <RouterLink
                     to="/features"
-                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
+                    class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-emerald-700 bg-emerald-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
                   >
                     Learn more
                   </RouterLink>
@@ -42,7 +42,7 @@
     <section class="py-12 bg-gray-50 dark:bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
+          <h2 class="text-base text-emerald-600 font-semibold tracking-wide uppercase">Features</h2>
           <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-100">
             Everything you need
           </p>
@@ -55,7 +55,7 @@
           <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
             {% raw %}<div v-for="feature in features" :key="feature.name" class="relative">
               <dt>
-                <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-emerald-600 text-white">
                   <component :is="feature.icon" class="h-6 w-6" aria-hidden="true" />
                 </div>
                 <p class="ml-16 text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">{{ feature.name }}</p>
@@ -68,7 +68,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="bg-indigo-700">
+    <section class="bg-emerald-700">
       <div class="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
           <span class="block">Ready to get started?</span>
@@ -79,7 +79,7 @@
         </p>
         <RouterLink
           to="/auth/register"
-          class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 sm:w-auto dark:bg-gray-900"
+          class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-emerald-50 sm:w-auto dark:bg-gray-900"
         >
           Sign up for free
         </RouterLink>

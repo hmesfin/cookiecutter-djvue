@@ -27,7 +27,7 @@
                     id="firstName"
                     v-model="form.firstName"
                     type="text"
-                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
+                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                     required
                   >
                 </div>
@@ -37,7 +37,7 @@
                     id="lastName"
                     v-model="form.lastName"
                     type="text"
-                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
+                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                     required
                   >
                 </div>
@@ -49,7 +49,7 @@
                   id="email"
                   v-model="form.email"
                   type="email"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
+                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                   required
                 >
               </div>
@@ -60,7 +60,7 @@
                   id="company"
                   v-model="form.company"
                   type="text"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
+                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                 >
               </div>
               
@@ -69,7 +69,7 @@
                 <select 
                   id="subject"
                   v-model="form.subject"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
+                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                   required
                 >
                   <option value=">Select a subject</option>
@@ -87,7 +87,7 @@
                   id="message"
                   v-model="form.message"
                   rows="6"
-                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
+                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 dark:bg-gray-900"
                   required
                 ></textarea>
               </div>
@@ -97,13 +97,13 @@
                   <input 
                     v-model="form.subscribe"
                     type="checkbox"
-                    class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 dark:border-gray-600 dark:focus:ring-indigo-400"
+                    class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500 dark:border-gray-600 dark:focus:ring-emerald-400"
                   >
                   <span>I'd like to receive updates and newsletters</span>
                 </label>
               </div>
               
-              <button type="submit" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200" :disabled="isSubmitting">
+              <button type="submit" class="btn bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200" :disabled="isSubmitting">
                 <span v-if="!isSubmitting">Send Message</span>
                 <span v-else>Sending...</span>
               </button>
@@ -124,7 +124,7 @@
               
               <div class="flex items-start gap-3s">
                 <div class="flex items-start gap-3">
-                  <div class="w-6 h-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+                  <div class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0">
                     <IconLucideMail class="w-5 h-5" />
                   </div>
                   <div>
@@ -136,7 +136,7 @@
                 </div>
                 
                 <div class="flex items-start gap-3">
-                  <div class="w-6 h-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+                  <div class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0">
                     <IconLucidePhone class="w-6 h-6" />
                   </div>
                   <div>
@@ -148,7 +148,7 @@
                 </div>
                 
                 <div class="flex items-start gap-3">
-                  <div class="w-6 h-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+                  <div class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0">
                     <IconLucideMapPin class="w-6 h-6" />
                   </div>
                   <div>
@@ -162,7 +162,7 @@
                 </div>
                 
                 <div class="flex items-start gap-3">
-                  <div class="w-6 h-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+                  <div class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0">
                     <IconLucideClock class="w-5 h-5" />
                   </div>
                   <div>
@@ -229,7 +229,7 @@
             <IconLucideMapPin class="w-6 h-6" />
             <h3>Visit Our Office</h3>
             <p>123 Business Ave, Suite 100<br>San Francisco, CA 94107</p>
-            <a href="#" class="btn px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-white text-indigo-600 hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-700">Get Directions</a>
+            <a href="#" class="btn px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-white text-emerald-600 hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-700">Get Directions</a>
           </div>
         </div>
       </div>

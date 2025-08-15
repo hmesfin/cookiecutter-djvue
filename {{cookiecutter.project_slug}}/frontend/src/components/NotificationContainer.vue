@@ -26,7 +26,7 @@
             />
             <IconLucideInfo 
               v-else 
-              class="w-6 h-6 text-blue-500" 
+              class="w-6 h-6 text-emerald-600" 
             />
           </div>
           <div class="flex-1">
@@ -41,7 +41,7 @@
                 v-for="action in notification.actions"
                 :key="action.label"
                 @click="handleAction(action.handler, notification.id)"
-                class="px-2 py-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors"
+                class="px-2 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-blue-900/20 rounded transition-colors"
               >
                 {% raw %}{{ action.label }}{% endraw %}
               </button>

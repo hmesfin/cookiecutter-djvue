@@ -2,4 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import custom component styles */
+@import '../styles/components.css';
 {%- endif %}

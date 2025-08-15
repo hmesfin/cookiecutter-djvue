@@ -12,7 +12,7 @@
             <span :class="{ \'text-gray-900 dark:text-gray-100 font-semibold\': !isAnnual, \'text-gray-500 dark:text-gray-400\': !!isAnnual }">Monthly</span>
             <label class="relative inline-block w-14 h-7">
               <input type="checkbox" v-model="isAnnual" class="sr-only peer">
-              <span class="absolute cursor-pointer inset-0 bg-gray-300 rounded-full transition-colors peer-checked:bg-indigo-600 dark:bg-gray-600"></span>
+              <span class="absolute cursor-pointer inset-0 bg-gray-300 rounded-full transition-colors peer-checked:bg-emerald-600 dark:bg-gray-600"></span>
             </label>
             <span :class="{ \'text-gray-900 dark:text-gray-100 font-semibold\': isAnnual, \'text-gray-500 dark:text-gray-400\': !isAnnual }">
               Annual
@@ -58,7 +58,7 @@
             
             <button 
               @click="selectPlan(plan)"
-              :class="['btn', plan.featured ? 'px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-indigo-600 text-white hover:bg-indigo-700' : duration-200-outline']"
+              :class="['btn', plan.featured ? 'px-6 py-3 rounded-lg font-medium transition-all duration-200 bg-emerald-600 text-white hover:bg-emerald-700' : duration-200-outline']"
             >
               {% raw %}{{ plan.cta }}{% endraw %}
             </button>
@@ -85,7 +85,7 @@
             </ul>
           </div>
           <div class="text-center">
-            <router-link to="/contact" class="btn bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
+            <router-link to="/contact" class="btn bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 text-lg rounded-lg font-medium transition-all duration-200">
               Contact Sales
             </router-link>
             <p class="mt-3 text-gray-600 dark:text-gray-400 text-sm">Let's discuss your specific requirements</p>
