@@ -280,6 +280,7 @@ console.log('Cleanup complete:', cache.getStats())
 
 Create `frontend/src/views/CacheTest.vue`:
 
+{% raw %}
 ```vue
 <template>
   <div class="p-4">
@@ -400,6 +401,7 @@ onMounted(() => {
 })
 </script>
 ```
+{% endraw %}
 
 ### D. Test Service Worker Caching
 

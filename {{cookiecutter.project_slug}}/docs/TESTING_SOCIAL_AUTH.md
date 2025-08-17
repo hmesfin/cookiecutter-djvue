@@ -77,6 +77,7 @@ google_app.sites.add(site)
 
 Create `frontend/src/components/SocialAuthTest.vue`:
 
+{% raw %}
 ```vue
 <template>
   <div class="p-4">
@@ -147,6 +148,7 @@ if (token) {
 }
 </script>
 ```
+{% endraw %}
 
 ## 4. Test API Integration
 
