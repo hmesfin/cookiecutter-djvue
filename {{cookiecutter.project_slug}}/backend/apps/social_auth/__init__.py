@@ -1,0 +1,1 @@
+"""Social authentication app for {{ cookiecutter.project_name }}."""

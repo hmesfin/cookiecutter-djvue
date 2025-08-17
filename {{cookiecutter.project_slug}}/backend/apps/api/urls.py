@@ -58,6 +58,11 @@ urlpatterns = [
     path('auth/resend-verification/', ResendVerificationEmailView.as_view(), name='resend_verification'),
     {%- endif %}
     
+    {% if cookiecutter.use_social_auth == 'y' -%}
+    # Social authentication
+    path('auth/social/', include('apps.social_auth.urls')),
+    {%- endif %}
+    
     # Current user
     path('me/', CurrentUserView.as_view(), name='current_user'),
     

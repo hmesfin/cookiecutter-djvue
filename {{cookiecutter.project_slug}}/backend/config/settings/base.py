@@ -46,12 +46,36 @@ THIRD_PARTY_APPS = [
     {% if cookiecutter.use_channels == 'y' -%}
     'channels',
     {%- endif %}
+    {% if cookiecutter.use_social_auth == 'y' -%}
+    # Social authentication
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    {% if 'google' in cookiecutter.social_auth_providers -%}
+    'allauth.socialaccount.providers.google',
+    {% endif -%}
+    {% if 'github' in cookiecutter.social_auth_providers -%}
+    'allauth.socialaccount.providers.github',
+    {% endif -%}
+    {% if 'facebook' in cookiecutter.social_auth_providers -%}
+    'allauth.socialaccount.providers.facebook',
+    {% endif -%}
+    {% if 'twitter' in cookiecutter.social_auth_providers -%}
+    'allauth.socialaccount.providers.twitter',
+    {% endif -%}
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    {%- endif %}
 ]
 
 LOCAL_APPS = [
     'apps.core',
     'apps.users',
     'apps.api',
+    {% if cookiecutter.use_social_auth == 'y' -%}
+    'apps.social_auth',
+    {%- endif %}
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -346,3 +370,91 @@ LOGGING = {
         },
     },
 }
+
+{% if cookiecutter.use_social_auth == 'y' -%}
+# Django Allauth Configuration
+SITE_ID = 1
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+
+# Social account settings
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'optional'
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    {% if 'google' in cookiecutter.social_auth_providers -%}
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id': os.environ.get('GOOGLE_OAUTH_CLIENT_ID', ''),
+            'secret': os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET', ''),
+            'key': ''
+        }
+    },
+    {% endif -%}
+    {% if 'github' in cookiecutter.social_auth_providers -%}
+    'github': {
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+        'APP': {
+            'client_id': os.environ.get('GITHUB_OAUTH_CLIENT_ID', ''),
+            'secret': os.environ.get('GITHUB_OAUTH_CLIENT_SECRET', ''),
+            'key': ''
+        }
+    },
+    {% endif -%}
+    {% if 'facebook' in cookiecutter.social_auth_providers -%}
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'name',
+            'name_format',
+            'picture',
+            'short_name'
+        ],
+        'EXCHANGE_TOKEN': True,
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v13.0',
+        'APP': {
+            'client_id': os.environ.get('FACEBOOK_OAUTH_CLIENT_ID', ''),
+            'secret': os.environ.get('FACEBOOK_OAUTH_CLIENT_SECRET', ''),
+            'key': ''
+        }
+    },
+    {% endif -%}
+    {% if 'twitter' in cookiecutter.social_auth_providers -%}
+    'twitter': {
+        'APP': {
+            'client_id': os.environ.get('TWITTER_OAUTH_CLIENT_ID', ''),
+            'secret': os.environ.get('TWITTER_OAUTH_CLIENT_SECRET', ''),
+            'key': os.environ.get('TWITTER_OAUTH_API_KEY', ''),
+        }
+    },
+    {% endif -%}
+}
+{%- endif %}
