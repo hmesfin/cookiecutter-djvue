@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 {%- endif %}
 
-from {{ cookiecutter.project_slug }}.apps.core.views import home_view
+from apps.core.views import home_view
 
 # Customize admin
 admin.site.site_header = "{{ cookiecutter.project_name }} Admin"
@@ -19,8 +19,8 @@ admin.site.index_title = "Welcome to {{ cookiecutter.project_name }} Administrat
 urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
-    path('api/', include('{{ cookiecutter.project_slug }}.apps.api.urls')),
-    path('api/', include('{{ cookiecutter.project_slug }}.apps.core.urls')),
+    path('api/', include('apps.api.urls')),
+    path('api/', include('apps.core.urls')),
     
     {% if cookiecutter.use_drf_spectacular == 'y' -%}
     # API Documentation

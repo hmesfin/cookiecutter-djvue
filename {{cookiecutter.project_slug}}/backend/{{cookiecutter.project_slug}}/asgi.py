@@ -16,7 +16,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{{ cookiecutter.project_slug }}
 django_asgi_app = get_asgi_application()
 
 # Import websocket routing after Django setup
-from {{ cookiecutter.project_slug }}.apps.api import routing
+from apps.api import routing
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,

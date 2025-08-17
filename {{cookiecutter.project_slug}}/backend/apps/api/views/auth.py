@@ -16,8 +16,8 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.authtoken.models import Token
 {%- endif %}
 
-from {{ cookiecutter.project_slug }}.apps.users.models import User
-from {{ cookiecutter.project_slug }}.apps.users.utils import (
+from apps.users.models import User
+from apps.users.utils import (
     email_verification_token,
     generate_verification_token,
     send_verification_email_to_user
@@ -212,7 +212,7 @@ class VerifyEmailView(APIView):
             
             # Try to send welcome email, but don't fail verification if it fails
             try:
-                from {{ cookiecutter.project_slug }}.apps.users.tasks import send_email_task
+                from apps.users.tasks import send_email_task
                 send_email_task(user_id=user.id, email_type="welcome")
             except Exception as e:
                 import logging

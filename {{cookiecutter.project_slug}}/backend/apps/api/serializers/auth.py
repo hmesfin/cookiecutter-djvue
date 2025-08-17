@@ -4,7 +4,7 @@ Authentication serializers.
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
-from {{ cookiecutter.project_slug }}.apps.users.models import User
+from apps.users.models import User
 
 
 class RegisterSerializer(serializers.ModelSerializer):

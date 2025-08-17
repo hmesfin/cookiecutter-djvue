@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 from django.core import mail
 from django.contrib.auth import get_user_model
 
-from {{ cookiecutter.project_slug }}.apps.users.tasks import (
+from apps.users.tasks import (
     send_welcome_email,
     send_verification_email,
     send_password_reset_email,
@@ -110,8 +110,8 @@ class TestEmailTasks:
         assert reset_url in mail.outbox[0].body
     
     {% if cookiecutter.use_celery == 'y' -%}
-    @patch('{{ cookiecutter.project_slug }}.apps.users.tasks.CELERY_AVAILABLE', True)
-    @patch('{{ cookiecutter.project_slug }}.apps.users.tasks.send_welcome_email.delay')
+    @patch('apps.users.tasks.CELERY_AVAILABLE', True)
+    @patch('apps.users.tasks.send_welcome_email.delay')
     def test_send_email_task_with_celery(self, mock_delay, settings):
         """Test that emails are queued with Celery when available."""
         settings.USE_CELERY = True
@@ -130,7 +130,7 @@ class TestEmailTasks:
         mock_delay.assert_called_once_with(user_id=user.id)
         assert hasattr(result, 'id')
     
-    @patch('{{ cookiecutter.project_slug }}.apps.users.tasks.CELERY_AVAILABLE', False)
+    @patch('apps.users.tasks.CELERY_AVAILABLE', False)
     def test_send_email_task_without_celery(self):
         """Test that emails are sent synchronously when Celery is not available."""
         user = User.objects.create_user(
@@ -158,7 +158,7 @@ class TestEmailTasks:
         result = send_email_task(user_id=user.id, email_type="invalid")
         assert result is False
     
-    @patch('{{ cookiecutter.project_slug }}.apps.users.tasks.send_mail')
+    @patch('apps.users.tasks.send_mail')
     def test_email_failure_handling(self, mock_send_mail):
         """Test that email failures are handled gracefully."""
         mock_send_mail.side_effect = Exception("SMTP error")
@@ -176,7 +176,7 @@ from django.test import TestCase
 from django.core import mail
 from django.contrib.auth import get_user_model
 
-from {{ cookiecutter.project_slug }}.apps.users.tasks import (
+from apps.users.tasks import (
     send_welcome_email,
     send_email_task,
 )

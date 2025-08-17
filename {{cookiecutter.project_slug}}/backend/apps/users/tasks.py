@@ -57,7 +57,7 @@ def send_welcome_email(self=None, user_id: int = None) -> bool:
     Returns:
         bool: True if email was sent successfully, False otherwise
     """
-    from {{ cookiecutter.project_slug }}.apps.users.models import User
+    from apps.users.models import User
     
     try:
         user = User.objects.get(id=user_id)
@@ -134,7 +134,7 @@ def send_verification_email(self=None, user_id: int = None, verification_url: st
     Returns:
         bool: True if email was sent successfully, False otherwise
     """
-    from {{ cookiecutter.project_slug }}.apps.users.models import User
+    from apps.users.models import User
     
     try:
         user = User.objects.get(id=user_id)
@@ -208,7 +208,7 @@ def send_password_reset_email(self=None, user_id: int = None, reset_url: str = N
     Returns:
         bool: True if email was sent successfully, False otherwise
     """
-    from {{ cookiecutter.project_slug }}.apps.users.models import User
+    from apps.users.models import User
     
     try:
         user = User.objects.get(id=user_id)

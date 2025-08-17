@@ -3,7 +3,7 @@ User serializers.
 """
 from rest_framework import serializers
 
-from {{ cookiecutter.project_slug }}.apps.users.models import User
+from apps.users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):

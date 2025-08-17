@@ -3,7 +3,7 @@
 import django.contrib.auth.validators
 from django.db import migrations, models
 import django.utils.timezone
-from {{ cookiecutter.project_slug }}.apps.users.managers import UserManager
+from apps.users.managers import UserManager
 
 
 class Migration(migrations.Migration):

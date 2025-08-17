@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from {{ cookiecutter.project_slug }}.apps.users.models import User
+from apps.users.models import User
 from ..serializers.users import UserSerializer, UserUpdateSerializer
 
 

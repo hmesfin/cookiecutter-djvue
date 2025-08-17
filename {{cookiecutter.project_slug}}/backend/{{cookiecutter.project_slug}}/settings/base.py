@@ -49,9 +49,9 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    '{{ cookiecutter.project_slug }}.apps.core',
-    '{{ cookiecutter.project_slug }}.apps.users',
-    '{{ cookiecutter.project_slug }}.apps.api',
+    'apps.core',
+    'apps.users',
+    'apps.api',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -71,8 +71,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Custom middleware
-    '{{ cookiecutter.project_slug }}.apps.core.middleware.APIMetricsMiddleware',
-    '{{ cookiecutter.project_slug }}.apps.core.middleware.HealthCheckMiddleware',
+    'apps.core.middleware.APIMetricsMiddleware',
+    'apps.core.middleware.HealthCheckMiddleware',
 ]
 
 ROOT_URLCONF = '{{ cookiecutter.project_slug }}.urls'
@@ -165,7 +165,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # Authentication backends - allow login with username or email
 AUTHENTICATION_BACKENDS = [
-    '{{ cookiecutter.project_slug }}.apps.users.backends.EmailOrUsernameBackend',
+    'apps.users.backends.EmailOrUsernameBackend',
     'django.contrib.auth.backends.ModelBackend',  # Keep default as fallback
 ]
 
