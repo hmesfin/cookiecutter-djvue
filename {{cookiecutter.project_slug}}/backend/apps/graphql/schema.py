@@ -3,7 +3,6 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from django.contrib.auth import get_user_model
-from apps.users.models import UserProfile
 from apps.graphql.auth import login_required
 
 User = get_user_model()
@@ -12,25 +11,24 @@ User = get_user_model()
 # Types
 class UserType(DjangoObjectType):
     """User GraphQL type."""
+    is_complete_profile = graphene.Boolean()
     
     class Meta:
         model = User
         fields = ['id', 'email', 'username', 'first_name', 'last_name', 
-                 'is_active', 'date_joined', 'profile']
+                 'is_active', 'date_joined', 'created_at', 'updated_at',
+                 'phone_number', 'bio', 'avatar', 'date_of_birth', 'is_verified']
         filter_fields = {
             'email': ['exact', 'icontains'],
             'username': ['exact', 'icontains'],
             'is_active': ['exact'],
+            'is_verified': ['exact'],
         }
         interfaces = (graphene.relay.Node,)
-
-
-class UserProfileType(DjangoObjectType):
-    """UserProfile GraphQL type."""
     
-    class Meta:
-        model = UserProfile
-        fields = '__all__'
+    def resolve_is_complete_profile(self, info):
+        """Resolve the is_complete_profile property."""
+        return self.is_complete_profile
 
 
 # Input Types
@@ -45,8 +43,9 @@ class UserInput(graphene.InputObjectType):
 
 class UserProfileInput(graphene.InputObjectType):
     """Input type for user profile update."""
+    first_name = graphene.String()
+    last_name = graphene.String()
     bio = graphene.String()
-    avatar = graphene.String()
     phone_number = graphene.String()
     date_of_birth = graphene.Date()
 
@@ -195,7 +194,7 @@ class UpdateProfile(graphene.Mutation):
     class Arguments:
         profile_data = UserProfileInput(required=True)
     
-    profile = graphene.Field(UserProfileType)
+    user = graphene.Field(UserType)
     success = graphene.Boolean()
     errors = graphene.List(graphene.String)
     
@@ -203,19 +202,19 @@ class UpdateProfile(graphene.Mutation):
     def mutate(self, info, profile_data):
         """Update profile mutation."""
         try:
-            profile = info.context.user.profile
+            user = info.context.user
             
             # Update fields
             for field, value in profile_data.items():
                 if value is not None:
-                    setattr(profile, field, value)
+                    setattr(user, field, value)
             
-            profile.save()
+            user.save()
             
-            return UpdateProfile(profile=profile, success=True, errors=[])
+            return UpdateProfile(user=user, success=True, errors=[])
         except Exception as e:
             return UpdateProfile(
-                profile=None, 
+                user=None, 
                 success=False, 
                 errors=[str(e)]
             )
