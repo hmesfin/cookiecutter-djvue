@@ -1,6 +1,7 @@
 """GraphQL type definitions using Strawberry."""
 import strawberry
 from strawberry import auto
+import strawberry_django
 from typing import Optional, List
 from datetime import date, datetime
 from django.contrib.auth import get_user_model
@@ -8,7 +9,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-@strawberry.django.type(User)
+@strawberry_django.type(User)
 class UserType:
     """User GraphQL type."""
     id: auto

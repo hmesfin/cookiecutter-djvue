@@ -73,7 +73,8 @@ requests-oauthlib==2.0.*  # Required for OAuth providers
 
 # GraphQL
 {% if cookiecutter.use_graphql == 'y' -%}
-strawberry-graphql[django]==0.278.*
+strawberry-graphql==0.278.*
+strawberry-graphql-django==0.54.*
 PyJWT==2.8.*  # For JWT authentication
 django-filter==24.3.*
 # Strawberry has better Django 5.x compatibility and active maintenance

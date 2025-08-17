@@ -1,5 +1,6 @@
 """GraphQL schema definition using Strawberry."""
 import strawberry
+import strawberry_django
 from typing import List, Optional
 from django.contrib.auth import get_user_model
 from django.db.models import Q
@@ -23,7 +24,7 @@ class Query:
             return user
         return None
     
-    @strawberry.django.field
+    @strawberry_django.field
     def user(self, info: Info, id: int) -> Optional[UserType]:
         """Get user by ID."""
         try:
@@ -31,7 +32,7 @@ class Query:
         except User.DoesNotExist:
             return None
     
-    @strawberry.django.field
+    @strawberry_django.field
     def users(
         self,
         info: Info,
