@@ -2,6 +2,7 @@
 Development settings for {{ cookiecutter.project_name }} project.
 """
 from .base import *
+from decouple import config
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,8 +45,8 @@ CORS_ALLOWED_ORIGINS = [
 {% if cookiecutter.use_mailhog == 'y' -%}
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Use 'mailhog' hostname when running in Docker, 'localhost' otherwise
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'mailhog' if os.environ.get('DJANGO_ENV') == 'development' else 'localhost')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 1025))
+EMAIL_HOST = config('EMAIL_HOST', default='mailhog' if config('DJANGO_ENV', default='') == 'development' else 'localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=1025, cast=int)
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = ''

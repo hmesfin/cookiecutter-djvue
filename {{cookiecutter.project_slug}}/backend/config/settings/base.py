@@ -4,13 +4,15 @@ Base Django settings for {{ cookiecutter.project_name }} project.
 import os
 from pathlib import Path
 from datetime import timedelta
+from decouple import config, Csv
+import dj_database_url
 
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ROOT_DIR = BASE_DIR.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-change-this-in-production')
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-this-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -127,7 +129,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Supports DATABASE_URL for easy configuration
 import dj_database_url
 
-DATABASE_URL = os.environ.get('DATABASE_URL', None)
+DATABASE_URL = config('DATABASE_URL', default=None)
 
 if DATABASE_URL:
     DATABASES = {
@@ -139,11 +141,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('POSTGRES_DB', '{{ cookiecutter.project_slug }}'),
-            'USER': os.environ.get('POSTGRES_USER', '{{ cookiecutter.project_slug }}'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'changeme'),
-            'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+            'NAME': config('POSTGRES_DB', default='{{ cookiecutter.project_slug }}'),
+            'USER': config('POSTGRES_USER', default='{{ cookiecutter.project_slug }}'),
+            'PASSWORD': config('POSTGRES_PASSWORD', default='changeme'),
+            'HOST': config('POSTGRES_HOST', default='localhost'),
+            'PORT': config('POSTGRES_PORT', default='5432'),
         }
     }
     {% elif cookiecutter.database == 'mysql' -%}
@@ -151,11 +153,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('MYSQL_DATABASE', '{{ cookiecutter.project_slug }}'),
-            'USER': os.environ.get('MYSQL_USER', '{{ cookiecutter.project_slug }}'),
-            'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'changeme'),
-            'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
-            'PORT': os.environ.get('MYSQL_PORT', '3306'),
+            'NAME': config('MYSQL_DATABASE', default='{{ cookiecutter.project_slug }}'),
+            'USER': config('MYSQL_USER', default='{{ cookiecutter.project_slug }}'),
+            'PASSWORD': config('MYSQL_PASSWORD', default='changeme'),
+            'HOST': config('MYSQL_HOST', default='localhost'),
+            'PORT': config('MYSQL_PORT', default='3306'),
         }
     }
     {% else -%}
@@ -222,7 +224,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': env('REDIS_URL', default='redis://127.0.0.1:6379/1'),
+        'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/1'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'CONNECTION_POOL_KWARGS': {
@@ -239,7 +241,7 @@ CACHES = {
     },
     'session': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': env('REDIS_URL', default='redis://127.0.0.1:6379/2'),
+        'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/2'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
@@ -327,8 +329,8 @@ SPECTACULAR_SETTINGS = {
 
 {% if cookiecutter.use_celery == 'y' -%}
 # Celery Configuration
-CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+CELERY_BROKER_URL = config('REDIS_URL', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = config('REDIS_URL', 'redis://localhost:6379/0')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -341,7 +343,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': os.environ.get('REDIS_URL', 'redis://localhost:6379/1'),
+        'LOCATION': config('REDIS_URL', 'redis://localhost:6379/1'),
     }
 }
 {%- endif %}
@@ -352,29 +354,29 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [os.environ.get('REDIS_URL', 'redis://localhost:6379/2')],
+            'hosts': [config('REDIS_URL', 'redis://localhost:6379/2')],
         },
     },
 }
 {%- endif %}
 
 # Frontend URL for email links
-FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:{{ cookiecutter.frontend_port }}')
+FRONTEND_URL = config('FRONTEND_URL', 'http://localhost:{{ cookiecutter.frontend_port }}')
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@{{ cookiecutter.domain_name }}')
+EMAIL_HOST = config('EMAIL_HOST', 'localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', 'noreply@{{ cookiecutter.domain_name }}')
 
 # Email Task Configuration
-SEND_WELCOME_EMAIL = os.environ.get('SEND_WELCOME_EMAIL', 'True') == 'True'
-SEND_VERIFICATION_EMAIL = os.environ.get('SEND_VERIFICATION_EMAIL', 'True') == 'True'
+SEND_WELCOME_EMAIL = config('SEND_WELCOME_EMAIL', default=True, cast=bool)
+SEND_VERIFICATION_EMAIL = config('SEND_VERIFICATION_EMAIL', default=True, cast=bool)
 {% if cookiecutter.use_celery == 'y' -%}
-USE_CELERY = os.environ.get('USE_CELERY', 'True') == 'True'  # Can disable Celery for emails
+USE_CELERY = config('USE_CELERY', default=True, cast=bool)  # Can disable Celery for emails
 {%- endif %}
 
 # Security Settings
@@ -409,7 +411,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': os.environ.get('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': config('DJANGO_LOG_LEVEL', 'INFO'),
             'propagate': False,
         },
     },
@@ -445,8 +447,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'APP': {
-            'client_id': os.environ.get('GOOGLE_OAUTH_CLIENT_ID', ''),
-            'secret': os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET', ''),
+            'client_id': config('GOOGLE_OAUTH_CLIENT_ID', ''),
+            'secret': config('GOOGLE_OAUTH_CLIENT_SECRET', ''),
             'key': ''
         }
     },
@@ -459,8 +461,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'read:org',
         ],
         'APP': {
-            'client_id': os.environ.get('GITHUB_OAUTH_CLIENT_ID', ''),
-            'secret': os.environ.get('GITHUB_OAUTH_CLIENT_SECRET', ''),
+            'client_id': config('GITHUB_OAUTH_CLIENT_ID', ''),
+            'secret': config('GITHUB_OAUTH_CLIENT_SECRET', ''),
             'key': ''
         }
     },
@@ -485,8 +487,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERIFIED_EMAIL': False,
         'VERSION': 'v13.0',
         'APP': {
-            'client_id': os.environ.get('FACEBOOK_OAUTH_CLIENT_ID', ''),
-            'secret': os.environ.get('FACEBOOK_OAUTH_CLIENT_SECRET', ''),
+            'client_id': config('FACEBOOK_OAUTH_CLIENT_ID', ''),
+            'secret': config('FACEBOOK_OAUTH_CLIENT_SECRET', ''),
             'key': ''
         }
     },
@@ -494,9 +496,9 @@ SOCIALACCOUNT_PROVIDERS = {
     {% if 'twitter' in cookiecutter.social_auth_providers -%}
     'twitter': {
         'APP': {
-            'client_id': os.environ.get('TWITTER_OAUTH_CLIENT_ID', ''),
-            'secret': os.environ.get('TWITTER_OAUTH_CLIENT_SECRET', ''),
-            'key': os.environ.get('TWITTER_OAUTH_API_KEY', ''),
+            'client_id': config('TWITTER_OAUTH_CLIENT_ID', ''),
+            'secret': config('TWITTER_OAUTH_CLIENT_SECRET', ''),
+            'key': config('TWITTER_OAUTH_API_KEY', ''),
         }
     },
     {% endif -%}
