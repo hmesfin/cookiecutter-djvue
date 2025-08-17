@@ -82,6 +82,12 @@ LOCAL_APPS = [
     'apps.cache',
     'apps.emails',
     {%- endif %}
+    {% if cookiecutter.use_graphql == 'y' -%}
+    'apps.graphql',
+    {%- endif %}
+    {% if cookiecutter.use_websockets_enhanced == 'y' -%}
+    'apps.websockets',
+    {%- endif %}
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -533,5 +539,32 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     },
     {% endif -%}
+}
+{%- endif %}
+
+{% if cookiecutter.use_graphql == 'y' -%}
+# GraphQL Configuration
+GRAPHENE = {
+    'SCHEMA': 'apps.graphql.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
+# GraphQL JWT Configuration
+from datetime import timedelta
+
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=15),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_ALLOW_ANY_CLASSES': [
+        'apps.graphql.auth.ObtainJSONWebToken',
+        'apps.graphql.auth.RegisterUser',
+        'apps.graphql.auth.RequestPasswordReset',
+        'apps.graphql.auth.ResetPassword',
+    ],
 }
 {%- endif %}

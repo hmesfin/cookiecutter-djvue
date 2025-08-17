@@ -69,3 +69,13 @@ sentry-sdk==2.13.*
 django-allauth==65.3.*
 dj-rest-auth==7.0.*
 {%- endif %}
+
+# GraphQL
+{% if cookiecutter.use_graphql == 'y' -%}
+graphene-django==3.2.*
+django-graphql-jwt==0.4.*
+django-filter==24.3.*
+{% if cookiecutter.use_channels == 'y' -%}
+channels-graphql-ws==1.0.*
+{%- endif %}
+{%- endif %}
