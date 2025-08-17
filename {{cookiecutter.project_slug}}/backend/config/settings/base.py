@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'apps.core.middleware.HealthCheckMiddleware',
 ]
 
-ROOT_URLCONF = '{{ cookiecutter.project_slug }}.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -94,9 +94,9 @@ TEMPLATES = [
 ]
 
 {% if cookiecutter.use_channels == 'y' -%}
-ASGI_APPLICATION = '{{ cookiecutter.project_slug }}.asgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 {% else -%}
-WSGI_APPLICATION = '{{ cookiecutter.project_slug }}.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 {%- endif %}
 
 # Database

@@ -70,14 +70,14 @@ line-ending = "auto"
 
 [tool.ruff.lint.isort]
 known-third-party = ["django", "rest_framework", "celery", "redis"]
-known-first-party = ["{{ cookiecutter.project_slug }}"]
+known-first-party = ["apps", "config"]
 
 [tool.ruff.lint.pycodestyle]
 max-doc-length = 88
 
 [tool.ruff.lint.flake8-django]
 # Configure Django settings module for flake8-django
-django-settings-module = "{{ cookiecutter.project_slug }}.settings"
+django-settings-module = "config.settings"
 
 [tool.ruff.lint.per-file-ignores]
 # Ignore certain rules in specific files

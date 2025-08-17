@@ -10,7 +10,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator
 {%- endif %}
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{{ cookiecutter.project_slug }}.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 {% if cookiecutter.use_channels == 'y' -%}
 django_asgi_app = get_asgi_application()
