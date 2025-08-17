@@ -4,8 +4,8 @@ import jwt
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
-from apps.graphql.schema import UserType
 from functools import wraps
+from apps.graphql.types import UserType
 
 User = get_user_model()
 

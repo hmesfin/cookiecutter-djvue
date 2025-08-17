@@ -1,6 +1,6 @@
 """GraphQL subscriptions for real-time updates."""
 import graphene
-from apps.graphql.schema import UserType
+from apps.graphql.types import UserType
 from apps.graphql.auth import login_required
 from django.contrib.auth import get_user_model
 
