@@ -1,221 +1,134 @@
-"""GraphQL schema definition."""
-import graphene
-from graphene_django.filter import DjangoFilterConnectionField
+"""GraphQL schema definition using Strawberry."""
+import strawberry
+import strawberry_django
+from typing import List, Optional
 from django.contrib.auth import get_user_model
-from apps.graphql.auth import login_required
-from apps.graphql.types import UserType
+from django.db.models import Q
+from strawberry.types import Info
+
+from apps.graphql.types import UserType, UserInput, MutationResult
+from apps.graphql.auth import AuthMutations, login_required
 
 User = get_user_model()
 
 
-# Input Types
-class UserInput(graphene.InputObjectType):
-    """Input type for user creation/update."""
-    email = graphene.String(required=True)
-    username = graphene.String(required=True)
-    first_name = graphene.String()
-    last_name = graphene.String()
-    password = graphene.String()
-
-
-class UserProfileInput(graphene.InputObjectType):
-    """Input type for user profile update."""
-    first_name = graphene.String()
-    last_name = graphene.String()
-    bio = graphene.String()
-    phone_number = graphene.String()
-    date_of_birth = graphene.Date()
-
-
-# Queries
-class Query(graphene.ObjectType):
+@strawberry.type
+class Query:
     """Root query object."""
     
-    # Single object queries
-    me = graphene.Field(UserType)
-    user = graphene.Field(UserType, id=graphene.ID(required=True))
-    
-    # List queries with pagination
-    all_users = DjangoFilterConnectionField(UserType)
-    
-    # Custom queries
-    search_users = graphene.List(
-        UserType,
-        query=graphene.String(required=True),
-        limit=graphene.Int(default_value=10)
-    )
-    
-    @login_required
-    def resolve_me(self, info):
+    @strawberry.field
+    def me(self, info: Info) -> Optional[UserType]:
         """Get current authenticated user."""
-        return info.context.user
+        user = info.context.request.user
+        if user.is_authenticated:
+            return user
+        return None
     
-    @login_required
-    def resolve_user(self, info, id):
+    @strawberry_django.field
+    def user(self, info: Info, id: int) -> Optional[UserType]:
         """Get user by ID."""
         try:
-            return User.objects.get(pk=id)
+            return User.objects.get(pk=id, is_active=True)
         except User.DoesNotExist:
             return None
     
-    @login_required
-    def resolve_all_users(self, info, **kwargs):
-        """Get all users with filtering."""
-        return User.objects.filter(is_active=True)
-    
-    @login_required
-    def resolve_search_users(self, info, query, limit):
-        """Search users by email or username."""
-        from django.db.models import Q
+    @strawberry_django.field
+    def users(
+        self,
+        info: Info,
+        search: Optional[str] = None,
+        limit: int = 20,
+        offset: int = 0
+    ) -> List[UserType]:
+        """Get all users with optional search."""
+        queryset = User.objects.filter(is_active=True)
         
-        return User.objects.filter(
-            Q(email__icontains=query) | 
-            Q(username__icontains=query) |
-            Q(first_name__icontains=query) |
-            Q(last_name__icontains=query)
-        ).filter(is_active=True)[:limit]
+        if search:
+            queryset = queryset.filter(
+                Q(email__icontains=search) |
+                Q(username__icontains=search) |
+                Q(first_name__icontains=search) |
+                Q(last_name__icontains=search)
+            )
+        
+        return list(queryset[offset:offset + limit])
+    
+    @strawberry.field
+    def user_count(self, info: Info) -> int:
+        """Get total number of active users."""
+        return User.objects.filter(is_active=True).count()
 
 
-# Mutations
-class CreateUser(graphene.Mutation):
-    """Create a new user."""
+@strawberry.type
+class UserMutations:
+    """User-related mutations."""
     
-    class Arguments:
-        user_data = UserInput(required=True)
-    
-    user = graphene.Field(UserType)
-    success = graphene.Boolean()
-    errors = graphene.List(graphene.String)
-    
-    def mutate(self, info, user_data):
-        """Create user mutation."""
-        errors = []
+    @strawberry.mutation
+    def create_user(self, info: Info, input: UserInput) -> UserType:
+        """Create a new user (admin only)."""
+        if not info.context.request.user.is_staff:
+            raise Exception("Permission denied")
         
         # Validate unique fields
-        if User.objects.filter(email=user_data.email).exists():
-            errors.append("Email already exists")
-        if User.objects.filter(username=user_data.username).exists():
-            errors.append("Username already exists")
+        if User.objects.filter(email=input.email).exists():
+            raise Exception("Email already exists")
+        if User.objects.filter(username=input.username).exists():
+            raise Exception("Username already exists")
         
-        if errors:
-            return CreateUser(user=None, success=False, errors=errors)
+        user = User.objects.create_user(
+            email=input.email,
+            username=input.username,
+            first_name=input.first_name or '',
+            last_name=input.last_name or '',
+            password=input.password or 'defaultpass123'
+        )
         
-        try:
-            user = User.objects.create_user(
-                email=user_data.email,
-                username=user_data.username,
-                first_name=user_data.get('first_name', ''),
-                last_name=user_data.get('last_name', ''),
-                password=user_data.get('password', 'defaultpass123')
-            )
-            
-            return CreateUser(user=user, success=True, errors=[])
-        except Exception as e:
-            return CreateUser(user=None, success=False, errors=[str(e)])
-
-
-class UpdateUser(graphene.Mutation):
-    """Update user information."""
+        return user
     
-    class Arguments:
-        id = graphene.ID(required=True)
-        user_data = UserInput(required=True)
-    
-    user = graphene.Field(UserType)
-    success = graphene.Boolean()
-    errors = graphene.List(graphene.String)
-    
+    @strawberry.mutation
     @login_required
-    def mutate(self, info, id, user_data):
-        """Update user mutation."""
+    def update_user(
+        self,
+        info: Info,
+        id: int,
+        input: UserInput
+    ) -> UserType:
+        """Update user information."""
         try:
             user = User.objects.get(pk=id)
             
             # Check permissions
-            if info.context.user != user and not info.context.user.is_staff:
-                return UpdateUser(
-                    user=None, 
-                    success=False, 
-                    errors=["Permission denied"]
-                )
+            if info.context.request.user != user and not info.context.request.user.is_staff:
+                raise Exception("Permission denied")
             
             # Update fields
-            for field, value in user_data.items():
-                if field != 'password' and value is not None:
-                    setattr(user, field, value)
+            user.email = input.email
+            user.username = input.username
+            if input.first_name is not None:
+                user.first_name = input.first_name
+            if input.last_name is not None:
+                user.last_name = input.last_name
             
             # Handle password separately
-            if user_data.get('password'):
-                user.set_password(user_data.password)
+            if input.password:
+                user.set_password(input.password)
             
             user.save()
-            
-            return UpdateUser(user=user, success=True, errors=[])
+            return user
         except User.DoesNotExist:
-            return UpdateUser(
-                user=None, 
-                success=False, 
-                errors=["User not found"]
-            )
-        except Exception as e:
-            return UpdateUser(
-                user=None, 
-                success=False, 
-                errors=[str(e)]
-            )
-
-
-class UpdateProfile(graphene.Mutation):
-    """Update user profile."""
+            raise Exception("User not found")
     
-    class Arguments:
-        profile_data = UserProfileInput(required=True)
-    
-    user = graphene.Field(UserType)
-    success = graphene.Boolean()
-    errors = graphene.List(graphene.String)
-    
+    @strawberry.mutation
     @login_required
-    def mutate(self, info, profile_data):
-        """Update profile mutation."""
-        try:
-            user = info.context.user
-            
-            # Update fields
-            for field, value in profile_data.items():
-                if value is not None:
-                    setattr(user, field, value)
-            
-            user.save()
-            
-            return UpdateProfile(user=user, success=True, errors=[])
-        except Exception as e:
-            return UpdateProfile(
-                user=None, 
-                success=False, 
-                errors=[str(e)]
-            )
-
-
-class DeleteUser(graphene.Mutation):
-    """Delete (deactivate) a user."""
-    
-    class Arguments:
-        id = graphene.ID(required=True)
-    
-    success = graphene.Boolean()
-    message = graphene.String()
-    
-    @login_required
-    def mutate(self, info, id):
-        """Delete user mutation."""
+    def delete_user(self, info: Info, id: int) -> MutationResult:
+        """Delete (deactivate) a user."""
         try:
             user = User.objects.get(pk=id)
             
             # Check permissions
-            if info.context.user != user and not info.context.user.is_superuser:
-                return DeleteUser(
-                    success=False, 
+            if info.context.request.user != user and not info.context.request.user.is_superuser:
+                return MutationResult(
+                    success=False,
                     message="Permission denied"
                 )
             
@@ -223,21 +136,28 @@ class DeleteUser(graphene.Mutation):
             user.is_active = False
             user.save()
             
-            return DeleteUser(
-                success=True, 
+            return MutationResult(
+                success=True,
                 message="User deactivated successfully"
             )
         except User.DoesNotExist:
-            return DeleteUser(success=False, message="User not found")
+            return MutationResult(
+                success=False,
+                message="User not found"
+            )
 
 
-class Mutation(graphene.ObjectType):
-    """Root mutation object."""
-    create_user = CreateUser.Field()
-    update_user = UpdateUser.Field()
-    update_profile = UpdateProfile.Field()
-    delete_user = DeleteUser.Field()
+@strawberry.type
+class Mutation(AuthMutations, UserMutations):
+    """Root mutation object combining all mutations."""
+    pass
 
 
-# Create schema
-schema = graphene.Schema(query=Query, mutation=Mutation)
+# Create the schema
+schema = strawberry.Schema(
+    query=Query,
+    mutation=Mutation,
+    extensions=[
+        # Add any Strawberry extensions here
+    ]
+)

@@ -551,15 +551,11 @@ SOCIALACCOUNT_PROVIDERS = {
 {%- endif %}
 
 {% if cookiecutter.use_graphql == 'y' -%}
-# GraphQL Configuration
-GRAPHENE = {
-    'SCHEMA': 'apps.graphql.schema.schema',
-    'MIDDLEWARE': [
-        # Custom JWT middleware can be added here
-    ],
-}
+# Strawberry GraphQL Configuration
+# Strawberry doesn't require special Django settings
+# Schema is configured directly in the views
 
-# Custom JWT settings for GraphQL (using PyJWT directly)
+# Custom JWT settings for GraphQL (using PyJWT)
 GRAPHQL_JWT_SECRET_KEY = SECRET_KEY
 GRAPHQL_JWT_ALGORITHM = 'HS256'
 GRAPHQL_JWT_EXPIRATION_DELTA = 24  # hours

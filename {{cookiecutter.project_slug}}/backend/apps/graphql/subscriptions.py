@@ -1,62 +1,80 @@
-"""GraphQL subscriptions for real-time updates."""
-import graphene
+"""GraphQL subscriptions for real-time updates using Strawberry."""
+import strawberry
+from typing import AsyncGenerator, Optional
+from datetime import datetime
 from apps.graphql.types import UserType
-from apps.graphql.auth import login_required
-from django.contrib.auth import get_user_model
 
-User = get_user_model()
+# Note: Full WebSocket subscriptions require Django Channels setup
+# These are placeholder subscriptions that can be activated when
+# Channels is configured with Strawberry WebSocket support
 
-# Note: Full WebSocket subscriptions require additional setup with Django Channels
-# These are placeholder types that can be extended when channels-graphql-ws
-# becomes compatible with Django 5.x
 
-class UserUpdatePayload(graphene.ObjectType):
+@strawberry.type
+class UserUpdatePayload:
     """Payload for user update subscription."""
-    user = graphene.Field(UserType)
-    event_type = graphene.String()
-    timestamp = graphene.DateTime()
+    user: UserType
+    event_type: str
+    timestamp: datetime
 
 
-class NotificationPayload(graphene.ObjectType):
+@strawberry.type
+class NotificationPayload:
     """Payload for notification subscription."""
-    message = graphene.String()
-    type = graphene.String()
-    data = graphene.JSONString()
-    timestamp = graphene.DateTime()
+    message: str
+    type: str
+    data: Optional[str] = None
+    timestamp: datetime
 
 
-class OnlineUsersPayload(graphene.ObjectType):
+@strawberry.type
+class OnlineUsersPayload:
     """Payload for online users subscription."""
-    online_users = graphene.List(UserType)
-    user_joined = graphene.Field(UserType)
-    user_left = graphene.Field(UserType)
-    count = graphene.Int()
+    online_users: list[UserType]
+    user_joined: Optional[UserType] = None
+    user_left: Optional[UserType] = None
+    count: int
 
 
-class Subscription(graphene.ObjectType):
+@strawberry.type
+class Subscription:
     """
     Root subscription object.
     
-    Note: These subscriptions are defined but require WebSocket setup
-    with Django Channels for real-time functionality.
+    Note: These subscriptions require WebSocket setup with Django Channels.
+    To enable real-time functionality:
+    1. Install channels and channels-redis
+    2. Configure ASGI application
+    3. Set up WebSocket routing
     """
     
-    # Placeholder subscriptions - implement with channels when needed
-    on_user_update = graphene.Field(UserUpdatePayload)
-    on_notification = graphene.Field(NotificationPayload)
-    online_users = graphene.Field(OnlineUsersPayload)
+    @strawberry.subscription
+    async def on_user_update(self, info) -> AsyncGenerator[UserUpdatePayload, None]:
+        """Subscribe to user updates."""
+        # Placeholder implementation
+        # In production, this would connect to Channels
+        yield UserUpdatePayload(
+            user=info.context.request.user,
+            event_type="placeholder",
+            timestamp=datetime.now()
+        )
     
-    def resolve_on_user_update(root, info):
-        """Placeholder resolver for user updates."""
-        # This would be connected to channels in production
-        return None
+    @strawberry.subscription
+    async def on_notification(self, info) -> AsyncGenerator[NotificationPayload, None]:
+        """Subscribe to notifications."""
+        # Placeholder implementation
+        # In production, this would connect to Channels
+        yield NotificationPayload(
+            message="Placeholder notification",
+            type="info",
+            timestamp=datetime.now()
+        )
     
-    def resolve_on_notification(root, info):
-        """Placeholder resolver for notifications."""
-        # This would be connected to channels in production
-        return None
-    
-    def resolve_online_users(root, info):
-        """Placeholder resolver for online users."""
-        # This would be connected to channels in production
-        return None
+    @strawberry.subscription
+    async def online_users(self, info) -> AsyncGenerator[OnlineUsersPayload, None]:
+        """Subscribe to online users updates."""
+        # Placeholder implementation
+        # In production, this would connect to Channels
+        yield OnlineUsersPayload(
+            online_users=[],
+            count=0
+        )

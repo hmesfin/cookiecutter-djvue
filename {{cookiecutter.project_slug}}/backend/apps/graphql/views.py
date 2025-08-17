@@ -1,18 +1,18 @@
-"""GraphQL views."""
+"""GraphQL views using Strawberry."""
+from strawberry.django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
-from graphene_django.views import GraphQLView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-import json
-
-
-class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
-    """GraphQL view that requires authentication."""
-    pass
+from apps.graphql.schema import schema
 
 
 class PublicGraphQLView(GraphQLView):
-    """Public GraphQL view."""
+    """Public GraphQL endpoint with Strawberry."""
+    pass
+
+
+class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
+    """Private GraphQL endpoint requiring authentication."""
     pass
 
 
@@ -50,7 +50,7 @@ def graphql_playground(request):
                         tabs: [
                             {
                                 endpoint: '/graphql/',
-                                query: `# Welcome to GraphQL Playground
+                                query: `# Welcome to GraphQL Playground (Strawberry)
 # 
 # GraphQL Playground is an in-browser tool for writing, validating, and
 # testing GraphQL queries.
@@ -59,26 +59,12 @@ def graphql_playground(request):
 # typeaheads aware of the current GraphQL type schema and live syntax and
 # validation errors highlighted within the text.
 #
-# GraphQL queries typically start with a "{" character. Lines that start
-# with a # are ignored.
-#
-# An example GraphQL query might look like:
-#
-#     {
-#       me {
-#         id
-#         email
-#         username
-#       }
-#     }
-#
 # Keyboard shortcuts:
-#
 #  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
 #     Run Query:  Ctrl-Enter (or press the play button above)
 #   Auto Complete:  Ctrl-Space (or just start typing)
-#
 
+# Get current user
 query GetMe {
   me {
     id
@@ -86,64 +72,89 @@ query GetMe {
     username
     firstName
     lastName
+    isCompleteProfile
+    fullName
   }
 }
 
-query GetAllUsers {
-  allUsers(first: 10) {
-    edges {
-      node {
-        id
-        email
-        username
-      }
-    }
+# Search users
+query SearchUsers {
+  users(search: "john", limit: 10) {
+    id
+    email
+    username
+    fullName
   }
 }
 
+# Login
 mutation Login {
-  tokenAuth(email: "admin@example.com", password: "admin123") {
-    token
-    refreshToken
+  login(input: {
+    email: "admin@example.com"
+    password: "admin123"
+  }) {
     user {
       id
       email
+      username
     }
+    token
+    refreshToken
   }
 }
 
+# Register new user
 mutation Register {
-  register(
+  register(input: {
     email: "newuser@example.com"
     username: "newuser"
     password: "password123"
     firstName: "New"
     lastName: "User"
-  ) {
-    success
-    errors
+  }) {
     user {
       id
       email
     }
     token
+    refreshToken
   }
 }
 
-subscription OnlineUsers {
-  onlineUsers {
-    onlineUsers {
-      id
-      username
-    }
-    userJoined {
-      id
-      username
-    }
-    userLeft {
-      id
-      username
-    }
+# Update profile
+mutation UpdateProfile {
+  updateProfile(input: {
+    firstName: "John"
+    lastName: "Doe"
+    bio: "Software Developer"
+    phoneNumber: "+1234567890"
+  }) {
+    id
+    email
+    firstName
+    lastName
+    bio
+    phoneNumber
+    isCompleteProfile
+  }
+}
+
+# Change password
+mutation ChangePassword {
+  changePassword(
+    oldPassword: "currentpass"
+    newPassword: "newpass123"
+  ) {
+    success
+    message
+  }
+}
+
+# Request password reset
+mutation RequestPasswordReset {
+  requestPasswordReset(email: "user@example.com") {
+    success
+    message
   }
 }`
                             }
@@ -156,3 +167,8 @@ subscription OnlineUsers {
         """
         return HttpResponse(html, content_type='text/html')
     return HttpResponse(status=405)
+
+
+# Create view instances
+public_graphql_view = csrf_exempt(PublicGraphQLView.as_view(schema=schema))
+private_graphql_view = csrf_exempt(PrivateGraphQLView.as_view(schema=schema))

@@ -73,10 +73,8 @@ requests-oauthlib==2.0.*  # Required for OAuth providers
 
 # GraphQL
 {% if cookiecutter.use_graphql == 'y' -%}
-graphene-django==3.2.*
-graphql-core==3.2.*
-PyJWT==2.8.*  # For JWT in GraphQL
+strawberry-graphql[django]==0.279.*
+PyJWT==2.8.*  # For JWT authentication
 django-filter==24.3.*
-# Note: django-graphql-jwt is not compatible with Django 5.x yet
-# Using PyJWT directly for GraphQL JWT authentication
+# Strawberry has better Django 5.x compatibility and active maintenance
 {%- endif %}
