@@ -34,6 +34,18 @@ echo "Redis is ready"
 # Give services a moment to fully initialize
 sleep 2
 
+# Wait for migrations to be complete by checking if django_migrations table exists
+echo "Waiting for migrations to complete..."
+until python manage.py showmigrations --plan | grep -q "\[X\]" 2>/dev/null; do
+  echo "Waiting for migrations..."
+  sleep 2
+done
+
+# Run migrations for django-celery-beat tables specifically
+echo "Ensuring django-celery-beat tables exist..."
+python manage.py migrate django_celery_beat --noinput || true
+python manage.py migrate django_celery_results --noinput || true
+
 # Start Celery Beat
 echo "Starting Celery Beat..."
 exec celery -A config beat \

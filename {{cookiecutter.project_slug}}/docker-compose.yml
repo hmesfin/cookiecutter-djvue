@@ -151,7 +151,13 @@ services:
     depends_on:
       - backend
       - redis
+      {% if cookiecutter.database == 'postgresql' -%}
+      - postgres
+      {% elif cookiecutter.database == 'mysql' -%}
+      - mysql
+      {%- endif %}
     command: /start-worker
+    restart: unless-stopped
 
   celery_beat:
     build:
@@ -180,7 +186,13 @@ services:
     depends_on:
       - backend
       - redis
+      {% if cookiecutter.database == 'postgresql' -%}
+      - postgres
+      {% elif cookiecutter.database == 'mysql' -%}
+      - mysql
+      {%- endif %}
     command: /start-beat
+    restart: unless-stopped
   {%- endif %}
 
 volumes:
