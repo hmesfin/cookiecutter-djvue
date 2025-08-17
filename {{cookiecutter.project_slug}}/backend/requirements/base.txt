@@ -26,6 +26,7 @@ dj-database-url==2.1.*
 # Redis
 redis==5.0.*
 hiredis==2.3.*
+django-redis==5.4.*
 {%- endif %}
 
 {% if cookiecutter.use_celery == 'y' -%}

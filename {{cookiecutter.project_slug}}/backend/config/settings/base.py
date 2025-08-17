@@ -218,6 +218,50 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Cache configuration
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': env('REDIS_URL', default='redis://127.0.0.1:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 50,
+                'retry_on_timeout': True,
+            },
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'SOCKET_TIMEOUT': 5,
+            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
+            'IGNORE_EXCEPTIONS': True,
+        },
+        'KEY_PREFIX': '{{ cookiecutter.project_slug }}',
+        'TIMEOUT': 300,  # Default 5 minutes
+    },
+    'session': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': env('REDIS_URL', default='redis://127.0.0.1:6379/2'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+        'KEY_PREFIX': '{{ cookiecutter.project_slug }}_session',
+    },
+    'static': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'static-cache',
+        'TIMEOUT': 3600,  # 1 hour for static content
+    }
+}
+
+# Session configuration
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'session'
+SESSION_COOKIE_AGE = 86400  # 24 hours
+
+# Cache middleware settings
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 600  # 10 minutes
+CACHE_MIDDLEWARE_KEY_PREFIX = '{{ cookiecutter.project_slug }}_cache'
+
 # REST Framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
