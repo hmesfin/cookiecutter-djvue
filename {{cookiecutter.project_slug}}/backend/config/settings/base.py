@@ -35,6 +35,10 @@ THIRD_PARTY_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     {%- endif %}
+    {% if cookiecutter.api_authentication == 'token' or cookiecutter.use_social_auth == 'y' -%}
+    # Token auth required for dj-rest-auth
+    'rest_framework.authtoken',
+    {%- endif %}
     {% if cookiecutter.use_cors == 'y' -%}
     'corsheaders',
     {%- endif %}
