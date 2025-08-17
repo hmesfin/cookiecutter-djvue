@@ -73,9 +73,9 @@ dj-rest-auth==7.0.*
 # GraphQL
 {% if cookiecutter.use_graphql == 'y' -%}
 graphene-django==3.2.*
-django-graphql-jwt==0.4.*
+graphql-core==3.2.*
+PyJWT==2.8.*  # For JWT in GraphQL
 django-filter==24.3.*
-{% if cookiecutter.use_channels == 'y' -%}
-channels-graphql-ws==1.0.*
-{%- endif %}
+# Note: django-graphql-jwt is not compatible with Django 5.x yet
+# Using PyJWT directly for GraphQL JWT authentication
 {%- endif %}

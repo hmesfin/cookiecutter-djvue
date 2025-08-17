@@ -1,21 +1,69 @@
 """GraphQL authentication schema."""
 import graphene
-import graphql_jwt
-from graphql_jwt.decorators import login_required
-from django.contrib.auth import get_user_model
+import jwt
+from datetime import datetime, timedelta
+from django.conf import settings
+from django.contrib.auth import authenticate, get_user_model
 from apps.graphql.schema import UserType
+from functools import wraps
 
 User = get_user_model()
 
 
-class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
-    """Custom JWT token mutation with user data."""
+def login_required(func):
+    """Decorator to require authentication for GraphQL resolvers."""
+    @wraps(func)
+    def wrapper(root, info, *args, **kwargs):
+        user = info.context.user
+        if not user or not user.is_authenticated:
+            raise Exception("Authentication required")
+        return func(root, info, *args, **kwargs)
+    return wrapper
+
+
+def create_token(user):
+    """Create JWT token for user."""
+    payload = {
+        'user_id': user.id,
+        'email': user.email,
+        'exp': datetime.utcnow() + timedelta(hours=24),
+        'iat': datetime.utcnow()
+    }
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+
+
+def create_refresh_token(user):
+    """Create refresh token for user."""
+    payload = {
+        'user_id': user.id,
+        'type': 'refresh',
+        'exp': datetime.utcnow() + timedelta(days=7),
+        'iat': datetime.utcnow()
+    }
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+
+
+class ObtainJSONWebToken(graphene.Mutation):
+    """JWT token mutation."""
+    class Arguments:
+        email = graphene.String(required=True)
+        password = graphene.String(required=True)
+    
+    token = graphene.String()
+    refresh_token = graphene.String()
     user = graphene.Field(UserType)
     
-    @classmethod
-    def resolve(cls, root, info, **kwargs):
-        """Add user to response."""
-        return cls(user=info.context.user)
+    def mutate(self, info, email, password):
+        """Authenticate and return tokens."""
+        user = authenticate(email=email, password=password)
+        if not user:
+            raise Exception("Invalid credentials")
+        
+        return ObtainJSONWebToken(
+            token=create_token(user),
+            refresh_token=create_refresh_token(user),
+            user=user
+        )
 
 
 class RegisterUser(graphene.Mutation):
@@ -66,9 +114,8 @@ class RegisterUser(graphene.Mutation):
             )
             
             # Generate tokens
-            from graphql_jwt.shortcuts import get_token, get_refresh_token
-            token = get_token(user)
-            refresh_token = get_refresh_token(user)
+            token = create_token(user)
+            refresh_token = create_refresh_token(user)
             
             return RegisterUser(
                 user=user,
@@ -204,12 +251,53 @@ class ResetPassword(graphene.Mutation):
             )
 
 
+class VerifyToken(graphene.Mutation):
+    """Verify JWT token."""
+    class Arguments:
+        token = graphene.String(required=True)
+    
+    valid = graphene.Boolean()
+    user = graphene.Field(UserType)
+    
+    def mutate(self, info, token):
+        """Verify token mutation."""
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            user = User.objects.get(id=payload['user_id'])
+            return VerifyToken(valid=True, user=user)
+        except (jwt.ExpiredSignatureError, jwt.DecodeError, User.DoesNotExist):
+            return VerifyToken(valid=False, user=None)
+
+
+class RefreshToken(graphene.Mutation):
+    """Refresh JWT token."""
+    class Arguments:
+        refresh_token = graphene.String(required=True)
+    
+    token = graphene.String()
+    refresh_token = graphene.String()
+    
+    def mutate(self, info, refresh_token):
+        """Refresh token mutation."""
+        try:
+            payload = jwt.decode(refresh_token, settings.SECRET_KEY, algorithms=['HS256'])
+            if payload.get('type') != 'refresh':
+                raise Exception("Invalid token type")
+            
+            user = User.objects.get(id=payload['user_id'])
+            return RefreshToken(
+                token=create_token(user),
+                refresh_token=create_refresh_token(user)
+            )
+        except (jwt.ExpiredSignatureError, jwt.DecodeError, User.DoesNotExist):
+            raise Exception("Invalid refresh token")
+
+
 class AuthMutation(graphene.ObjectType):
     """Authentication mutations."""
     token_auth = ObtainJSONWebToken.Field()
-    verify_token = graphql_jwt.Verify.Field()
-    refresh_token = graphql_jwt.Refresh.Field()
-    revoke_token = graphql_jwt.Revoke.Field()
+    verify_token = VerifyToken.Field()
+    refresh_token = RefreshToken.Field()
     
     register = RegisterUser.Field()
     change_password = ChangePassword.Field()

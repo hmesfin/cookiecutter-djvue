@@ -16,6 +16,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator
 
 # Import websocket routing after Django setup
+{% if cookiecutter.use_websockets_enhanced == 'y' -%}
 from apps.websockets.routing import websocket_urlpatterns
 from apps.websockets.middleware import JWTAuthMiddleware, WebSocketLoggingMiddleware
 
@@ -29,6 +30,13 @@ application = ProtocolTypeRouter({
         )
     ),
 })
+{% else -%}
+# Basic channels setup without enhanced websockets
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,
+    # Add basic websocket support here if needed
+})
+{%- endif %}
 {% else -%}
 application = django_asgi_app
 {%- endif %}

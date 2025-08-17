@@ -547,24 +547,13 @@ SOCIALACCOUNT_PROVIDERS = {
 GRAPHENE = {
     'SCHEMA': 'apps.graphql.schema.schema',
     'MIDDLEWARE': [
-        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+        # Custom JWT middleware can be added here
     ],
 }
 
-# GraphQL JWT Configuration
-from datetime import timedelta
-
-GRAPHQL_JWT = {
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=15),
-    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
-    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-    'JWT_ALLOW_ANY_CLASSES': [
-        'apps.graphql.auth.ObtainJSONWebToken',
-        'apps.graphql.auth.RegisterUser',
-        'apps.graphql.auth.RequestPasswordReset',
-        'apps.graphql.auth.ResetPassword',
-    ],
-}
+# Custom JWT settings for GraphQL (using PyJWT directly)
+GRAPHQL_JWT_SECRET_KEY = SECRET_KEY
+GRAPHQL_JWT_ALGORITHM = 'HS256'
+GRAPHQL_JWT_EXPIRATION_DELTA = 24  # hours
+GRAPHQL_JWT_REFRESH_EXPIRATION_DELTA = 7  # days
 {%- endif %}
