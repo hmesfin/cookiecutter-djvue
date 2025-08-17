@@ -110,6 +110,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    {% if cookiecutter.use_social_auth == 'y' -%}
+    # Required for django-allauth
+    'allauth.account.middleware.AccountMiddleware',
+    {%- endif %}
     # Custom middleware
     'apps.core.middleware.APIMetricsMiddleware',
     'apps.core.middleware.HealthCheckMiddleware',

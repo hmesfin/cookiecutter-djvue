@@ -68,6 +68,7 @@ sentry-sdk==2.13.*
 {% if cookiecutter.use_social_auth == 'y' -%}
 django-allauth==65.3.*
 dj-rest-auth==7.0.*
+requests-oauthlib==2.0.*  # Required for OAuth providers
 {%- endif %}
 
 # GraphQL
