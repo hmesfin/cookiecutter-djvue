@@ -151,7 +151,7 @@ services:
     depends_on:
       - backend
       - redis
-    command: celery -A {{ cookiecutter.project_slug }} worker -l info
+    command: celery -A config worker -l info
 
   celery_beat:
     build:
@@ -180,7 +180,7 @@ services:
     depends_on:
       - backend
       - redis
-    command: celery -A {{ cookiecutter.project_slug }} beat -l info
+    command: celery -A config beat -l info
   {%- endif %}
 
 volumes:

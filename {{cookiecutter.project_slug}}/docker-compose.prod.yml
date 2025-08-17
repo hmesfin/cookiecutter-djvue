@@ -108,7 +108,7 @@ services:
     depends_on:
       - backend
       - redis
-    command: celery -A {{ cookiecutter.project_slug }} worker -l info
+    command: celery -A config worker -l info
     restart: unless-stopped
 
   celery_beat:
@@ -124,7 +124,7 @@ services:
     depends_on:
       - backend
       - redis
-    command: celery -A {{ cookiecutter.project_slug }} beat -l info
+    command: celery -A config beat -l info
     restart: unless-stopped
   {%- endif %}
 
