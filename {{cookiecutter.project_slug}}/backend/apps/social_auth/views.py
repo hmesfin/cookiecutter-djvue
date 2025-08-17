@@ -21,7 +21,7 @@ from .serializers import SocialAccountSerializer, ConnectSocialAccountSerializer
 class GoogleLogin(SocialLoginView):
     """Google OAuth2 login."""
     adapter_class = GoogleOAuth2Adapter
-    callback_url = "{{ 'https://' if cookiecutter.use_https else 'http://' }}{{ cookiecutter.domain_name }}/auth/google/callback"
+    # Callback URL will be configured in OAuth app settings
     client_class = None  # OAuth2Client can be used if needed
 {% endif %}
 
@@ -29,7 +29,7 @@ class GoogleLogin(SocialLoginView):
 class GitHubLogin(SocialLoginView):
     """GitHub OAuth2 login."""
     adapter_class = GitHubOAuth2Adapter
-    callback_url = "{{ 'https://' if cookiecutter.use_https else 'http://' }}{{ cookiecutter.domain_name }}/auth/github/callback"
+    # Callback URL will be configured in OAuth app settings
     client_class = None
 {% endif %}
 
@@ -37,7 +37,7 @@ class GitHubLogin(SocialLoginView):
 class FacebookLogin(SocialLoginView):
     """Facebook OAuth2 login."""
     adapter_class = FacebookOAuth2Adapter
-    callback_url = "{{ 'https://' if cookiecutter.use_https else 'http://' }}{{ cookiecutter.domain_name }}/auth/facebook/callback"
+    # Callback URL will be configured in OAuth app settings
     client_class = None
 {% endif %}
 
@@ -46,7 +46,7 @@ class TwitterLogin(SocialLoginView):
     """Twitter OAuth login."""
     adapter_class = TwitterOAuthAdapter
     serializer_class = TwitterLoginSerializer
-    callback_url = "{{ 'https://' if cookiecutter.use_https else 'http://' }}{{ cookiecutter.domain_name }}/auth/twitter/callback"
+    # Callback URL will be configured in OAuth app settings
     client_class = None
 {% endif %}
 
