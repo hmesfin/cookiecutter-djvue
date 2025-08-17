@@ -1,6 +1,6 @@
 """GraphQL type definitions using Strawberry."""
 import strawberry
-import strawberry_django
+from strawberry import auto
 from typing import Optional, List
 from datetime import date, datetime
 from django.contrib.auth import get_user_model
@@ -8,22 +8,22 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-@strawberry_django.type(User)
+@strawberry.django.type(User)
 class UserType:
     """User GraphQL type."""
-    id: int
-    email: str
-    username: str
-    first_name: str
-    last_name: str
-    is_active: bool
-    is_verified: bool
-    date_joined: datetime
-    created_at: datetime
-    updated_at: datetime
-    phone_number: Optional[str]
-    bio: Optional[str]
-    date_of_birth: Optional[date]
+    id: auto
+    email: auto
+    username: auto
+    first_name: auto
+    last_name: auto
+    is_active: auto
+    is_verified: auto
+    date_joined: auto
+    created_at: auto
+    updated_at: auto
+    phone_number: auto
+    bio: auto
+    date_of_birth: auto
     
     @strawberry.field
     def is_complete_profile(self) -> bool:

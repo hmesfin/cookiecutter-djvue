@@ -73,6 +73,10 @@ THIRD_PARTY_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     {%- endif %}
+    {% if cookiecutter.use_graphql == 'y' -%}
+    # Strawberry GraphQL
+    'strawberry.django',
+    {%- endif %}
 ]
 
 LOCAL_APPS = [
