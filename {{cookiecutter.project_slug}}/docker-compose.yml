@@ -54,7 +54,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: docker/backend/Dockerfile.dev
+      dockerfile: docker/backend/dev/Dockerfile
     container_name: {{ cookiecutter.project_slug }}_backend
     volumes:
       - ./backend:/app
@@ -100,7 +100,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: docker/frontend/Dockerfile.dev
+      dockerfile: docker/frontend/dev/Dockerfile
     container_name: {{ cookiecutter.project_slug }}_frontend
     volumes:
       - ./frontend:/app
@@ -127,7 +127,7 @@ services:
   celery_worker:
     build:
       context: .
-      dockerfile: docker/backend/Dockerfile.celery
+      dockerfile: docker/backend/celery/Dockerfile
     container_name: {{ cookiecutter.project_slug }}_celery_worker
     volumes:
       - ./backend:/app
@@ -151,12 +151,12 @@ services:
     depends_on:
       - backend
       - redis
-    command: celery -A config worker -l info
+    command: /start-worker
 
   celery_beat:
     build:
       context: .
-      dockerfile: docker/backend/Dockerfile.celery
+      dockerfile: docker/backend/celery/Dockerfile
     container_name: {{ cookiecutter.project_slug }}_celery_beat
     volumes:
       - ./backend:/app
@@ -180,7 +180,7 @@ services:
     depends_on:
       - backend
       - redis
-    command: celery -A config beat -l info
+    command: /start-beat
   {%- endif %}
 
 volumes:

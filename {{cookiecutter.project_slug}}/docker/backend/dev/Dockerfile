@@ -1,5 +1,5 @@
-{% if cookiecutter.use_celery == 'y' -%}
-# Celery Worker/Beat Dockerfile
+{% if cookiecutter.use_docker == 'y' -%}
+# Development Dockerfile for backend
 FROM python:{{ cookiecutter.python_version }}-slim
 
 # Set environment variables
@@ -21,20 +21,29 @@ RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     default-mysql-client \
     {%- endif %}
+    gettext \
     netcat-traditional \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install dependencies
+# This allows Docker to cache the dependency layer
 COPY backend/requirements/ /tmp/requirements/
 RUN pip install --upgrade pip && \
     pip install -r /tmp/requirements/development.txt
 
-# Copy the Celery entrypoint script
-COPY docker/backend/celery-entrypoint.sh /celery-entrypoint.sh
-RUN chmod +x /celery-entrypoint.sh
+# Copy start script
+COPY docker/backend/dev/start /start
+RUN chmod +x /start
 
 # The application code will be mounted as a volume
 
-# Use the entrypoint script
-ENTRYPOINT ["/celery-entrypoint.sh"]
+# Create necessary directories
+RUN mkdir -p /app/staticfiles /app/media
+
+# Expose port
+EXPOSE 8000
+
+# Use start script
+CMD ["/start"]
 {%- endif %}

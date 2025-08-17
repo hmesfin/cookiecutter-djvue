@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+
+# Set Python path to ensure imports work correctly
+export PYTHONPATH=/app:$PYTHONPATH
+
+echo "Waiting for database..."
+
+{% if cookiecutter.database == 'postgresql' -%}
+# Wait for PostgreSQL to be ready
+until PGPASSWORD=${POSTGRES_PASSWORD:-changeme} psql -h ${POSTGRES_HOST:-postgres} -U ${POSTGRES_USER:-{{ cookiecutter.project_slug }}} -d ${POSTGRES_DB:-{{ cookiecutter.project_slug }}} -c '\q' 2>/dev/null; do
+  echo "PostgreSQL is unavailable - sleeping"
+  sleep 1
+done
+echo "PostgreSQL is ready"
+{% elif cookiecutter.database == 'mysql' -%}
+# Wait for MySQL to be ready
+until mysql -h ${MYSQL_HOST:-mysql} -u ${MYSQL_USER:-{{ cookiecutter.project_slug }}} -p${MYSQL_PASSWORD:-changeme} -e "SELECT 1" &>/dev/null; do
+  echo "MySQL is unavailable - sleeping"
+  sleep 1
+done
+echo "MySQL is ready"
+{%- endif %}
+
+{% if cookiecutter.use_redis == 'y' -%}
+echo "Waiting for Redis..."
+until nc -z ${REDIS_HOST:-redis} ${REDIS_PORT:-6379}; do
+  echo "Redis is unavailable - sleeping"
+  sleep 1
+done
+echo "Redis is ready"
+{%- endif %}
+
+# Give services a moment to fully initialize
+sleep 2
+
+# Start Celery Worker
+echo "Starting Celery Worker..."
+exec celery -A config worker \
+    --loglevel=${CELERY_LOG_LEVEL:-info} \
+    --concurrency=${CELERY_CONCURRENCY:-4} \
+    --hostname=worker@%h \
+    --queues=${CELERY_QUEUES:-celery}

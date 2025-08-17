@@ -1,0 +1,48 @@
+#!/bin/bash
+set -e
+
+# Set Python path to ensure imports work correctly
+export PYTHONPATH=/app:$PYTHONPATH
+
+echo "Waiting for database..."
+
+{% if cookiecutter.database == 'postgresql' -%}
+# Wait for PostgreSQL to be ready
+while ! nc -z $POSTGRES_HOST $POSTGRES_PORT; do
+  echo "PostgreSQL is unavailable - sleeping"
+  sleep 1
+done
+echo "PostgreSQL is ready"
+{% elif cookiecutter.database == 'mysql' -%}
+# Wait for MySQL to be ready
+while ! nc -z $MYSQL_HOST $MYSQL_PORT; do
+  echo "MySQL is unavailable - sleeping"
+  sleep 1
+done
+echo "MySQL is ready"
+{%- endif %}
+
+# Give the database a moment to fully initialize
+sleep 2
+
+# Run migrations
+echo "Running database migrations..."
+python manage.py migrate --noinput
+
+# Collect static files
+echo "Collecting static files..."
+python manage.py collectstatic --noinput --clear
+
+# Start Gunicorn
+echo "Starting Gunicorn..."
+exec gunicorn config.wsgi:application \
+    --bind 0.0.0.0:8000 \
+    --workers ${GUNICORN_WORKERS:-4} \
+    --threads ${GUNICORN_THREADS:-2} \
+    --worker-class ${GUNICORN_WORKER_CLASS:-sync} \
+    --worker-tmp-dir /dev/shm \
+    --log-level ${GUNICORN_LOG_LEVEL:-info} \
+    --access-logfile - \
+    --error-logfile - \
+    --timeout ${GUNICORN_TIMEOUT:-60} \
+    --graceful-timeout ${GUNICORN_GRACEFUL_TIMEOUT:-30}

@@ -1,4 +1,5 @@
-{% if cookiecutter.use_docker == 'y' -%}
+{% if cookiecutter.use_celery == 'y' -%}
+# Celery Worker/Beat Dockerfile
 FROM python:{{ cookiecutter.python_version }}-slim
 
 # Set environment variables
@@ -20,32 +21,21 @@ RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     default-mysql-client \
     {%- endif %}
-    gettext \
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Copy requirements and install dependencies
 COPY backend/requirements/ /tmp/requirements/
 RUN pip install --upgrade pip && \
-    pip install -r /tmp/requirements/production.txt
+    pip install -r /tmp/requirements/development.txt
 
-# Copy project
-COPY backend/ /app/
+# Copy start scripts
+COPY docker/backend/celery/start-worker /start-worker
+COPY docker/backend/celery/start-beat /start-beat
+RUN chmod +x /start-worker /start-beat
 
-# Copy entrypoint script
-COPY docker/backend/docker-entrypoint.sh /docker-entrypoint.sh
+# The application code will be mounted as a volume
 
-# Create necessary directories and set permissions
-RUN mkdir -p /app/staticfiles /app/media && \
-    chmod +x /docker-entrypoint.sh
-
-# Run as non-root user
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
-USER appuser
-
-# Expose port
-EXPOSE 8000
-
-# Use entrypoint script
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# Default to worker, can be overridden
+CMD ["/start-worker"]
 {%- endif %}

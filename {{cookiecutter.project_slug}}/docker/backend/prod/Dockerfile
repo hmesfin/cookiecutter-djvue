@@ -1,5 +1,4 @@
 {% if cookiecutter.use_docker == 'y' -%}
-# Development Dockerfile for backend
 FROM python:{{ cookiecutter.python_version }}-slim
 
 # Set environment variables
@@ -23,27 +22,30 @@ RUN apt-get update && apt-get install -y \
     {%- endif %}
     gettext \
     netcat-traditional \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install dependencies
-# This allows Docker to cache the dependency layer
+# Install Python dependencies
 COPY backend/requirements/ /tmp/requirements/
 RUN pip install --upgrade pip && \
-    pip install -r /tmp/requirements/development.txt
+    pip install -r /tmp/requirements/production.txt
 
-# Copy entrypoint script
-COPY docker/backend/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+# Copy project
+COPY backend/ /app/
 
-# The application code will be mounted as a volume
+# Copy start script
+COPY docker/backend/prod/start /start
 
-# Create necessary directories
-RUN mkdir -p /app/staticfiles /app/media
+# Create necessary directories and set permissions
+RUN mkdir -p /app/staticfiles /app/media && \
+    chmod +x /start
+
+# Run as non-root user
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
 
 # Expose port
 EXPOSE 8000
 
-# Use entrypoint script
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# Use start script
+CMD ["/start"]
 {%- endif %}
