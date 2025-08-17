@@ -78,6 +78,10 @@ LOCAL_APPS = [
     {% if cookiecutter.use_social_auth == 'y' -%}
     'apps.social_auth',
     {%- endif %}
+    {% if cookiecutter.use_redis == 'y' -%}
+    'apps.cache',
+    'apps.emails',
+    {%- endif %}
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -221,42 +225,69 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Cache configuration
+{% if cookiecutter.use_redis == 'y' -%}
+# Redis cache configuration
+USE_REDIS_CACHE = config('USE_REDIS_CACHE', default=True, cast=bool)
+
+if USE_REDIS_CACHE:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/1'),
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'CONNECTION_POOL_KWARGS': {
+                    'max_connections': 50,
+                    'retry_on_timeout': True,
+                },
+                'SOCKET_CONNECT_TIMEOUT': 5,
+                'SOCKET_TIMEOUT': 5,
+                'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
+                'IGNORE_EXCEPTIONS': True,
+            },
+            'KEY_PREFIX': '{{ cookiecutter.project_slug }}',
+            'TIMEOUT': 300,  # Default 5 minutes
+        },
+        'session': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/2'),
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'IGNORE_EXCEPTIONS': True,
+            },
+            'KEY_PREFIX': '{{ cookiecutter.project_slug }}_session',
+        },
+        'static': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'static-cache',
+            'TIMEOUT': 3600,  # 1 hour for static content
+        }
+    }
+    # Session configuration for Redis
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+    SESSION_CACHE_ALIAS = 'session'
+else:
+    # Fallback to local memory cache
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+    # Session configuration for database
+    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+{% else -%}
+# Local memory cache configuration (no Redis)
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/1'),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'CONNECTION_POOL_KWARGS': {
-                'max_connections': 50,
-                'retry_on_timeout': True,
-            },
-            'SOCKET_CONNECT_TIMEOUT': 5,
-            'SOCKET_TIMEOUT': 5,
-            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
-            'IGNORE_EXCEPTIONS': True,
-        },
-        'KEY_PREFIX': '{{ cookiecutter.project_slug }}',
-        'TIMEOUT': 300,  # Default 5 minutes
-    },
-    'session': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/2'),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        },
-        'KEY_PREFIX': '{{ cookiecutter.project_slug }}_session',
-    },
-    'static': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'static-cache',
-        'TIMEOUT': 3600,  # 1 hour for static content
+        'LOCATION': 'unique-snowflake',
     }
 }
+# Session configuration for database
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+{%- endif %}
 
-# Session configuration
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'session'
 SESSION_COOKIE_AGE = 86400  # 24 hours
 
 # Cache middleware settings

@@ -65,6 +65,18 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Logging
 LOGGING['loggers']['django']['level'] = 'DEBUG'
 
+# Simple cache configuration for development
+# Override the base settings if Redis is not available
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
+# Use database sessions in development for simplicity
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 # Allow all origins in development (be careful!)
 {% if cookiecutter.use_cors == 'y' -%}
 # Uncomment for very permissive CORS in development
