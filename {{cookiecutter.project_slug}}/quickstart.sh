@@ -133,7 +133,7 @@ check_requirements() {
     fi
     
     # Report missing dependencies
-    if [ ${#missing_deps[@]} -gt 0 ]; then
+    if [ ${{'#'}}missing_deps[@]} -gt 0 ]; then
         print_error "Missing required dependencies: ${missing_deps[*]}"
         echo ""
         echo "Please install the missing dependencies and run this script again."
