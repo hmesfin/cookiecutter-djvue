@@ -1,0 +1,379 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  release:
+    types: [created]
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+  {% if cookiecutter.database == 'postgresql' -%}
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: test_db
+  {% elif cookiecutter.database == 'mysql' -%}
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_DATABASE: test_db
+  MYSQL_USER: test_user
+  MYSQL_PASSWORD: test_pass
+  {%- endif %}
+
+jobs:
+  # =============================================================================
+  # Backend Testing
+  # =============================================================================
+  backend-test:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    
+    {% if cookiecutter.database == 'postgresql' -%}
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: {% raw %}${{ env.POSTGRES_USER }}{% endraw %}
+          POSTGRES_PASSWORD: {% raw %}${{ env.POSTGRES_PASSWORD }}{% endraw %}
+          POSTGRES_DB: {% raw %}${{ env.POSTGRES_DB }}{% endraw %}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    {% elif cookiecutter.database == 'mysql' -%}
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: {% raw %}${{ env.MYSQL_ROOT_PASSWORD }}{% endraw %}
+          MYSQL_DATABASE: {% raw %}${{ env.MYSQL_DATABASE }}{% endraw %}
+          MYSQL_USER: {% raw %}${{ env.MYSQL_USER }}{% endraw %}
+          MYSQL_PASSWORD: {% raw %}${{ env.MYSQL_PASSWORD }}{% endraw %}
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+    {%- endif %}
+    
+    {% if cookiecutter.use_redis == 'y' -%}
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    {%- endif %}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: {% raw %}${{ env.PYTHON_VERSION }}{% endraw %}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements/testing.txt
+
+      - name: Run linting
+        run: |
+          cd backend
+          black --check .
+          isort --check-only .
+          flake8 .
+
+      - name: Run type checking
+        run: |
+          cd backend
+          mypy apps/
+
+      - name: Run security checks
+        run: |
+          cd backend
+          bandit -r apps/
+
+      - name: Run tests with coverage
+        env:
+          {% if cookiecutter.database == 'postgresql' -%}
+          DATABASE_URL: postgres://{% raw %}${{ env.POSTGRES_USER }}{% endraw %}:{% raw %}${{ env.POSTGRES_PASSWORD }}{% endraw %}@localhost:5432/{% raw %}${{ env.POSTGRES_DB }}{% endraw %}
+          {% elif cookiecutter.database == 'mysql' -%}
+          DATABASE_URL: mysql://{% raw %}${{ env.MYSQL_USER }}{% endraw %}:{% raw %}${{ env.MYSQL_PASSWORD }}{% endraw %}@localhost:3306/{% raw %}${{ env.MYSQL_DATABASE }}{% endraw %}
+          {%- endif %}
+          {% if cookiecutter.use_redis == 'y' -%}
+          REDIS_URL: redis://localhost:6379/0
+          {%- endif %}
+          SECRET_KEY: test-secret-key-for-ci
+          DEBUG: False
+        run: |
+          cd backend
+          pytest --cov=apps --cov-report=xml --cov-report=html
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./backend/coverage.xml
+          flags: backend
+          name: backend-coverage
+
+  # =============================================================================
+  # Frontend Testing
+  # =============================================================================
+  frontend-test:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: {% raw %}${{ env.NODE_VERSION }}{% endraw %}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run linting
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Run type checking
+        run: |
+          cd frontend
+          npm run type-check
+
+      - name: Run unit tests
+        run: |
+          cd frontend
+          npm run test:unit -- --coverage
+
+      - name: Build application
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./frontend/coverage/coverage-final.json
+          flags: frontend
+          name: frontend-coverage
+
+  # =============================================================================
+  # E2E Testing
+  # =============================================================================
+  e2e-test:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [backend-test, frontend-test]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: {% raw %}${{ env.NODE_VERSION }}{% endraw %}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: {% raw %}${{ env.PYTHON_VERSION }}{% endraw %}
+
+      - name: Start services with Docker Compose
+        run: |
+          docker-compose up -d
+          sleep 10
+
+      - name: Run E2E tests
+        run: |
+          cd frontend
+          npm ci
+          npm run test:e2e
+
+      - name: Upload E2E test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-screenshots
+          path: frontend/tests/e2e/screenshots
+
+      - name: Stop services
+        if: always()
+        run: docker-compose down
+
+  # =============================================================================
+  # Security Scanning
+  # =============================================================================
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: {% raw %}${{ secrets.SNYK_TOKEN }}{% endraw %}
+        with:
+          args: --severity-threshold=high
+
+  # =============================================================================
+  # Docker Build
+  # =============================================================================
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [backend-test, frontend-test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}
+          password: {% raw %}${{ secrets.DOCKER_PASSWORD }}{% endraw %}
+
+      - name: Build and push Backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./docker/backend/Dockerfile
+          push: true
+          tags: |
+            {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}/{{ cookiecutter.project_slug }}-backend:latest
+            {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}/{{ cookiecutter.project_slug }}-backend:{% raw %}${{ github.sha }}{% endraw %}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./docker/frontend/Dockerfile
+          push: true
+          tags: |
+            {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}/{{ cookiecutter.project_slug }}-frontend:latest
+            {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}/{{ cookiecutter.project_slug }}-frontend:{% raw %}${{ github.sha }}{% endraw %}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # =============================================================================
+  # Deploy to Staging
+  # =============================================================================
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [docker-build, e2e-test, security-scan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: staging
+      url: https://staging.{{ cookiecutter.domain_name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to staging server
+        run: |
+          echo "Deploying to staging..."
+          # Add your deployment script here
+          # Example: SSH to server and pull latest images
+          # ssh user@staging-server 'cd /app && docker-compose pull && docker-compose up -d'
+
+  # =============================================================================
+  # Deploy to Production
+  # =============================================================================
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [deploy-staging]
+    if: github.event_name == 'release'
+    environment:
+      name: production
+      url: https://{{ cookiecutter.domain_name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to production server
+        run: |
+          echo "Deploying to production..."
+          # Add your production deployment script here
+          # Example: SSH to server and pull latest images
+          # ssh user@prod-server 'cd /app && docker-compose pull && docker-compose up -d'
+
+      - name: Run smoke tests
+        run: |
+          echo "Running smoke tests..."
+          # Add smoke test scripts
+
+      - name: Notify deployment
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: {% raw %}${{ job.status }}{% endraw %}
+          text: 'Production deployment {% raw %}${{ job.status }}{% endraw %} for version {% raw %}${{ github.event.release.tag_name }}{% endraw %}'
+          webhook_url: {% raw %}${{ secrets.SLACK_WEBHOOK }}{% endraw %}
+
+  # =============================================================================
+  # Code Quality
+  # =============================================================================
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+          SONAR_TOKEN: {% raw %}${{ secrets.SONAR_TOKEN }}{% endraw %}
+
+      - name: Check code complexity
+        run: |
+          pip install radon
+          radon cc backend -s -nb
+
+      - name: Check maintainability index
+        run: |
+          radon mi backend -s
