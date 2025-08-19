@@ -9,17 +9,19 @@
     :target="target"
     @click="handleClick"
   >
-    <span v-if="loading" class="btn-loader">
-      <BaseSpinner :size="size" :color="spinnerColor" />
+    <BaseSpinner 
+      v-if="loading" 
+      :size="size === 'sm' || size === 'xs' ? 'sm' : 'md'"
+      class="mr-2"
+    />
+    <span v-if="icon && iconPosition === 'left'" class="mr-2">
+      <component :is="icon" :class="iconClasses" />
     </span>
-    <span v-if="icon && iconPosition === 'left'" class="btn-icon btn-icon-left">
-      <component :is="icon" :size="iconSize" />
-    </span>
-    <span class="btn-content">
+    <span>
       <slot />
     </span>
-    <span v-if="icon && iconPosition === 'right'" class="btn-icon btn-icon-right">
-      <component :is="icon" :size="iconSize" />
+    <span v-if="icon && iconPosition === 'right'" class="ml-2">
+      <component :is="icon" :class="iconClasses" />
     </span>
   </component>
 </template>
@@ -30,7 +32,7 @@ import { RouterLink } from 'vue-router'
 import BaseSpinner from './BaseSpinner.vue'
 
 {% if cookiecutter.use_typescript == 'y' -%}
-type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'ghost' | 'link'
+type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost' | 'link'
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 type ButtonType = 'button' | 'submit' | 'reset'
 type IconPosition = 'left' | 'right'
@@ -57,7 +59,7 @@ const props = defineProps({
     type: String{% if cookiecutter.use_typescript == 'y' %} as PropType<ButtonVariant>{% endif %},
     default: 'primary',
     validator: (value{% if cookiecutter.use_typescript == 'y' %}: string{% endif %}) =>
-      ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'ghost', 'link'].includes(value)
+      ['primary', 'secondary', 'danger', 'ghost', 'link'].includes(value)
   },
   size: {
     type: String{% if cookiecutter.use_typescript == 'y' %} as PropType<ButtonSize>{% endif %},
@@ -123,31 +125,184 @@ const componentType = computed(() => {
 })
 
 const buttonClasses = computed(() => {
-  const classes = ['btn', `btn-${props.variant}`, `btn-${props.size}`]
+  const classes = [
+    'inline-flex',
+    'items-center',
+    'justify-center',
+    'font-medium',
+    'transition-all',
+    'duration-200',
+    'focus:outline-none',
+    'focus:ring-2',
+    'focus:ring-offset-2',
+    'disabled:opacity-50',
+    'disabled:cursor-not-allowed'
+  ]
   
-  if (props.block) classes.push('btn-block')
-  if (props.rounded) classes.push('btn-rounded')
-  if (props.outlined) classes.push('btn-outlined')
-  if (props.loading) classes.push('btn-loading')
-  if (props.disabled) classes.push('btn-disabled')
+  // Size classes
+  const sizeClasses = {
+    xs: ['px-2', 'py-1', 'text-xs'],
+    sm: ['px-3', 'py-1.5', 'text-sm'],
+    md: ['px-4', 'py-2', 'text-base'],
+    lg: ['px-6', 'py-3', 'text-lg'],
+    xl: ['px-8', 'py-4', 'text-xl']
+  }
+  classes.push(...sizeClasses[props.size])
+  
+  // Rounded
+  if (props.rounded) {
+    classes.push('rounded-full')
+  } else {
+    classes.push('rounded-lg')
+  }
+  
+  // Block
+  if (props.block) {
+    classes.push('w-full')
+  }
+  
+  // Variant classes
+  if (props.outlined) {
+    // Outlined variants
+    const outlinedVariants = {
+      primary: [
+        'bg-transparent',
+        'text-emerald-600',
+        'border-2',
+        'border-emerald-600',
+        'hover:bg-emerald-600',
+        'hover:text-white',
+        'focus:ring-emerald-500',
+        'dark:text-emerald-400',
+        'dark:border-emerald-400',
+        'dark:hover:bg-emerald-500',
+        'dark:focus:ring-emerald-400'
+      ],
+      secondary: [
+        'bg-transparent',
+        'text-gray-700',
+        'border-2',
+        'border-gray-300',
+        'hover:bg-gray-100',
+        'focus:ring-gray-500',
+        'dark:text-gray-300',
+        'dark:border-gray-600',
+        'dark:hover:bg-gray-800',
+        'dark:focus:ring-gray-400'
+      ],
+      danger: [
+        'bg-transparent',
+        'text-red-600',
+        'border-2',
+        'border-red-600',
+        'hover:bg-red-600',
+        'hover:text-white',
+        'focus:ring-red-500',
+        'dark:text-red-400',
+        'dark:border-red-400',
+        'dark:hover:bg-red-500',
+        'dark:focus:ring-red-400'
+      ],
+      ghost: [
+        'bg-transparent',
+        'text-gray-600',
+        'border-2',
+        'border-transparent',
+        'hover:bg-gray-100',
+        'focus:ring-gray-500',
+        'dark:text-gray-400',
+        'dark:hover:bg-gray-800',
+        'dark:focus:ring-gray-400'
+      ],
+      link: [
+        'bg-transparent',
+        'text-emerald-600',
+        'border-transparent',
+        'hover:text-emerald-700',
+        'underline',
+        'focus:ring-emerald-500',
+        'dark:text-emerald-400',
+        'dark:hover:text-emerald-300',
+        'dark:focus:ring-emerald-400'
+      ]
+    }
+    classes.push(...(outlinedVariants[props.variant] || outlinedVariants.primary))
+  } else {
+    // Solid variants
+    const solidVariants = {
+      primary: [
+        'bg-emerald-600',
+        'text-white',
+        'hover:bg-emerald-700',
+        'focus:ring-emerald-500',
+        'dark:bg-emerald-500',
+        'dark:hover:bg-emerald-600',
+        'dark:focus:ring-emerald-400'
+      ],
+      secondary: [
+        'bg-gray-100',
+        'text-gray-700',
+        'hover:bg-gray-200',
+        'focus:ring-gray-500',
+        'dark:bg-gray-700',
+        'dark:text-gray-200',
+        'dark:hover:bg-gray-600',
+        'dark:focus:ring-gray-400'
+      ],
+      danger: [
+        'bg-red-600',
+        'text-white',
+        'hover:bg-red-700',
+        'focus:ring-red-500',
+        'dark:bg-red-500',
+        'dark:hover:bg-red-600',
+        'dark:focus:ring-red-400'
+      ],
+      ghost: [
+        'bg-transparent',
+        'text-gray-600',
+        'hover:text-gray-900',
+        'hover:bg-gray-100',
+        'focus:ring-gray-500',
+        'dark:text-gray-400',
+        'dark:hover:text-gray-100',
+        'dark:hover:bg-gray-800',
+        'dark:focus:ring-gray-400'
+      ],
+      link: [
+        'bg-transparent',
+        'text-emerald-600',
+        'hover:text-emerald-700',
+        'underline',
+        'focus:ring-emerald-500',
+        'dark:text-emerald-400',
+        'dark:hover:text-emerald-300',
+        'dark:focus:ring-emerald-400'
+      ]
+    }
+    classes.push(...(solidVariants[props.variant] || solidVariants.primary))
+  }
+  
+  // Loading state
+  if (props.loading) {
+    classes.push('cursor-wait')
+  }
+  
+  // Focus offset for dark mode
+  classes.push('dark:focus:ring-offset-gray-900')
   
   return classes
 })
 
-const iconSize = computed(() => {
+const iconClasses = computed(() => {
   const sizes = {
-    xs: 14,
-    sm: 16,
-    md: 18,
-    lg: 20,
-    xl: 24
+    xs: 'w-3 h-3',
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5',
+    lg: 'w-6 h-6',
+    xl: 'w-7 h-7'
   }
-  return sizes[props.size] || 18
-})
-
-const spinnerColor = computed(() => {
-  const darkVariants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark']
-  return darkVariants.includes(props.variant) ? 'white' : 'currentColor'
+  return sizes[props.size] || sizes.md
 })
 
 const handleClick = (event{% if cookiecutter.use_typescript == 'y' %}: MouseEvent{% endif %}) => {
@@ -157,115 +312,6 @@ const handleClick = (event{% if cookiecutter.use_typescript == 'y' %}: MouseEven
 }
 </script>
 
-<style scoped>
 {% if cookiecutter.css_framework == 'tailwind' -%}
-/* Tailwind CSS classes are used inline */
-.btn {
-  @apply inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-}
-
-/* Size variants */
-.btn-xs { @apply px-2 py-1 text-xs; }
-.btn-sm { @apply px-3 py-1.5 text-sm; }
-.btn-md { @apply px-4 py-2 text-base; }
-.btn-lg { @apply px-6 py-3 text-lg; }
-.btn-xl { @apply px-8 py-4 text-xl; }
-
-/* Color variants */
-.btn-primary { @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500; }
-.btn-secondary { @apply bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500; }
-.btn-success { @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500; }
-.btn-danger { @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500; }
-.btn-warning { @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500; }
-.btn-info { @apply bg-cyan-500 text-white hover:bg-cyan-600 focus:ring-cyan-500; }
-.btn-light { @apply bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-300; }
-.btn-dark { @apply bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-700; }
-.btn-ghost { @apply bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-300; }
-.btn-link { @apply bg-transparent text-blue-600 hover:text-blue-700 underline focus:ring-blue-500; }
-
-/* Outlined variants */
-.btn-outlined.btn-primary { @apply bg-transparent text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white; }
-.btn-outlined.btn-secondary { @apply bg-transparent text-gray-600 border-2 border-gray-600 hover:bg-gray-600 hover:text-white; }
-.btn-outlined.btn-success { @apply bg-transparent text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white; }
-.btn-outlined.btn-danger { @apply bg-transparent text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white; }
-
-/* States */
-.btn-block { @apply w-full; }
-.btn-rounded { @apply rounded-full; }
-.btn-disabled { @apply opacity-50 cursor-not-allowed; }
-.btn-loading { @apply cursor-wait; }
-
-/* Icon spacing */
-.btn-icon-left { @apply mr-2; }
-.btn-icon-right { @apply ml-2; }
-
-/* Loader */
-.btn-loader { @apply mr-2; }
-{% else -%}
-/* Custom CSS implementation */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  outline: none;
-  position: relative;
-}
-
-.btn:focus {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-}
-
-/* Size variants */
-.btn-xs { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
-.btn-sm { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
-.btn-md { padding: 0.5rem 1rem; font-size: 1rem; }
-.btn-lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
-.btn-xl { padding: 1rem 2rem; font-size: 1.25rem; }
-
-/* Color variants */
-.btn-primary { background-color: #3b82f6; color: white; }
-.btn-primary:hover { background-color: #2563eb; }
-.btn-secondary { background-color: #6b7280; color: white; }
-.btn-secondary:hover { background-color: #4b5563; }
-.btn-success { background-color: #10b981; color: white; }
-.btn-success:hover { background-color: #059669; }
-.btn-danger { background-color: #ef4444; color: white; }
-.btn-danger:hover { background-color: #dc2626; }
-.btn-warning { background-color: #f59e0b; color: white; }
-.btn-warning:hover { background-color: #d97706; }
-.btn-info { background-color: #06b6d4; color: white; }
-.btn-info:hover { background-color: #0891b2; }
-.btn-light { background-color: #f3f4f6; color: #1f2937; }
-.btn-light:hover { background-color: #e5e7eb; }
-.btn-dark { background-color: #1f2937; color: white; }
-.btn-dark:hover { background-color: #111827; }
-.btn-ghost { background-color: transparent; color: #4b5563; }
-.btn-ghost:hover { background-color: #f3f4f6; }
-.btn-link { background-color: transparent; color: #3b82f6; text-decoration: underline; }
-.btn-link:hover { color: #2563eb; }
-
-/* Outlined variants */
-.btn-outlined { background-color: transparent; border: 2px solid; }
-.btn-outlined.btn-primary { color: #3b82f6; border-color: #3b82f6; }
-.btn-outlined.btn-primary:hover { background-color: #3b82f6; color: white; }
-
-/* States */
-.btn-block { width: 100%; }
-.btn-rounded { border-radius: 9999px; }
-.btn-disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-loading { cursor: wait; }
-
-/* Icon spacing */
-.btn-icon { display: inline-flex; align-items: center; }
-.btn-icon-left { margin-right: 0.5rem; }
-.btn-icon-right { margin-left: 0.5rem; }
-
-/* Loader */
-.btn-loader { margin-right: 0.5rem; display: inline-flex; }
+<!-- Using only Tailwind utility classes, no custom CSS needed -->
 {%- endif %}
-</style>
