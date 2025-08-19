@@ -1,7 +1,7 @@
 <template>
   <BaseModal
     v-model="isOpen"
-    :title="title"
+    :modal-title="title"
     :show-footer="true"
     :cancel-text="cancelText"
     :confirm-text="confirmText"

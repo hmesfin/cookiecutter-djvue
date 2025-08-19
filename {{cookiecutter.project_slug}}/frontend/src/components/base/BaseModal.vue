@@ -5,7 +5,7 @@
         <div class="modal-container" :class="modalClasses" @click.stop>
           <div v-if="showHeader" class="modal-header">
             <slot name="header">
-              <h2 v-if="title" class="modal-title">{{ title }}</h2>
+              <h2 v-if="modalTitle" class="modal-title">{{ modalTitle }}</h2>
             </slot>
             <button
               v-if="closable"
@@ -58,7 +58,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' 
 
 interface Props {
   modelValue?: boolean
-  title?: string
+  modalTitle?: string
   size?: ModalSize
   closable?: boolean
   closeOnOverlay?: boolean
@@ -81,7 +81,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  title: {
+  modalTitle: {
     type: String,
     default: null
   },

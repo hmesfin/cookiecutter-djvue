@@ -11,9 +11,9 @@
       </slot>
     </div>
     
-    <div v-if="header || title || $slots.header" class="card-header">
+    <div v-if="header || cardTitle || $slots.header" class="card-header">
       <slot name="header">
-        <h3 v-if="title" class="card-title">{{ title }}</h3>
+        <h3 v-if="cardTitle" class="card-title">{{ cardTitle }}</h3>
         <p v-if="subtitle" class="card-subtitle">{{ subtitle }}</p>
       </slot>
     </div>
@@ -36,7 +36,7 @@ type CardVariant = 'default' | 'bordered' | 'elevated' | 'flat'
 type CardPadding = 'none' | 'sm' | 'md' | 'lg'
 
 interface Props {
-  title?: string
+  cardTitle?: string
   subtitle?: string
   image?: string
   imageAlt?: string
@@ -50,7 +50,7 @@ interface Props {
 {%- endif %}
 
 const props = defineProps({
-  title: {
+  cardTitle: {
     type: String,
     default: null
   },
