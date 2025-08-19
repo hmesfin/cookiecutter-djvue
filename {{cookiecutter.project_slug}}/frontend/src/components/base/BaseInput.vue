@@ -59,7 +59,7 @@
 </template>
 
 <script setup {% if cookiecutter.use_typescript == 'y' %}lang="ts"{% endif %}>
-import { ref, computed, watch, onMounted{% if cookiecutter.use_typescript == 'y' %}, type PropType{% endif %} } from 'vue'
+import { ref, computed, watch, onMounted, useSlots{% if cookiecutter.use_typescript == 'y' %}, type PropType{% endif %} } from 'vue'
 import BaseSpinner from './BaseSpinner.vue'
 
 {% if cookiecutter.use_typescript == 'y' -%}
@@ -194,6 +194,7 @@ const emit = defineEmits<{
   clear: []
 }>()
 
+const slots = useSlots()
 const inputRef = ref<HTMLInputElement>()
 const inputValue = ref(props.modelValue)
 const inputId = computed(() => props.name || `input-${Math.random().toString(36).substr(2, 9)}`)
@@ -224,10 +225,10 @@ const inputClasses = computed(() => {
   ]
   
   // Add padding for prefix/suffix
-  if (props.prefix || props.$slots.prefix) {
+  if (props.prefix || slots.prefix) {
     classes.push('pl-10')
   }
-  if (props.suffix || props.$slots.suffix || props.clearable || props.loading) {
+  if (props.suffix || slots.suffix || props.clearable || props.loading) {
     classes.push('pr-10')
   }
   
