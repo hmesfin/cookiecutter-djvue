@@ -5,7 +5,7 @@
         <div class="modal-container" :class="modalClasses" @click.stop>
           <div v-if="showHeader" class="modal-header">
             <slot name="header">
-              <h2 v-if="modalTitle" class="modal-title">{{ modalTitle }}</h2>
+              <h2 v-if="modalTitle" class="modal-title">{% raw %}{{ modalTitle }}{% endraw %}</h2>
             </slot>
             <button
               v-if="closable"
@@ -30,7 +30,7 @@
                 variant="ghost"
                 @click="cancel"
               >
-                {{ cancelText }}
+                {% raw %}{{ cancelText }}{% endraw %}
               </BaseButton>
               <BaseButton
                 v-if="showConfirm"
@@ -38,7 +38,7 @@
                 :loading="loading"
                 @click="confirm"
               >
-                {{ confirmText }}
+                {% raw %}{{ confirmText }}{% endraw %}
               </BaseButton>
             </slot>
           </div>

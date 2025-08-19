@@ -13,8 +13,8 @@
     
     <div v-if="header || cardTitle || $slots.header" class="card-header">
       <slot name="header">
-        <h3 v-if="cardTitle" class="card-title">{{ cardTitle }}</h3>
-        <p v-if="subtitle" class="card-subtitle">{{ subtitle }}</p>
+        <h3 v-if="cardTitle" class="card-title">{% raw %}{{ cardTitle }}{% endraw %}</h3>
+        <p v-if="subtitle" class="card-subtitle">{% raw %}{{ subtitle }}{% endraw %}</p>
       </slot>
     </div>
     

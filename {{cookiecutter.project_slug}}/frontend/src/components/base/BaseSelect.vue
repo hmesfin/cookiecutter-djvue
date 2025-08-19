@@ -1,7 +1,7 @@
 <template>
   <div class="select-wrapper" :class="wrapperClasses">
     <label v-if="label" :for="selectId" class="select-label">
-      {{ label }}
+      {% raw %}{{ label }}{% endraw %}
       <span v-if="required" class="select-required">*</span>
     </label>
     
@@ -21,7 +21,7 @@
         @focus="handleFocus"
       >
         <option v-if="placeholder && !multiple" :value="null" disabled>
-          {{ placeholder }}
+          {% raw %}{{ placeholder }}{% endraw %}
         </option>
         <option
           v-for="option in normalizedOptions"
@@ -29,7 +29,7 @@
           :value="option.value"
           :disabled="option.disabled"
         >
-          {{ option.label }}
+          {% raw %}{{ option.label }}{% endraw %}
         </option>
       </select>
       
@@ -41,8 +41,8 @@
     </div>
     
     <div v-if="hint || error" class="select-message">
-      <span v-if="error" class="select-error">{{ error }}</span>
-      <span v-else-if="hint" class="select-hint">{{ hint }}</span>
+      <span v-if="error" class="select-error">{% raw %}{{ error }}{% endraw %}</span>
+      <span v-else-if="hint" class="select-hint">{% raw %}{{ hint }}{% endraw %}</span>
     </div>
   </div>
 </template>

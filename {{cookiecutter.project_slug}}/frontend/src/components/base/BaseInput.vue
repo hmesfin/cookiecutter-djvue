@@ -1,13 +1,13 @@
 <template>
   <div class="input-wrapper" :class="wrapperClasses">
     <label v-if="label" :for="inputId" class="input-label">
-      {{ label }}
+      {% raw %}{{ label }}{% endraw %}
       <span v-if="required" class="input-required">*</span>
     </label>
     
     <div class="input-container">
       <span v-if="prefix || $slots.prefix" class="input-addon input-prefix">
-        <slot name="prefix">{{ prefix }}</slot>
+        <slot name="prefix">{% raw %}{{ prefix }}{% endraw %}</slot>
       </span>
       
       <input
@@ -35,7 +35,7 @@
       />
       
       <span v-if="suffix || $slots.suffix" class="input-addon input-suffix">
-        <slot name="suffix">{{ suffix }}</slot>
+        <slot name="suffix">{% raw %}{{ suffix }}{% endraw %}</slot>
       </span>
       
       <button
@@ -51,8 +51,8 @@
     </div>
     
     <div v-if="hint || error" class="input-message">
-      <span v-if="error" class="input-error">{{ error }}</span>
-      <span v-else-if="hint" class="input-hint">{{ hint }}</span>
+      <span v-if="error" class="input-error">{% raw %}{{ error }}{% endraw %}</span>
+      <span v-else-if="hint" class="input-hint">{% raw %}{{ hint }}{% endraw %}</span>
     </div>
   </div>
 </template>

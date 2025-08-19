@@ -20,12 +20,12 @@
         </svg>
       </span>
       <span v-if="label || $slots.default" class="checkbox-text">
-        <slot>{{ label }}</slot>
+        <slot>{% raw %}{{ label }}{% endraw %}</slot>
       </span>
     </label>
     <div v-if="hint || error" class="checkbox-message">
-      <span v-if="error" class="checkbox-error">{{ error }}</span>
-      <span v-else-if="hint" class="checkbox-hint">{{ hint }}</span>
+      <span v-if="error" class="checkbox-error">{% raw %}{{ error }}{% endraw %}</span>
+      <span v-else-if="hint" class="checkbox-hint">{% raw %}{{ hint }}{% endraw %}</span>
     </div>
   </div>
 </template>
